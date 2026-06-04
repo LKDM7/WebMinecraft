@@ -4,16 +4,21 @@
    CONFIGURATION
 ===================================================================== */
 const CONFIG = {
-  // Instant absolu d'ouverture (heure de Paris = +02:00 en été) — sert au compte à rebours visuel
+  // Instant absolu d'ouverture (heure de Paris = +02:00 en été)
   launchDate: "2026-06-05T21:00:00+02:00",
 
-  // URL de votre Cloudflare Worker qui garde l'IP (voir worker/ip-gate.js).
-  // L'IP n'est PAS dans ce fichier : le Worker ne la renvoie qu'après l'ouverture.
-  // MODIFIER après déploiement : "https://donjonmc-ip.VOTRE-SOUS-DOMAINE.workers.dev"
-  gateUrl: "https://donjonmc-ip-gate.lkdm.workers.dev",
+  // IP du serveur CHIFFRÉE (AES-256-GCM). Impossible à lire en clair dans le code.
+  // La clé est dérivée de la date d'ouverture — déchiffrée seulement après vérification
+  // de l'heure RÉELLE sur internet (changer l'horloge du PC ne révèle rien).
+  // Pour régénérer après changement d'IP : voir scripts/encrypt-ip.js
+  ipCipher: {
+    iv:   "+kJO0RtGAnmKRDHD",
+    data: "munRnw1JDiQmXRAFvPNVR2fX5AmP9vz48J3JdU41ko1hSPo=",
+    salt: "hunter-gate-v1",
+  },
 };
 
-// IP récupérée depuis le Worker au moment de l'ouverture (jamais en clair dans le code)
+// IP déchiffrée à l'ouverture (jamais en clair dans le code source)
 let revealedIP = null;
 
 /* =====================================================================
@@ -311,30 +316,59 @@ function tick() {
   secondsEl.textContent = pad(Math.floor((diff % 60000) / 1000));
 }
 
-/* Demande l'IP au Cloudflare Worker. Le Worker vérifie l'heure RÉELLE côté serveur :
-   - ouvert  → renvoie l'IP, on l'affiche
-   - fermé   → ne renvoie jamais l'IP (changer l'horloge du PC ne sert à rien)
-   - erreur  → on réessaie, sans jamais exposer d'IP */
-function tryReveal() {
+/* Récupère l'heure RÉELLE depuis internet (anti triche d'horloge).
+   Essaie 2 services ; en cas d'échec total, retombe sur l'horloge locale. */
+async function getRealNow() {
+  const sources = [
+    ["https://worldtimeapi.org/api/timezone/Etc/UTC", d => d.unixtime * 1000],
+    ["https://timeapi.io/api/Time/current/zone?timeZone=UTC", d => new Date(d.dateTime + "Z").getTime()],
+  ];
+  for (const [url, parse] of sources) {
+    try {
+      const r = await fetch(url, { cache: "no-store" });
+      if (!r.ok) continue;
+      const t = parse(await r.json());
+      if (t && !isNaN(t)) return t;
+    } catch (_) { /* source suivante */ }
+  }
+  return Date.now(); // dernier recours : horloge locale
+}
+
+/* Déchiffre l'IP via Web Crypto (AES-256-GCM), clé dérivée de la date + sel. */
+async function decryptIP() {
+  const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  const passphrase = "DonjonMC|" + CONFIG.launchDate + "|" + CONFIG.ipCipher.salt;
+  const hash = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(passphrase));
+  const key  = await crypto.subtle.importKey("raw", hash, { name: "AES-GCM" }, false, ["decrypt"]);
+  const pt   = await crypto.subtle.decrypt(
+    { name: "AES-GCM", iv: b64(CONFIG.ipCipher.iv) }, key, b64(CONFIG.ipCipher.data)
+  );
+  return new TextDecoder().decode(pt);
+}
+
+/* Vérifie l'heure réelle, et si l'ouverture est passée → déchiffre + révèle l'IP.
+   Sinon → ne révèle RIEN et réessaie (résiste au changement d'horloge). */
+async function tryReveal() {
   if (revealedIP || revealing) return;
   revealing = true;
-  fetch(CONFIG.gateUrl, { cache: "no-store" })
-    .then(r => r.json())
-    .then(data => {
-      if (data && data.open && data.ip) {
-        revealedIP = data.ip;
-        if (countdownTimer) clearInterval(countdownTimer);
-        launchConfetti();
-        countdownSection.classList.add("hidden");
-        serverIpEl.textContent = revealedIP;
-        serverReveal.classList.remove("hidden");
-      } else {
-        // Toujours verrouillé côté serveur — on retente plus tard (anti triche d'horloge)
-        const wait = Math.min(Math.max((data && data.remaining) || 10, 5), 30) * 1000;
-        setTimeout(() => { revealing = false; tryReveal(); }, wait);
-      }
-    })
-    .catch(() => { setTimeout(() => { revealing = false; }, 5000); });
+  try {
+    const realNow = await getRealNow();
+    const launch  = new Date(CONFIG.launchDate).getTime();
+    if (realNow >= launch) {
+      revealedIP = await decryptIP();
+      if (countdownTimer) clearInterval(countdownTimer);
+      launchConfetti();
+      countdownSection.classList.add("hidden");
+      serverIpEl.textContent = revealedIP;
+      serverReveal.classList.remove("hidden");
+    } else {
+      // Pas encore l'heure réelle → on retente, sans rien révéler
+      const wait = Math.min(Math.max((launch - realNow) / 1000, 5), 30) * 1000;
+      setTimeout(() => { revealing = false; tryReveal(); }, wait);
+    }
+  } catch (_) {
+    setTimeout(() => { revealing = false; }, 5000);
+  }
 }
 
 function launchConfetti() {

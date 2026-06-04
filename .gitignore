@@ -21,9 +21,6 @@ ruvector.db
 .mcp.json
 skills-lock.json
 
-# Worker Cloudflare — contient l'IP en clair, NE JAMAIS publier (déploiement local uniquement)
-worker/
-
 # Fichiers locaux/sensibles
 *.local.*
 .env
