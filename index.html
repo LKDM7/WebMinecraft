@@ -10,9 +10,9 @@
 
   <meta property="og:title" content="DonjonMC - Bientôt Disponible">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="">
-  <meta property="og:image" content="">
-  <meta property="og:image:alt" content="DonjonMC - Serveur Minecraft">
+  <meta property="og:url" content="https://lkdm7.github.io/WebMinecraft/">
+  <meta property="og:image" content="https://lkdm7.github.io/WebMinecraft/img/logo.jpg">
+  <meta property="og:image:alt" content="DonjonMC — Le serveur Minecraft Solo Leveling">
 
   <link rel="icon" href="img/logo.jpg" type="image/jpeg">
   <link rel="apple-touch-icon" href="img/logo.jpg">
@@ -99,6 +99,12 @@
             <span class="countdown-value" id="seconds">00</span>
             <span class="countdown-unit-label">Secondes</span>
           </div>
+        </div>
+
+        <!-- Notification navigateur opt-in -->
+        <div class="notif-wrap" id="notif-wrap">
+          <button class="btn btn-notif" id="notif-btn">🔔 Me notifier à l'ouverture</button>
+          <p class="notif-hint" id="notif-hint"></p>
         </div>
       </div>
 
@@ -248,7 +254,12 @@
       <div id="tab-commands" class="tab-content" role="tabpanel">
         <p class="tab-intro">Toutes les commandes disponibles sur DonjonMC.</p>
 
-        <div class="commands-grid">
+        <div class="cmds-search-wrap">
+          <input type="text" id="cmds-search" class="cmds-search-input" placeholder="🔍 Rechercher une commande…" autocomplete="off" aria-label="Rechercher une commande">
+          <p class="cmds-count" id="cmds-count"></p>
+        </div>
+
+        <div class="commands-grid" id="commands-grid">
           <div class="command-col-stack">
             <div class="command-category">
               <h3 class="category-title">⚙ Général</h3>

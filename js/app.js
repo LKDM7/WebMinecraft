@@ -364,6 +364,7 @@ async function tryReveal() {
       revealedIP = await decryptIP();
       if (countdownTimer) clearInterval(countdownTimer);
       launchConfetti();
+      fireOpenNotification();
       countdownSection.classList.add("hidden");
       serverIpEl.textContent = revealedIP;
       serverReveal.classList.remove("hidden");
@@ -453,6 +454,49 @@ tick();
 countdownTimer = setInterval(tick, 1000);
 
 /* =====================================================================
+   NOTIFICATION NAVIGATEUR — opt-in avant l'ouverture
+   Fonctionne si l'onglet est ouvert (ou en arrière-plan) au moment
+   du lancement. Pas de serveur push requis.
+===================================================================== */
+const notifBtn  = document.getElementById("notif-btn");
+const notifHint = document.getElementById("notif-hint");
+const notifWrap = document.getElementById("notif-wrap");
+
+function updateNotifUI() {
+  if (!notifBtn) return;
+  if (!("Notification" in window)) { notifWrap.style.display = "none"; return; }
+  if (Notification.permission === "granted") {
+    notifBtn.textContent = "🔔 Notification activée";
+    notifBtn.classList.add("notif-active");
+    notifBtn.disabled = true;
+    if (notifHint) notifHint.textContent = "Tu seras notifié à l'ouverture si cet onglet est ouvert.";
+  } else if (Notification.permission === "denied") {
+    notifWrap.style.display = "none";
+  }
+}
+
+if (notifBtn) {
+  updateNotifUI();
+  notifBtn.addEventListener("click", async () => {
+    if (!("Notification" in window)) return;
+    await Notification.requestPermission();
+    updateNotifUI();
+  });
+}
+
+function fireOpenNotification() {
+  if (!("Notification" in window) || Notification.permission !== "granted") return;
+  try {
+    new Notification("🎉 DonjonMC est maintenant OUVERT !", {
+      body: "Le serveur est en ligne. Rejoignez l'aventure dès maintenant !",
+      icon: "img/logo.jpg",
+      tag: "donjonmc-open",
+      requireInteraction: true,
+    });
+  } catch (_) { /* silencieux */ }
+}
+
+/* =====================================================================
    COPIER L'IP  (utilise l'IP récupérée du Worker, jamais une valeur en dur)
 ===================================================================== */
 document.getElementById("copy-btn").addEventListener("click", function () {
@@ -497,6 +541,48 @@ document.querySelectorAll(".nav-pill a[data-tab]").forEach(a => {
     document.getElementById("info").scrollIntoView({ behavior: "smooth" });
   });
 });
+
+/* =====================================================================
+   RECHERCHE DE COMMANDES
+===================================================================== */
+(function () {
+  const input    = document.getElementById("cmds-search");
+  const countEl  = document.getElementById("cmds-count");
+  const grid     = document.getElementById("commands-grid");
+  if (!input || !grid) return;
+
+  // Compte et affiche le total initial
+  function refreshCount() {
+    const visible = grid.querySelectorAll(".command-card:not([hidden])").length;
+    const total   = grid.querySelectorAll(".command-card").length;
+    countEl.textContent = visible < total
+      ? `${visible} commande${visible !== 1 ? "s" : ""} trouvée${visible !== 1 ? "s" : ""}`
+      : "";
+  }
+
+  const hide = el => { el.style.display = "none"; };
+  const show = el => { el.style.display = ""; };
+  const isVisible = el => el.style.display !== "none";
+
+  input.addEventListener("input", () => {
+    const q = input.value.toLowerCase().trim();
+    // Filtre chaque command-card
+    grid.querySelectorAll(".command-card").forEach(card => {
+      (q === "" || card.textContent.toLowerCase().includes(q)) ? show(card) : hide(card);
+    });
+    // Masque les catégories sans aucune commande visible
+    grid.querySelectorAll(".command-category").forEach(cat => {
+      [...cat.querySelectorAll(".command-card")].some(isVisible) ? show(cat) : hide(cat);
+    });
+    // Masque les colonnes sans catégorie visible
+    grid.querySelectorAll(".command-col-stack").forEach(col => {
+      [...col.querySelectorAll(".command-category")].some(isVisible) ? show(col) : hide(col);
+    });
+    refreshCount();
+  });
+
+  input.addEventListener("keydown", e => { if (e.key === "Escape") { input.value = ""; input.dispatchEvent(new Event("input")); } });
+})();
 
 /* =====================================================================
    LISTE DES MODS — rendu + recherche + filtres
