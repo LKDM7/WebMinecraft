@@ -551,6 +551,25 @@ details[open] summary::after { transform:rotate(90deg); }
 .prog-item:last-child { border-bottom:none; }
 .prog-lv { font-family:var(--font-pixel); font-size:0.48rem; color:var(--green); white-space:nowrap; padding-top:0.2rem; flex-shrink:0; min-width:60px; }
 
+/* --- MODAL MODS REQUIS --- */
+.mods-overlay { position:fixed; inset:0; background:rgba(12,11,18,0.9); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; z-index:1100; padding:1.5rem; }
+.mods-overlay[hidden] { display:none; }
+.mods-modal { background:var(--card); border:1px solid rgba(167,139,250,0.35); border-radius:1rem; padding:2rem; max-width:460px; width:100%; box-shadow:0 0 60px rgba(167,139,250,0.14); text-align:center; }
+.mods-modal-icon { font-size:2rem; margin-bottom:0.75rem; }
+.mods-modal-title { font-family:var(--font-pixel); font-size:0.72rem; color:#fff; line-height:1.7; margin-bottom:1rem; }
+.mods-modal-desc { font-size:0.88rem; color:var(--muted); margin-bottom:1.25rem; line-height:1.6; }
+.mods-modal-desc strong { color:#fff; }
+.mods-required-list { display:flex; flex-direction:column; gap:0.65rem; margin-bottom:1.1rem; }
+.mods-required-item { display:flex; align-items:center; justify-content:space-between; background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:10px; padding:0.85rem 1rem; transition:border-color 0.2s,background 0.2s; text-decoration:none; }
+.mods-required-item:hover { border-color:rgba(167,139,250,0.45); background:rgba(167,139,250,0.05); }
+.mods-required-item-info { display:flex; flex-direction:column; gap:0.15rem; text-align:left; }
+.mods-required-item-info strong { color:#fff; font-size:0.9rem; }
+.mods-required-item-info span { font-size:0.73rem; color:var(--muted); }
+.mods-required-dl { font-size:0.8rem; color:var(--green); font-weight:600; white-space:nowrap; margin-left:1rem; }
+.mods-modal-path { font-size:0.78rem; color:var(--muted); background:rgba(255,255,255,0.04); border-radius:8px; padding:0.55rem 0.9rem; margin-bottom:1.25rem; }
+.mods-modal-path code { color:var(--green); }
+.mods-modal-confirm { width:100%; }
+
 /* --- RESPONSIVE --- */
 @media (max-width: 768px) {
   .nav-pill { display: none; }

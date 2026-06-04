@@ -169,6 +169,7 @@ const MODS = [
 ["Immersive Engineering","Combat",CF+"immersive-engineering"],
 ["Paxii","Combat",CF+"paxii"],
 ["Royal Variants","Combat",CF+"royal-variants"],
+["DonjonMC","Combat","https://github.com/LKDM7/DonjonMC/raw/refs/heads/master/releases/donjonmc-2.0.0.jar"],
 // --- Décoration ---
 ["Macaw's Bridges","Déco",CF+"macaws-bridges"],
 ["Macaw's Doors","Déco",CF+"macaws-doors"],
@@ -243,6 +244,7 @@ const MODS = [
 ["More Mob Griefing Options","Interface",CF+"more-mob-griefing-options"],
 ["Tombstone","Interface",CF+"tombstone"],
 ["Easy NPC","Interface",CF+"easy-npc"],
+["Dashboard Admin","Interface","https://github.com/LKDM7/DashBoardAdmin/raw/refs/heads/master/releases/dashboardadmin-1.0.4.jar"],
 // --- API & Bibliothèques ---
 ["Architectury API","API",MR+"architectury-api"],
 ["GeckoLib","API",CF+"geckolib"],
@@ -368,6 +370,7 @@ async function tryReveal() {
       countdownSection.classList.add("hidden");
       serverIpEl.textContent = revealedIP;
       serverReveal.classList.remove("hidden");
+      showModsRequiredModal();
       startServerStatus(revealedIP);
     } else {
       // Pas encore l'heure réelle → on retente, sans rien révéler
@@ -448,6 +451,18 @@ function startServerStatus(ip) {
   if (statusTimer) return;
   fetchServerStatus(ip);
   statusTimer = setInterval(() => fetchServerStatus(ip), 60000);
+}
+
+/* =====================================================================
+   MODAL MODS REQUIS — affiché à la révélation de l'IP
+===================================================================== */
+function showModsRequiredModal() {
+  const overlay = document.getElementById("mods-required-overlay");
+  if (!overlay) return;
+  overlay.removeAttribute("hidden");
+  document.getElementById("mods-modal-confirm").addEventListener("click", () => {
+    overlay.setAttribute("hidden", "");
+  }, { once: true });
 }
 
 tick();

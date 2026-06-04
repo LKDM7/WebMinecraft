@@ -749,6 +749,33 @@
     </div>
   </footer>
 
+  <!-- ===== MODAL : MODS REQUIS ===== -->
+  <div id="mods-required-overlay" class="mods-overlay" hidden aria-modal="true" role="dialog" aria-labelledby="mods-modal-title">
+    <div class="mods-modal">
+      <div class="mods-modal-icon">⚠️</div>
+      <h2 class="mods-modal-title" id="mods-modal-title">Mods requis avant de te connecter</h2>
+      <p class="mods-modal-desc">Tu dois <strong>absolument</strong> télécharger ces 2 mods et les placer dans ton dossier mods. Sans eux, tu ne pourras <strong>pas rejoindre</strong> DonjonMC.</p>
+      <div class="mods-required-list">
+        <a href="https://github.com/LKDM7/DonjonMC/raw/refs/heads/master/releases/donjonmc-2.0.0.jar" class="mods-required-item" download>
+          <div class="mods-required-item-info">
+            <strong>DonjonMC</strong>
+            <span>Mod principal — Combat &amp; RPG Solo Leveling</span>
+          </div>
+          <span class="mods-required-dl">⬇ Télécharger</span>
+        </a>
+        <a href="https://github.com/LKDM7/DashBoardAdmin/raw/refs/heads/master/releases/dashboardadmin-1.0.4.jar" class="mods-required-item" download>
+          <div class="mods-required-item-info">
+            <strong>Dashboard Admin</strong>
+            <span>Interface d'administration du serveur</span>
+          </div>
+          <span class="mods-required-dl">⬇ Télécharger</span>
+        </a>
+      </div>
+      <p class="mods-modal-path">📁 Chemin : <code>%appdata%\.minecraft\mods\</code></p>
+      <button id="mods-modal-confirm" class="btn btn-primary mods-modal-confirm">✓ J'ai téléchargé les deux mods</button>
+    </div>
+  </div>
+
   <script src="js/app.js"></script>
 </body>
 </html>
