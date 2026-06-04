@@ -286,6 +286,12 @@ const MODS = [
 ];
 
 /* =====================================================================
+   COMPTEUR DE MODS — synchronise tous les "X mods" sur la taille réelle
+   du tableau MODS (plus jamais d'incohérence codée en dur).
+===================================================================== */
+document.querySelectorAll(".js-mod-count").forEach(el => { el.textContent = MODS.length; });
+
+/* =====================================================================
    COMPTE À REBOURS
 ===================================================================== */
 const daysEl    = document.getElementById("days");
@@ -361,6 +367,7 @@ async function tryReveal() {
       countdownSection.classList.add("hidden");
       serverIpEl.textContent = revealedIP;
       serverReveal.classList.remove("hidden");
+      startServerStatus(revealedIP);
     } else {
       // Pas encore l'heure réelle → on retente, sans rien révéler
       const wait = Math.min(Math.max((launch - realNow) / 1000, 5), 30) * 1000;
@@ -391,6 +398,55 @@ function launchConfetti() {
     wrap.appendChild(el);
   }
   setTimeout(() => wrap.remove(), 5000);
+}
+
+/* =====================================================================
+   STATUT LIVE DU SERVEUR  (api.mcsrvstat.us — public, sans clé)
+   Affiche En ligne / Hors ligne + joueurs connectés + noms.
+   Démarre une fois l'IP révélée, puis rafraîchit toutes les 60 sec.
+===================================================================== */
+let statusTimer = null;
+
+async function fetchServerStatus(ip) {
+  const dot     = document.getElementById("status-dot");
+  const text    = document.getElementById("status-text");
+  const players = document.getElementById("status-players");
+  const list    = document.getElementById("status-playerlist");
+  if (!dot || !text) return;
+
+  try {
+    const r = await fetch("https://api.mcsrvstat.us/3/" + encodeURIComponent(ip), { cache: "no-store" });
+    const d = await r.json();
+
+    if (d && d.online) {
+      dot.className = "status-dot online";
+      text.textContent = "En ligne";
+      const on  = d.players ? (d.players.online ?? 0) : 0;
+      const max = d.players ? (d.players.max ?? 0) : 0;
+      players.innerHTML = `· <strong>${on}</strong>/${max} joueur${on !== 1 ? "s" : ""}`;
+
+      const names = (d.players && Array.isArray(d.players.list)) ? d.players.list : [];
+      list.innerHTML = names
+        .map(p => `<span class="player-chip">${escapeHTML(typeof p === "string" ? p : (p.name || ""))}</span>`)
+        .join("");
+    } else {
+      dot.className = "status-dot offline";
+      text.textContent = "Hors ligne";
+      players.textContent = "";
+      list.innerHTML = "";
+    }
+  } catch (_) {
+    dot.className = "status-dot offline";
+    text.textContent = "Statut indisponible";
+    players.textContent = "";
+    list.innerHTML = "";
+  }
+}
+
+function startServerStatus(ip) {
+  if (statusTimer) return;
+  fetchServerStatus(ip);
+  statusTimer = setInterval(() => fetchServerStatus(ip), 60000);
 }
 
 tick();
@@ -561,3 +617,12 @@ mobileNav.querySelectorAll(".mnav-link").forEach(link => {
     requestAnimationFrame(loop);
   })();
 })();
+
+/* =====================================================================
+   PWA — enregistrement du service worker (offline + installable)
+===================================================================== */
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch(() => { /* silencieux */ });
+  });
+}

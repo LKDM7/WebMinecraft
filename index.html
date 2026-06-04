@@ -111,6 +111,15 @@
           <span class="ip-address" id="server-ip">—</span>
           <button class="btn btn-copy" id="copy-btn">Copier l'IP</button>
         </div>
+
+        <!-- STATUT LIVE DU SERVEUR (via api.mcsrvstat.us, une fois l'IP révélée) -->
+        <div class="server-status" id="server-status" aria-live="polite">
+          <span class="status-dot" id="status-dot"></span>
+          <span class="status-text" id="status-text">Vérification du statut…</span>
+          <span class="status-players" id="status-players"></span>
+        </div>
+        <div class="status-playerlist" id="status-playerlist" aria-live="polite"></div>
+
         <p class="reveal-subtitle">Lancez Minecraft et rejoignez-nous dès maintenant !</p>
       </div>
     </div>
@@ -125,7 +134,7 @@
       <div class="feature-item">
         <span class="feature-icon">🧩</span>
         <div class="feature-text">
-          <strong>246 Mods</strong>
+          <strong><span class="js-mod-count">244</span> Mods</strong>
           <span>NeoForge 1.21.1</span>
         </div>
       </div>
@@ -199,7 +208,7 @@
       <!-- ===== ONGLET : MODS ===== -->
       <div id="tab-mods" class="tab-content active" role="tabpanel">
         <p class="tab-intro">
-          <strong>246 mods</strong> — NeoForge 1.21.1. Utilisez le bouton ci-dessous pour tout installer d'un coup,
+          <strong><span class="js-mod-count">244</span> mods</strong> — NeoForge 1.21.1. Utilisez le bouton ci-dessous pour tout installer d'un coup,
           ou cliquez sur chaque mod pour le télécharger manuellement.
         </p>
 
@@ -404,7 +413,7 @@
             <div class="cl-content">
               <span class="cl-tag tag-new">NOUVEAU</span>
               <h3>Ouverture officielle de DonjonMC !</h3>
-              <p>Le serveur ouvre ses portes ce soir à 21h. Rejoignez-nous pour découvrir un monde entièrement forgé pour l'aventure, avec 241 mods soigneusement sélectionnés.</p>
+              <p>Le serveur ouvre ses portes ce soir à 21h. Rejoignez-nous pour découvrir un monde entièrement forgé pour l'aventure, avec <span class="js-mod-count">244</span> mods soigneusement sélectionnés.</p>
             </div>
           </div>
           <div class="cl-item">
@@ -420,7 +429,7 @@
             <div class="cl-content">
               <span class="cl-tag tag-fix">MISE À JOUR</span>
               <h3>Finalisation du modpack — v1.0</h3>
-              <p>Le modpack est stabilisé. 241 mods NeoForge 1.21.1, optimisé et testé. Téléchargement disponible via CurseForge.</p>
+              <p>Le modpack est stabilisé. <span class="js-mod-count">244</span> mods NeoForge 1.21.1, optimisé et testé. Téléchargement disponible via CurseForge.</p>
             </div>
           </div>
         </div>

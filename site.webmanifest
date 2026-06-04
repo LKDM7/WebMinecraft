@@ -1,7 +1,7 @@
 {
   "name": "DonjonMC",
   "short_name": "DonjonMC",
-  "description": "Le serveur Minecraft qui repousse les limites de l'aventure. 241 mods, NeoForge 1.21.1.",
+  "description": "Le serveur Minecraft qui repousse les limites de l'aventure. Plus de 240 mods, NeoForge 1.21.1.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0c0b12",
