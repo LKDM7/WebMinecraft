@@ -1,0 +1,734 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- MODIFIER : titre et description du site -->
+  <title>DonjonMC - Bientôt Disponible</title>
+  <meta name="description" content="DonjonMC, le nouveau serveur Minecraft arrive bientôt. Préparez-vous à l'aventure.">
+
+  <meta property="og:title" content="DonjonMC - Bientôt Disponible">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+  <meta property="og:image:alt" content="DonjonMC - Serveur Minecraft">
+
+  <link rel="icon" href="img/logo.jpg" type="image/jpeg">
+  <link rel="apple-touch-icon" href="img/logo.jpg">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#0c0b12">
+
+  <!-- Google Fonts : Press Start 2P (Minecraft feel) + Inter (lisibilité) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#hero" class="logo">
+        <img src="img/logo.jpg" alt="DonjonMC" class="logo-img">
+        <span class="logo-text">DonjonMC</span>
+      </a>
+      <nav class="nav-pill" role="navigation">
+        <a href="#info" data-tab="mods">Mods</a>
+        <a href="#info" data-tab="commands">Commandes</a>
+        <a href="#info" data-tab="changelog">Actualités</a>
+        <a href="#info" data-tab="donjonmc">DonjonMC</a>
+        <a href="#info" data-tab="dashboard">DashBoard</a>
+      </nav>
+      <a href="https://www.curseforge.com/minecraft/share/6YIJ4L9J" target="_blank" rel="noopener" class="header-cta">⬇ Modpack</a>
+      <button class="burger" id="burger-btn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile nav drawer -->
+  <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
+    <a href="#info" data-tab="mods" class="mnav-link">⚙ Mods Requis</a>
+    <a href="#info" data-tab="commands" class="mnav-link">📋 Commandes</a>
+    <a href="#info" data-tab="changelog" class="mnav-link">📰 Actualités</a>
+    <a href="#info" data-tab="donjonmc" class="mnav-link">⚔ DonjonMC</a>
+    <a href="#info" data-tab="dashboard" class="mnav-link">📊 DashBoard</a>
+    <a href="https://www.curseforge.com/minecraft/share/6YIJ4L9J" target="_blank" rel="noopener" class="mnav-link">⬇ Télécharger le Modpack</a>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero">
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <canvas id="particles-canvas" aria-hidden="true"></canvas>
+
+    <div class="container hero-content">
+      <img src="img/logo.jpg" alt="DonjonMC Logo" class="hero-logo">
+      <span class="badge">BIENTÔT DISPONIBLE</span>
+
+      <!-- MODIFIER : nom du serveur -->
+      <h1 class="hero-title"><span class="grad">DonjonMC</span></h1>
+
+      <!-- MODIFIER : accroche -->
+      <p class="hero-subtitle">
+        Plongez dans les profondeurs. Affrontez les donjons, forgez votre légende.
+      </p>
+
+      <!-- COMPTE À REBOURS (visible avant l'ouverture) -->
+      <div id="countdown-section">
+        <p class="countdown-label">OUVERTURE DANS</p>
+        <div class="countdown-grid">
+          <div class="countdown-unit">
+            <span class="countdown-value" id="days">00</span>
+            <span class="countdown-unit-label">Jours</span>
+          </div>
+          <span class="countdown-sep" aria-hidden="true">:</span>
+          <div class="countdown-unit">
+            <span class="countdown-value" id="hours">00</span>
+            <span class="countdown-unit-label">Heures</span>
+          </div>
+          <span class="countdown-sep" aria-hidden="true">:</span>
+          <div class="countdown-unit">
+            <span class="countdown-value" id="minutes">00</span>
+            <span class="countdown-unit-label">Minutes</span>
+          </div>
+          <span class="countdown-sep" aria-hidden="true">:</span>
+          <div class="countdown-unit">
+            <span class="countdown-value" id="seconds">00</span>
+            <span class="countdown-unit-label">Secondes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RÉVÉLATION IP (visible après l'ouverture) -->
+      <div id="server-reveal" class="hidden">
+        <p class="reveal-title">🎉 Le serveur est OUVERT !</p>
+        <div class="ip-card">
+          <span class="ip-label">Adresse IP</span>
+          <!-- L'IP est récupérée depuis le Cloudflare Worker à l'ouverture — JAMAIS en clair ici -->
+          <span class="ip-address" id="server-ip">—</span>
+          <button class="btn btn-copy" id="copy-btn">Copier l'IP</button>
+        </div>
+        <p class="reveal-subtitle">Lancez Minecraft et rejoignez-nous dès maintenant !</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TRANSITION PIXEL ===== -->
+  <div class="pixel-divider" aria-hidden="true"></div>
+
+  <!-- ===== BANDEAU FEATURES ===== -->
+  <div class="features-strip">
+    <div class="container">
+      <div class="feature-item">
+        <span class="feature-icon">🧩</span>
+        <div class="feature-text">
+          <strong>246 Mods</strong>
+          <span>NeoForge 1.21.1</span>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">⚔</span>
+        <div class="feature-text">
+          <strong>Survie Modifiée</strong>
+          <span>PvE · Donjons · Magie</span>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">🏗</span>
+        <div class="feature-text">
+          <strong>Create & Craft</strong>
+          <span>Machines · Automatisation</span>
+        </div>
+      </div>
+      <div class="feature-item">
+        <span class="feature-icon">🌍</span>
+        <div class="feature-text">
+          <strong>Monde Immense</strong>
+          <span>Biomes · Structures · Explorations</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== COMMENT REJOINDRE ===== -->
+  <section class="steps-section">
+    <div class="container">
+      <h2 class="section-title"><span class="grad">Comment Rejoindre ?</span></h2>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">01</div>
+          <div class="step-icon">📦</div>
+          <h3 class="step-title">Télécharger le Modpack</h3>
+          <p class="step-desc">Installez le modpack via CurseForge. Tout est pré-configuré, aucun réglage manuel nécessaire.</p>
+          <span class="step-arrow">→</span>
+        </div>
+        <div class="step-card">
+          <div class="step-num">02</div>
+          <div class="step-icon">🎮</div>
+          <h3 class="step-title">Lancer Minecraft</h3>
+          <p class="step-desc">Ouvrez le launcher CurseForge, sélectionnez le profil DonjonMC et lancez le jeu.</p>
+          <span class="step-arrow">→</span>
+        </div>
+        <div class="step-card">
+          <div class="step-num">03</div>
+          <div class="step-icon">⚔</div>
+          <h3 class="step-title">Rejoindre le Serveur</h3>
+          <p class="step-desc">Allez dans Multijoueur → Ajouter un serveur, entrez l'IP et plongez dans le donjon.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== INFORMATIONS (Onglets) ===== -->
+  <section class="info-section" id="info">
+    <div class="container">
+      <h2 class="section-title"><span class="grad">Informations du Serveur</span></h2>
+
+      <!-- Navigation onglets -->
+      <div class="tabs" role="tablist">
+        <button class="tab-btn active" data-tab="mods" role="tab" aria-selected="true">⚙ Mods Requis</button>
+        <button class="tab-btn" data-tab="commands" role="tab" aria-selected="false">📋 Commandes</button>
+        <button class="tab-btn" data-tab="changelog" role="tab" aria-selected="false">📰 Actualités</button>
+        <button class="tab-btn" data-tab="donjonmc" role="tab" aria-selected="false">⚔ DonjonMC</button>
+        <button class="tab-btn" data-tab="dashboard" role="tab" aria-selected="false">📊 DashBoard</button>
+      </div>
+
+      <!-- ===== ONGLET : MODS ===== -->
+      <div id="tab-mods" class="tab-content active" role="tabpanel">
+        <p class="tab-intro">
+          <strong>246 mods</strong> — NeoForge 1.21.1. Utilisez le bouton ci-dessous pour tout installer d'un coup,
+          ou cliquez sur chaque mod pour le télécharger manuellement.
+        </p>
+
+        <div class="download-banner">
+          <div>
+            <strong>Modpack complet disponible</strong>
+            <span>Installe automatiquement tous les mods requis en un clic</span>
+          </div>
+          <!-- MODIFIER : remplacez # par le lien de votre modpack (CurseForge / Modrinth) -->
+          <a href="https://www.curseforge.com/minecraft/share/6YIJ4L9J" target="_blank" rel="noopener noreferrer" class="btn btn-primary">⬇ Télécharger le Modpack</a>
+        </div>
+
+        <!-- Recherche + filtres catégories (alimentés par js/app.js) -->
+        <div class="mods-controls">
+          <input type="text" id="mods-search" class="mods-search-input" placeholder="🔍 Rechercher un mod…" autocomplete="off">
+          <div class="filter-pills" id="filter-pills">
+            <button class="filter-pill active" data-filter="all">Tous</button>
+            <button class="filter-pill" data-filter="Monde">🌿 Monde</button>
+            <button class="filter-pill" data-filter="Structures">🏛 Structures</button>
+            <button class="filter-pill" data-filter="Mobs">🐾 Mobs</button>
+            <button class="filter-pill" data-filter="Nourriture">🍖 Nourriture</button>
+            <button class="filter-pill" data-filter="Create">⚙ Create</button>
+            <button class="filter-pill" data-filter="Combat">⚔ Combat</button>
+            <button class="filter-pill" data-filter="Déco">🎨 Déco</button>
+            <button class="filter-pill" data-filter="Performance">⚡ Performance</button>
+            <button class="filter-pill" data-filter="Interface">🖥 Interface</button>
+            <button class="filter-pill" data-filter="API">📚 API</button>
+          </div>
+          <p class="mods-count" id="mods-count"></p>
+        </div>
+
+        <!-- Conteneur généré dynamiquement par JS -->
+        <div class="mod-list" id="mods-list-container"></div>
+      </div>
+
+      <!-- ===== ONGLET : COMMANDES ===== -->
+      <div id="tab-commands" class="tab-content" role="tabpanel">
+        <p class="tab-intro">Toutes les commandes disponibles sur DonjonMC.</p>
+
+        <div class="commands-grid">
+          <div class="command-col-stack">
+            <div class="command-category">
+              <h3 class="category-title">⚙ Général</h3>
+              <div class="command-list">
+                <div class="command-card">
+                  <code class="cmd">/menu</code>
+                  <span class="cmd-desc">Ouvrir le menu paramètres &amp; commandes</span>
+                </div>
+                <div class="command-card">
+                  <code class="cmd">/stats</code>
+                  <span class="cmd-desc">Voir vos statistiques de jeu</span>
+                </div>
+                <div class="command-card">
+                  <code class="cmd">/report [message]</code>
+                  <span class="cmd-desc">Envoyer un signalement aux admins</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="command-category">
+              <h3 class="category-title">🏗 Construction</h3>
+              <div class="command-list">
+                <div class="command-card">
+                  <code class="cmd">/lock</code>
+                  <span class="cmd-desc">Verrouiller/déverrouiller un bloc regardé</span>
+                </div>
+                <div class="command-card">
+                  <code class="cmd">/trust &lt;joueur&gt;</code>
+                  <span class="cmd-desc">Donner accès à ses blocs verrouillés</span>
+                </div>
+                <div class="command-card">
+                  <code class="cmd">/build</code>
+                  <span class="cmd-desc">Activer/désactiver le mode construction</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="command-category">
+            <h3 class="category-title">🗺 Navigation</h3>
+            <div class="command-list">
+              <div class="command-card">
+                <code class="cmd">/tpa &lt;joueur&gt;</code>
+                <span class="cmd-desc">Demander une téléportation vers un joueur</span>
+              </div>
+              <div class="command-card">
+                <code class="cmd">/tpaccept</code>
+                <span class="cmd-desc">Accepter une demande de téléportation</span>
+              </div>
+              <div class="command-card">
+                <code class="cmd">/tpdeny</code>
+                <span class="cmd-desc">Refuser une demande de téléportation</span>
+              </div>
+              <div class="command-card">
+                <code class="cmd">/sethome &lt;nom&gt;</code>
+                <span class="cmd-desc">Enregistrer un home (Overworld uniquement)</span>
+              </div>
+              <div class="command-card">
+                <code class="cmd">/home [nom]</code>
+                <span class="cmd-desc">Se téléporter à un home enregistré</span>
+              </div>
+              <div class="command-card">
+                <code class="cmd">/back</code>
+                <span class="cmd-desc">Retourner à la position précédente</span>
+              </div>
+              <div class="command-card">
+                <code class="cmd">/warp [nom]</code>
+                <span class="cmd-desc">Se téléporter vers un warp</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="command-category">
+            <h3 class="category-title">💬 Social &amp; Échanges</h3>
+            <div class="command-list">
+              <div class="command-card">
+                <code class="cmd">/mail &lt;joueur&gt; &lt;msg&gt;</code>
+                <span class="cmd-desc">Envoyer un message privé</span>
+              </div>
+              <div class="command-card">
+                <code class="cmd">/r &lt;message&gt;</code>
+                <span class="cmd-desc">Répondre au dernier message reçu</span>
+              </div>
+              <div class="command-card">
+                <code class="cmd">/seen &lt;joueur&gt;</code>
+                <span class="cmd-desc">Voir la dernière connexion d'un joueur</span>
+              </div>
+              <div class="command-card">
+                <code class="cmd">/ignore &lt;joueur&gt;</code>
+                <span class="cmd-desc">Ignorer les messages d'un joueur</span>
+              </div>
+              <div class="command-card">
+                <code class="cmd">/unignore &lt;joueur&gt;</code>
+                <span class="cmd-desc">Arrêter d'ignorer un joueur</span>
+              </div>
+              <div class="command-card">
+                <code class="cmd">/deal &lt;joueur&gt;</code>
+                <span class="cmd-desc">Proposer un échange d'items</span>
+              </div>
+              <div class="command-card">
+                <code class="cmd">/dealaccept</code>
+                <span class="cmd-desc">Accepter une demande d'échange</span>
+              </div>
+              <div class="command-card">
+                <code class="cmd">/dealdeny</code>
+                <span class="cmd-desc">Refuser une demande d'échange</span>
+              </div>
+              <div class="command-card">
+                <code class="cmd">/groupaccept</code>
+                <span class="cmd-desc">Accepter une invitation de groupe</span>
+              </div>
+              <div class="command-card">
+                <code class="cmd">/groupdeny</code>
+                <span class="cmd-desc">Refuser une invitation de groupe</span>
+              </div>
+              <div class="command-card">
+                <code class="cmd">@g &lt;message&gt;</code>
+                <span class="cmd-desc">Chat de groupe (préfixe, pas une commande)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="command-category">
+            <h3 class="category-title">⚔ DonjonMC</h3>
+            <div class="command-list">
+              <div class="command-card">
+                <code class="cmd">/donjonmc trial</code>
+                <span class="cmd-desc">Lancer l'épreuve de classe (niv. 50+, sans classe)</span>
+              </div>
+              <div class="command-card">
+                <code class="cmd">/donjonmc punishment</code>
+                <span class="cmd-desc">Déclencher votre propre punition</span>
+              </div>
+              <div class="command-card">
+                <code class="cmd">/donjonmc dungeon exit</code>
+                <span class="cmd-desc">Sortir du donjon (téléportation)</span>
+              </div>
+              <div class="command-card">
+                <code class="cmd">/donjonmc dungeon join</code>
+                <span class="cmd-desc">Rejoindre un donjon de groupe</span>
+              </div>
+              <div class="command-card">
+                <code class="cmd">/donjonmc top</code>
+                <span class="cmd-desc">Top 10 des hunters en ligne par niveau</span>
+              </div>
+              <div class="command-card">
+                <code class="cmd">/donjonmc speed</code>
+                <span class="cmd-desc">Activer/désactiver le bonus de vitesse (Agilité)</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===== ONGLET : ACTUALITÉS ===== -->
+      <div id="tab-changelog" class="tab-content" role="tabpanel">
+        <p class="tab-intro">Actualités, mises à jour et événements du serveur. Ajoutez vos entrées en dupliquant un <code>.cl-item</code>.</p>
+        <div class="changelog-list">
+          <div class="cl-item">
+            <div class="cl-date">05<br>JUN<br>2026</div>
+            <div class="cl-content">
+              <span class="cl-tag tag-new">NOUVEAU</span>
+              <h3>Ouverture officielle de DonjonMC !</h3>
+              <p>Le serveur ouvre ses portes ce soir à 21h. Rejoignez-nous pour découvrir un monde entièrement forgé pour l'aventure, avec 241 mods soigneusement sélectionnés.</p>
+            </div>
+          </div>
+          <div class="cl-item">
+            <div class="cl-date">03<br>JUN<br>2026</div>
+            <div class="cl-content">
+              <span class="cl-tag tag-event">ÉVÉNEMENT</span>
+              <h3>Lancement du site officiel</h3>
+              <p>Le site de pré-lancement est en ligne ! Consultez la liste des mods, les commandes disponibles et préparez-vous pour l'ouverture.</p>
+            </div>
+          </div>
+          <div class="cl-item">
+            <div class="cl-date">01<br>JUN<br>2026</div>
+            <div class="cl-content">
+              <span class="cl-tag tag-fix">MISE À JOUR</span>
+              <h3>Finalisation du modpack — v1.0</h3>
+              <p>Le modpack est stabilisé. 241 mods NeoForge 1.21.1, optimisé et testé. Téléchargement disponible via CurseForge.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== ONGLET : DONJONMC ===== -->
+      <div id="tab-donjonmc" class="tab-content" role="tabpanel">
+        <p class="tab-intro">Guide complet du mod DonjonMC — RPG inspiré de <strong>Solo Leveling</strong>. Chaque section est cliquable pour se déplier.</p>
+
+        <details open>
+          <summary>📈 Progression &amp; Niveaux</summary>
+          <div class="detail-body">
+            <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Vous démarrez niveau 0 avec 5 cœurs. À chaque passage de niveau : soin à 100%, malus retirés, +2 points de compétences, +0,25 cœur maximum. L'XP requise est exponentielle.</p>
+            <table class="donjon-table"><thead><tr><th>Rang</th><th>Niveaux</th></tr></thead><tbody>
+              <tr><td><span class="rank-tag r-e">E</span></td><td>0–9</td></tr>
+              <tr><td><span class="rank-tag r-d">D</span></td><td>10–19</td></tr>
+              <tr><td><span class="rank-tag r-c">C</span></td><td>20–29</td></tr>
+              <tr><td><span class="rank-tag r-b">B</span></td><td>30–39</td></tr>
+              <tr><td><span class="rank-tag r-a">A</span></td><td>40–59</td></tr>
+              <tr><td><span class="rank-tag r-s">S</span></td><td>60–79</td></tr>
+              <tr><td><span class="rank-tag r-nat">National</span></td><td>80+</td></tr>
+            </tbody></table>
+          </div>
+        </details>
+
+        <details>
+          <summary>⚡ Les 5 Statistiques</summary>
+          <div class="detail-body">
+            <table class="donjon-table"><thead><tr><th>Stat</th><th>Effets</th></tr></thead><tbody>
+              <tr><td><strong>Force</strong></td><td>Dégâts de mêlée et santé max</td></tr>
+              <tr><td><strong>Agilité</strong></td><td>Vitesse de déplacement — toggle via <code class="cmd">/donjonmc speed</code></td></tr>
+              <tr><td><strong>Vitalité</strong></td><td>Santé max et résistance aux dégâts</td></tr>
+              <tr><td><strong>Intelligence</strong></td><td>Mana max (+5/point) et dégâts de sorts</td></tr>
+              <tr><td><strong>Sens</strong></td><td>Perception — détection ennemis et loots</td></tr>
+            </tbody></table>
+            <p class="donjon-note">▎ Atteindre 20 points dans une stat débloque un sort actif unique lié à cette stat.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>✨ Les Sorts de Rang</summary>
+          <div class="detail-body">
+            <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Les sorts utilisent Iron's Spellbooks. Chaque sort est reçu sous forme de parchemin — clic droit pour l'apprendre.</p>
+            <table class="donjon-table"><thead><tr><th>Nv.</th><th>Sort</th><th>École</th><th>Effet</th></tr></thead><tbody>
+              <tr><td>10</td><td><strong>Onde Primitive</strong></td><td>Évocation</td><td>Repousse + endommage tous dans 5–8 blocs</td></tr>
+              <tr><td>20</td><td><strong>Flamme du Donjon</strong></td><td>Feu</td><td>Enflamme l'ennemi le plus proche (20 blocs) — 8–36 sec d'ignition</td></tr>
+              <tr><td>30</td><td><strong>Tempête Givrée</strong></td><td>Glace</td><td>Lenteur II–IV + dégâts sur ennemis dans 8–17 blocs</td></tr>
+              <tr><td>40</td><td><strong>Foudre du Chasseur</strong></td><td>Foudre</td><td>Frappe 1 à 6 ennemis proches (30 blocs) d'éclairs</td></tr>
+              <tr><td>60</td><td><strong>Voile des Ténèbres</strong></td><td>Ender</td><td>Wither + Cécité + Lenteur IV sur tous proches — légendaire, CD 60 sec</td></tr>
+            </tbody></table>
+          </div>
+        </details>
+
+        <details>
+          <summary>📋 Le Système — Quêtes Quotidiennes</summary>
+          <div class="detail-body">
+            <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Chaque jour Minecraft, Le Système assigne <strong>4 quêtes</strong> (2 Faciles, 1 Normale, 1 Difficile). Vous avez 2 heures IRL pour toutes les compléter.</p>
+            <table class="donjon-table"><thead><tr><th>Difficulté</th><th>Récompense XP</th></tr></thead><tbody>
+              <tr><td>Facile</td><td>150 XP</td></tr>
+              <tr><td>Normale</td><td>350 XP</td></tr>
+              <tr><td>Difficile</td><td>700 XP</td></tr>
+              <tr><td><strong>Toutes complétées</strong></td><td>+2 points de compétences bonus</td></tr>
+            </tbody></table>
+            <p class="donjon-note">44 types de quêtes : tuer des mobs, compléter des donjons, récolter, crafter, survivre une nuit...</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>⚠ La Punition</summary>
+          <div class="detail-body">
+            <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Si le timer expire sans toutes les quêtes complétées — Le Système vous téléporte dans une dimension de punition. Un Sand Worm vous attend (60 PV, 8 dégâts, 10 armure). Survivez 15 minutes.</p>
+            <table class="donjon-table"><thead><tr><th>Résultat</th><th>Conséquence</th></tr></thead><tbody>
+              <tr><td>🟢 Survie</td><td>Retour à votre position dans l'Overworld</td></tr>
+              <tr><td>🔴 Mort</td><td>Perte de 1–3 points de stats aléatoires + retour Overworld</td></tr>
+            </tbody></table>
+          </div>
+        </details>
+
+        <details>
+          <summary>🏛 Les Donjons</summary>
+          <div class="detail-body">
+            <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Des portails colorés apparaissent aléatoirement dans l'Overworld (annoncés dans le chat). Le chef du groupe fait clic droit pour entrer — tous les membres dans un rayon de 10 blocs sont téléportés.</p>
+            <table class="donjon-table"><thead><tr><th>Rang</th><th>Couleur</th><th>Min.</th><th>PV Boss</th><th>XP</th><th>Temps</th></tr></thead><tbody>
+              <tr><td><span class="rank-tag r-d">D</span></td><td>Bleu</td><td>1</td><td>200</td><td>800</td><td>45 min</td></tr>
+              <tr><td><span class="rank-tag r-c">C</span></td><td>Vert</td><td>1</td><td>500</td><td>2 000</td><td>30 min</td></tr>
+              <tr><td><span class="rank-tag r-b">B</span></td><td>Violet</td><td>1</td><td>1 000</td><td>5 000</td><td>25 min</td></tr>
+              <tr><td><span class="rank-tag r-a">A</span></td><td>Orange</td><td>1</td><td>2 000</td><td>12 000</td><td>20 min</td></tr>
+              <tr><td><span class="rank-tag r-s">S</span></td><td>Rouge</td><td>4</td><td>4 000</td><td>30 000</td><td>15 min</td></tr>
+            </tbody></table>
+            <p class="donjon-note">▎ Double Donjon secret : les donjons D et C ont 1% de chance de mener au Temple de Cartenon. L'XP est divisée équitablement — bonus ×1,5 si vous avez 2+ rangs en dessous du joueur le plus haut.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>⚔ Niveau 50 — Épreuve de Classe</summary>
+          <div class="detail-body">
+            <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Utilisez <code class="cmd">/donjonmc trial</code>. Battez 3 zombies, 2 squelettes et un Wither Skeleton boss. Votre classe est attribuée selon votre stat la plus haute à la victoire.</p>
+            <div class="class-grid">
+              <div class="class-card">
+                <h4>🛡 Tank</h4>
+                <p class="class-role">Absorber les dégâts · protéger l'équipe</p>
+                <div class="class-spell"><strong>Rempart du Gardien</strong> — Résistance + Absorption (Sacré)<br><span style="color:var(--muted)">50–100 mana · 5–20 sec · CD 30 sec</span></div>
+              </div>
+              <div class="class-card">
+                <h4>🗡 Assassin</h4>
+                <p class="class-role">Burst DPS · élimination ciblée</p>
+                <div class="class-spell"><strong>Frappe de l'Ombre</strong> — Téléport + 10–50 dégâts + Cécité (Ender)<br><span style="color:var(--muted)">35–75 mana · CD 12 sec</span></div>
+              </div>
+              <div class="class-card">
+                <h4>🔮 Mage</h4>
+                <p class="class-role">DPS de zone · ×1,5 mana</p>
+                <div class="class-spell"><strong>Déluge Arcanique</strong> — 2 à 9 ennemis · 8–36 dégâts (Invocation)<br><span style="color:var(--muted)">55–115 mana · CD 6 sec</span></div>
+              </div>
+              <div class="class-card">
+                <h4>💚 Guérisseur</h4>
+                <p class="class-role">Support · soin de zone</p>
+                <div class="class-spell"><strong>Aura de Vie</strong> — 4–19 PV + Regen sur alliés proches (Sacré)<br><span style="color:var(--muted)">60–110 mana · CD 20 sec</span></div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>👥 Système de Raid (jusqu'à 8 joueurs)</summary>
+          <div class="detail-body">
+            <table class="donjon-table"><thead><tr><th>Commande</th><th>Action</th></tr></thead><tbody>
+              <tr><td><code class="cmd">/raid create</code></td><td>Créer un groupe (vous devenez chef)</td></tr>
+              <tr><td><code class="cmd">/raid invite &lt;joueur&gt;</code></td><td>Inviter un joueur (chef uniquement)</td></tr>
+              <tr><td><code class="cmd">/raid accept</code></td><td>Accepter une invitation</td></tr>
+              <tr><td><code class="cmd">/raid leave</code></td><td>Quitter le groupe</td></tr>
+              <tr><td><code class="cmd">/raid disband</code></td><td>Dissoudre le groupe (chef)</td></tr>
+              <tr><td><code class="cmd">/raid role &lt;rôle&gt;</code></td><td>vanguard · striker · support · porter</td></tr>
+            </tbody></table>
+          </div>
+        </details>
+
+        <details>
+          <summary>🗺 Parcours de Progression Recommandé</summary>
+          <div class="detail-body">
+            <div class="donjon-progress">
+              <div class="prog-item"><span class="prog-lv">Nv. 0–9</span><span>Grind XP (mobs, quêtes) — investir dans votre stat principale</span></div>
+              <div class="prog-item"><span class="prog-lv">Nv. 10</span><span>Sort <strong>Onde Primitive</strong> — commencer les donjons <span class="rank-tag r-d">D</span></span></div>
+              <div class="prog-item"><span class="prog-lv">Nv. 20</span><span>Sort <strong>Flamme du Donjon</strong> — donjons <span class="rank-tag r-c">C</span></span></div>
+              <div class="prog-item"><span class="prog-lv">Nv. 30</span><span>Sort <strong>Tempête Givrée</strong> — donjons <span class="rank-tag r-b">B</span></span></div>
+              <div class="prog-item"><span class="prog-lv">Nv. 40</span><span>Sort <strong>Foudre du Chasseur</strong> — donjons <span class="rank-tag r-a">A</span></span></div>
+              <div class="prog-item"><span class="prog-lv">Nv. 50</span><span><strong>Épreuve de Classe</strong> → déblocage classe + sort de classe</span></div>
+              <div class="prog-item"><span class="prog-lv">Nv. 60</span><span>Sort <strong>Voile des Ténèbres</strong> (légendaire) — donjons <span class="rank-tag r-s">S</span></span></div>
+              <div class="prog-item"><span class="prog-lv">Nv. 80+</span><span>Rang <span class="rank-tag r-nat">National</span></span></div>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- ===== ONGLET : DASHBOARD ===== -->
+      <div id="tab-dashboard" class="tab-content" role="tabpanel">
+        <p class="tab-intro">Résumé complet des fonctionnalités joueurs — commandes, protections, groupes et mécaniques passives.</p>
+
+        <details open>
+          <summary>🗺 Navigation &amp; Téléportation</summary>
+          <div class="detail-body">
+            <table class="donjon-table"><thead><tr><th>Commande</th><th>Description</th><th>Cooldown</th></tr></thead><tbody>
+              <tr><td><code class="cmd">/sethome &lt;nom&gt;</code></td><td>Enregistre une position (Overworld uniquement, max 3 homes)</td><td>—</td></tr>
+              <tr><td><code class="cmd">/home [nom]</code></td><td>Téléportation à un home enregistré</td><td>30s</td></tr>
+              <tr><td><code class="cmd">/back</code></td><td>Retour à la position précédente (avant TP)</td><td>10s</td></tr>
+              <tr><td><code class="cmd">/warp [nom]</code></td><td>Téléportation vers un warp public</td><td>10s</td></tr>
+              <tr><td><code class="cmd">/tpa &lt;joueur&gt;</code></td><td>Demande de téléportation vers un joueur</td><td>60s</td></tr>
+              <tr><td><code class="cmd">/tpaccept</code></td><td>Accepter une demande TPA</td><td>—</td></tr>
+              <tr><td><code class="cmd">/tpdeny</code></td><td>Refuser une demande TPA</td><td>—</td></tr>
+            </tbody></table>
+            <p class="donjon-note">▎ Les TPA et demandes expirent automatiquement après 60 secondes.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>🔒 Protection des Blocs</summary>
+          <div class="detail-body">
+            <table class="donjon-table"><thead><tr><th>Commande</th><th>Description</th></tr></thead><tbody>
+              <tr><td><code class="cmd">/lock</code></td><td>Verrouille/déverrouille le bloc regardé (coffres, portes…)</td></tr>
+              <tr><td><code class="cmd">/trust &lt;joueur&gt;</code></td><td>Donne accès à ses blocs verrouillés à un autre joueur</td></tr>
+              <tr><td><code class="cmd">/untrust &lt;joueur&gt;</code></td><td>Retire cet accès</td></tr>
+              <tr><td><code class="cmd">/lockinfo</code></td><td>Affiche propriétaire et joueurs de confiance d'un bloc</td></tr>
+            </tbody></table>
+            <p class="donjon-note">▎ Les membres d'un même groupe avec GroupTrust activé héritent automatiquement de l'accès.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>💬 Communication</summary>
+          <div class="detail-body">
+            <table class="donjon-table"><thead><tr><th>Commande</th><th>Description</th></tr></thead><tbody>
+              <tr><td><code class="cmd">/mail &lt;joueur&gt; &lt;msg&gt;</code></td><td>Message privé (si le destinataire l'accepte)</td></tr>
+              <tr><td><code class="cmd">/r &lt;message&gt;</code></td><td>Répondre au dernier message reçu</td></tr>
+              <tr><td><code class="cmd">/ignore &lt;joueur&gt;</code></td><td>Ignorer les messages d'un joueur</td></tr>
+              <tr><td><code class="cmd">/unignore &lt;joueur&gt;</code></td><td>Arrêter d'ignorer un joueur</td></tr>
+            </tbody></table>
+            <p class="donjon-note">▎ Taper <code>@g &lt;message&gt;</code> dans le chat envoie un message uniquement aux membres de son groupe.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>🔄 Échanges (Deal)</summary>
+          <div class="detail-body">
+            <table class="donjon-table"><thead><tr><th>Commande</th><th>Description</th></tr></thead><tbody>
+              <tr><td><code class="cmd">/deal &lt;joueur&gt;</code></td><td>Proposer un échange d'items à un joueur</td></tr>
+              <tr><td><code class="cmd">/dealaccept</code></td><td>Accepter la demande d'échange</td></tr>
+              <tr><td><code class="cmd">/dealdeny</code></td><td>Refuser la demande d'échange</td></tr>
+            </tbody></table>
+            <p class="donjon-note">▎ Interface graphique — les deux joueurs doivent valider. Si un joueur se déconnecte, les items sont automatiquement restitués.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>👥 Groupes</summary>
+          <div class="detail-body">
+            <table class="donjon-table"><thead><tr><th>Commande</th><th>Description</th></tr></thead><tbody>
+              <tr><td><code class="cmd">/groupaccept</code></td><td>Accepter une invitation de groupe</td></tr>
+              <tr><td><code class="cmd">/groupdeny</code></td><td>Refuser une invitation de groupe</td></tr>
+            </tbody></table>
+            <p style="color:var(--muted);font-size:0.85rem;margin-top:1rem;margin-bottom:0.5rem;">Fonctionnalités accessibles via <code class="cmd">/menu</code> :</p>
+            <div class="donjon-progress">
+              <div class="prog-item"><span class="prog-lv" style="min-width:auto;margin-right:0.5rem;">•</span><span>Créer un groupe avec un nom personnalisé et inviter des joueurs en ligne</span></div>
+              <div class="prog-item"><span class="prog-lv" style="min-width:auto;margin-right:0.5rem;">•</span><span>Choisir une couleur personnelle (affichée dans la tab-list)</span></div>
+              <div class="prog-item"><span class="prog-lv" style="min-width:auto;margin-right:0.5rem;">•</span><span>Activer GroupTrust (accès partagé aux blocs verrouillés)</span></div>
+              <div class="prog-item"><span class="prog-lv" style="min-width:auto;margin-right:0.5rem;">•</span><span>Chat de groupe exclusif avec <code>@g</code></span></div>
+              <div class="prog-item"><span class="prog-lv" style="min-width:auto;margin-right:0.5rem;">•</span><span>HUD temps réel : position, santé et statut AFK de chaque membre</span></div>
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>📦 Coffre Virtuel &amp; AFK</summary>
+          <div class="detail-body">
+            <table class="donjon-table"><thead><tr><th>Commande</th><th>Description</th></tr></thead><tbody>
+              <tr><td><code class="cmd">/chest</code></td><td>Ouvre un coffre virtuel personnel (9 slots) persistant</td></tr>
+              <tr><td><code class="cmd">/afk</code></td><td>Toggle manuellement le mode AFK</td></tr>
+            </tbody></table>
+            <p class="donjon-note">▎ En mode AFK : titre à l'écran + protection contre les monstres et autres joueurs. Le mode s'active aussi automatiquement après inactivité.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>⚙ Menu &amp; Paramètres (/menu)</summary>
+          <div class="detail-body">
+            <p style="color:var(--muted);font-size:0.85rem;margin-bottom:0.75rem;">Interface graphique complète accessible via <code class="cmd">/menu</code> :</p>
+            <div class="donjon-progress">
+              <div class="prog-item"><span class="prog-lv" style="min-width:auto;margin-right:0.5rem;">⚙</span><span>Paramètres personnels — toggle Accepter messages, TPA, échanges, notifications, alertes connexion</span></div>
+              <div class="prog-item"><span class="prog-lv" style="min-width:auto;margin-right:0.5rem;">🏠</span><span>Liste de ses homes avec coordonnées et dimension (Overworld / Nether / End)</span></div>
+              <div class="prog-item"><span class="prog-lv" style="min-width:auto;margin-right:0.5rem;">🔒</span><span>Liste de ses blocs verrouillés avec joueurs de confiance</span></div>
+              <div class="prog-item"><span class="prog-lv" style="min-width:auto;margin-right:0.5rem;">📊</span><span>Statistiques complètes (temps de jeu, morts, kills, XP, mobs tués, blocs parcourus)</span></div>
+              <div class="prog-item"><span class="prog-lv" style="min-width:auto;margin-right:0.5rem;">📋</span><span>Liste de toutes les commandes disponibles</span></div>
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>🏗 Mode Construction (/build)</summary>
+          <div class="detail-body">
+            <div class="donjon-progress">
+              <div class="prog-item"><span class="prog-lv" style="min-width:auto;margin-right:0.5rem;">•</span><span>Accessible uniquement dans une zone où le joueur est autorisé</span></div>
+              <div class="prog-item"><span class="prog-lv" style="min-width:auto;margin-right:0.5rem;">•</span><span>Passe en mode Créatif temporairement (inventaire et effets sauvegardés)</span></div>
+              <div class="prog-item"><span class="prog-lv" style="min-width:auto;margin-right:0.5rem;">•</span><span>Impossible de sortir de la zone, d'accéder aux conteneurs ou d'utiliser des spawn eggs</span></div>
+              <div class="prog-item"><span class="prog-lv" style="min-width:auto;margin-right:0.5rem;">•</span><span>Items droppés sont automatiquement récupérés</span></div>
+              <div class="prog-item"><span class="prog-lv" style="min-width:auto;margin-right:0.5rem;">•</span><span>À la sortie (<code>/build</code> à nouveau) : inventaire, XP, effets et position d'entrée restaurés</span></div>
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>🌿 Fonctionnalités Passives</summary>
+          <div class="detail-body">
+            <p style="color:var(--muted);font-size:0.85rem;margin-bottom:0.75rem;">Ces mécaniques s'appliquent automatiquement si activées côté serveur :</p>
+            <table class="donjon-table"><thead><tr><th>Fonctionnalité</th><th>Effet</th></tr></thead><tbody>
+              <tr><td><strong>Tree Capitator</strong></td><td>Casser un tronc à la hache abat tout l'arbre</td></tr>
+              <tr><td><strong>Fast Leaf Decay</strong></td><td>Les feuilles disparaissent rapidement après la coupe</td></tr>
+              <tr><td><strong>Right-Click Harvest</strong></td><td>Clic droit sur une culture mûre la récolte et replante</td></tr>
+              <tr><td><strong>Double Door</strong></td><td>Ouvrir une porte ouvre automatiquement la porte adjacente</td></tr>
+              <tr><td><strong>Proportional Sleep</strong></td><td>Le cycle jour/nuit avance si 30% des joueurs dorment</td></tr>
+              <tr><td><strong>Dispenser Harvest</strong></td><td>Un distributeur avec une houe récolte les cultures alentour</td></tr>
+              <tr><td><strong>PvP</strong></td><td>Activé ou désactivé globalement</td></tr>
+              <tr><td><strong>Protection AFK</strong></td><td>Les joueurs AFK ne reçoivent pas de dégâts</td></tr>
+            </tbody></table>
+          </div>
+        </details>
+
+        <details>
+          <summary>ℹ Infos Joueurs &amp; Signalement</summary>
+          <div class="detail-body">
+            <table class="donjon-table"><thead><tr><th>Commande</th><th>Description</th></tr></thead><tbody>
+              <tr><td><code class="cmd">/seen &lt;joueur&gt;</code></td><td>Voir quand un joueur s'est connecté pour la dernière fois</td></tr>
+              <tr><td><code class="cmd">/report [message]</code></td><td>Envoyer un signalement aux admins (interface ou texte direct)</td></tr>
+            </tbody></table>
+            <p class="donjon-note">▎ Le rapport est envoyé aux admins connectés avec un webhook Discord si configuré.</p>
+          </div>
+        </details>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="container">
+      <p class="footer-brand"><img src="img/logo.jpg" alt="" style="height:24px;border-radius:4px;vertical-align:middle;margin-right:0.4rem;"> DonjonMC</p>
+      <p class="footer-legal">Non affilié à Mojang Studios / Microsoft. Minecraft® est une marque de Microsoft.</p>
+      <p class="footer-love">Fait avec ❤ par @LKDM · <span style="color:var(--green);"></span></p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

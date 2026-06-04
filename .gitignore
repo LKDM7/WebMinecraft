@@ -1,0 +1,30 @@
+# Include your project-specific ignores in this file
+# Read about how to use .gitignore: https://help.github.com/articles/ignoring-files
+# Useful .gitignore templates: https://github.com/github/gitignore
+# Dépendances & build
+node_modules
+dist
+.cache
+package-lock.json
+
+# Bases de données & état (peuvent contenir du contexte indexé — NE PAS publier)
+*.db
+*.db-shm
+*.db-wal
+ruvector.db
+
+# Outils internes claude-flow / ruflo (hors site web)
+.swarm
+.agents
+.claude-flow
+.claude
+.mcp.json
+skills-lock.json
+
+# Worker Cloudflare — contient l'IP en clair, NE JAMAIS publier (déploiement local uniquement)
+worker/
+
+# Fichiers locaux/sensibles
+*.local.*
+.env
+.env.*

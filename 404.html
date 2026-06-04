@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>404 — DonjonMC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#0c0b12; --green:#a78bfa; --muted:#6b6b8a; --border:#2d2840; }
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+    body { background:var(--bg); color:#e2e8f0; font-family:'Inter',sans-serif; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:2rem; }
+    .err-code { font-family:'Press Start 2P',monospace; font-size:clamp(3rem,12vw,6rem); color:var(--green); line-height:1; margin-bottom:1rem; text-shadow:0 0 40px rgba(167,139,250,0.4); }
+    .err-title { font-family:'Press Start 2P',monospace; font-size:clamp(0.6rem,2vw,0.9rem); color:#fff; margin-bottom:1.5rem; line-height:1.6; }
+    .err-desc { color:var(--muted); font-size:0.95rem; margin-bottom:2.5rem; line-height:1.7; max-width:400px; }
+    .err-pixel { font-size:3rem; margin-bottom:1.5rem; animation:float 3s ease-in-out infinite; }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+    .btn { display:inline-block; padding:0.7rem 1.6rem; background:var(--green); color:#fff; font-family:'Inter',sans-serif; font-weight:600; font-size:0.9rem; border-radius:8px; text-decoration:none; transition:all 0.2s; }
+    .btn:hover { background:#c4b5fd; transform:translateY(-2px); }
+    .hint { margin-top:1.5rem; font-size:0.75rem; color:var(--border); font-family:'Press Start 2P',monospace; }
+  </style>
+</head>
+<body>
+  <div class="err-pixel">⚰</div>
+  <div class="err-code">404</div>
+  <p class="err-title">Vous vous êtes perdus<br>dans les donjons...</p>
+  <p class="err-desc">Cette page n'existe pas ou a été engloutie par les ténèbres. Rebroussez chemin avant que les monstres ne vous trouvent.</p>
+  <a href="/" class="btn">↩ Retour à la surface</a>
+  <p class="hint">DonjonMC · Survivre. Explorer. Conquérir.</p>
+</body>
+</html>
