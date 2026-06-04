@@ -501,6 +501,9 @@ button { cursor: pointer; font-family: var(--font-body); }
 .tag-new { background: rgba(167,139,250,0.15); color: #a78bfa; }
 .tag-event { background: rgba(34,211,238,0.15); color: #22d3ee; }
 .tag-fix { background: rgba(239,68,68,0.15); color: #f87171; }
+.tag-requis { background: rgba(251,146,60,0.15); color: #fb923c; }
+.cl-dl-row { display:flex; gap:0.65rem; margin-top:0.85rem; flex-wrap:wrap; }
+.inline-path { background:rgba(255,255,255,0.07); padding:0.1em 0.4em; border-radius:4px; font-size:0.82em; color:var(--green); }
 /* --- DIVERS --- */
 .pixel-divider { height: 20px; background: repeating-linear-gradient(90deg,#1c1a2e 0,#1c1a2e 16px,#2d2840 16px,#2d2840 32px); opacity: 0.7; }
 #particles-canvas { position: absolute; inset: 0; pointer-events: none; z-index: 0; width: 100%; height: 100%; }
