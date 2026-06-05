@@ -293,6 +293,79 @@ const MODS = [
 document.querySelectorAll(".js-mod-count").forEach(el => { el.textContent = MODS.length; });
 
 /* =====================================================================
+   ACTUALITÉS  (onglet "Actualités" — timeline)
+
+   Pour AJOUTER une actu : copiez un bloc { … } en haut du tableau.
+     day   : jour sur 2 chiffres        (ex. "05")
+     my    : mois + année               (ex. "JUIN 2026")
+     tag   : couleur — "new" | "event" | "fix" | "requis"
+     label : texte du badge (optionnel — sinon libellé par défaut du tag)
+     title : titre de l'actu
+     body  : texte (HTML autorisé : <strong>, <code class="inline-path">…)
+     dls   : boutons de téléchargement (optionnel) — [{ label, url }]
+   La plus récente se met en HAUT du tableau (elle est mise en avant).
+===================================================================== */
+const NEWS = [
+  {
+    day: "05", my: "JUIN 2026", tag: "new", label: "SANS CURSEFORGE",
+    title: "Télécharger le dossier mods directement",
+    body: `Vous ne souhaitez pas ou ne pouvez pas utiliser CurseForge ? Téléchargez l'intégralité du dossier <code class="inline-path">mods</code> directement depuis GitHub en un clic. Placez ensuite son contenu dans le dossier <code class="inline-path">mods</code> de votre instance NeoForge 1.21.1.`,
+    dls: [
+      { label: "⬇ Télécharger le dossier mods", url: "https://github.com/LKDM7/DonjonMC-modpacks/archive/refs/heads/main.zip" },
+    ],
+  },
+  {
+    day: "05", my: "JUIN 2026", tag: "requis", label: "REQUIS",
+    title: "2 mods à télécharger avant de rejoindre le serveur",
+    body: `DonjonMC utilise 2 mods personnalisés qui ne sont <strong>pas inclus</strong> dans le modpack CurseForge. Télécharge-les et place-les dans le dossier <strong>mods</strong> du modpack : ouvre CurseForge, repère le modpack DonjonMC, clique sur les <strong>3 points ⋮</strong> à côté du bouton Play → <strong>Open Folder</strong> → dépose les 2 mods dans le dossier <code class="inline-path">mods</code>.`,
+    dls: [
+      { label: "⬇ DonjonMC v2.0.0", url: "https://github.com/LKDM7/DonjonMC/raw/refs/heads/master/releases/donjonmc-2.0.0.jar" },
+      { label: "⬇ Dashboard Admin v1.0.4", url: "https://github.com/LKDM7/DashBoardAdmin/raw/refs/heads/master/releases/dashboardadmin-1.0.4.jar" },
+    ],
+  },
+  {
+    day: "05", my: "JUIN 2026", tag: "new", label: "NOUVEAU",
+    title: "Ouverture officielle de DonjonMC !",
+    body: `Le serveur ouvre ses portes ce soir à 21h. Rejoignez-nous pour découvrir un monde entièrement forgé pour l'aventure, avec ${MODS.length} mods soigneusement sélectionnés.`,
+  },
+  {
+    day: "03", my: "JUIN 2026", tag: "event", label: "ÉVÉNEMENT",
+    title: "Lancement du site officiel",
+    body: `Le site de pré-lancement est en ligne ! Consultez la liste des mods, les commandes disponibles et préparez-vous pour l'ouverture.`,
+  },
+  {
+    day: "01", my: "JUIN 2026", tag: "fix", label: "MISE À JOUR",
+    title: "Finalisation du modpack — v1.0",
+    body: `Le modpack est stabilisé. ${MODS.length} mods NeoForge 1.21.1, optimisé et testé. Téléchargement disponible via CurseForge.`,
+  },
+];
+
+const NEWS_LABELS = { new: "NOUVEAU", event: "ÉVÉNEMENT", fix: "MISE À JOUR", requis: "REQUIS" };
+
+function renderNews() {
+  const container = document.getElementById("changelog-list");
+  if (!container) return;
+  container.innerHTML = NEWS.map((n, i) => {
+    const label = n.label || NEWS_LABELS[n.tag] || "";
+    const dls = (n.dls && n.dls.length)
+      ? `<div class="cl-dl-row">${n.dls.map(d =>
+          `<a href="${d.url}" class="btn btn-primary cl-dl-btn" download>${d.label}</a>`
+        ).join("")}</div>`
+      : "";
+    return `<article class="cl-item${i === 0 ? " is-latest" : ""}">
+      <div class="cl-date"><span class="cl-day">${n.day}</span><span class="cl-my">${n.my}</span></div>
+      <div class="cl-content">
+        <span class="cl-tag tag-${n.tag}">${label}</span>
+        <h3>${n.title}</h3>
+        <p>${n.body}</p>
+        ${dls}
+      </div>
+    </article>`;
+  }).join("");
+}
+renderNews();
+
+/* =====================================================================
    COMPTE À REBOURS
 ===================================================================== */
 const daysEl    = document.getElementById("days");
@@ -562,45 +635,119 @@ document.querySelectorAll(".nav-pill a[data-tab]").forEach(a => {
 });
 
 /* =====================================================================
-   RECHERCHE DE COMMANDES
+   COMMANDES  (onglet "Commandes")
+
+   Pour AJOUTER une commande : ajoutez { cmd, desc } dans la bonne catégorie.
+   Pour AJOUTER une catégorie : copiez un bloc { cat, icon, cmds: [...] }.
+     cmd  : la commande (placeholders <...> et [...] autorisés tels quels)
+     desc : description courte
+   Le clic sur une carte copie la commande dans le presse-papiers.
 ===================================================================== */
+const COMMANDS = [
+  { cat: "Général", icon: "⚙", cmds: [
+    { cmd: "/menu",            desc: "Ouvrir le menu paramètres & commandes" },
+    { cmd: "/stats",           desc: "Voir vos statistiques de jeu" },
+    { cmd: "/report [message]",desc: "Envoyer un signalement aux admins" },
+    { cmd: "/chest",           desc: "Ouvrir son coffre virtuel personnel (9 slots)" },
+    { cmd: "/afk",             desc: "Activer/désactiver le mode AFK manuellement" },
+  ]},
+  { cat: "Construction", icon: "🏗", cmds: [
+    { cmd: "/lock",            desc: "Verrouiller/déverrouiller un bloc regardé" },
+    { cmd: "/trust <joueur>",  desc: "Donner accès à ses blocs verrouillés" },
+    { cmd: "/build",           desc: "Activer/désactiver le mode construction" },
+    { cmd: "/untrust <joueur>",desc: "Retirer l'accès à ses blocs verrouillés" },
+    { cmd: "/lockinfo",        desc: "Afficher propriétaire et joueurs de confiance d'un bloc" },
+  ]},
+  { cat: "Navigation", icon: "🗺", cmds: [
+    { cmd: "/tpa <joueur>",    desc: "Demander une téléportation vers un joueur" },
+    { cmd: "/tpaccept",        desc: "Accepter une demande de téléportation" },
+    { cmd: "/tpdeny",          desc: "Refuser une demande de téléportation" },
+    { cmd: "/sethome <nom>",   desc: "Enregistrer un home (Overworld uniquement)" },
+    { cmd: "/home [nom]",      desc: "Se téléporter à un home enregistré" },
+    { cmd: "/back",            desc: "Retourner à la position précédente" },
+    { cmd: "/warp [nom]",      desc: "Se téléporter vers un warp" },
+  ]},
+  { cat: "Social & Échanges", icon: "💬", cmds: [
+    { cmd: "/mail <joueur> <msg>", desc: "Envoyer un message privé" },
+    { cmd: "/r <message>",     desc: "Répondre au dernier message reçu" },
+    { cmd: "/seen <joueur>",   desc: "Voir la dernière connexion d'un joueur" },
+    { cmd: "/ignore <joueur>", desc: "Ignorer les messages d'un joueur" },
+    { cmd: "/unignore <joueur>",desc: "Arrêter d'ignorer un joueur" },
+    { cmd: "/deal <joueur>",   desc: "Proposer un échange d'items" },
+    { cmd: "/dealaccept",      desc: "Accepter une demande d'échange" },
+    { cmd: "/dealdeny",        desc: "Refuser une demande d'échange" },
+    { cmd: "/groupaccept",     desc: "Accepter une invitation de groupe" },
+    { cmd: "/groupdeny",       desc: "Refuser une invitation de groupe" },
+    { cmd: "@g <message>",     desc: "Chat de groupe (préfixe, pas une commande)" },
+  ]},
+  { cat: "DonjonMC", icon: "⚔", cmds: [
+    { cmd: "/donjonmc trial",       desc: "Lancer l'épreuve de classe (niv. 50+, sans classe)" },
+    { cmd: "/donjonmc punishment",  desc: "Déclencher votre propre punition" },
+    { cmd: "/donjonmc dungeon exit",desc: "Sortir du donjon (téléportation)" },
+    { cmd: "/donjonmc dungeon join",desc: "Rejoindre un donjon de groupe" },
+    { cmd: "/donjonmc top",         desc: "Top 10 des hunters en ligne par niveau" },
+    { cmd: "/donjonmc speed",       desc: "Activer/désactiver le bonus de vitesse (Agilité)" },
+  ]},
+];
+
+function renderCommands() {
+  const grid = document.getElementById("commands-grid");
+  if (!grid) return;
+  const input = document.getElementById("cmds-search");
+  const q = (input ? input.value : "").toLowerCase().trim();
+
+  let shown = 0, total = 0;
+  const html = COMMANDS.map(group => {
+    const cmds = group.cmds.filter(c => {
+      total++;
+      const match = q === "" || (c.cmd + " " + c.desc).toLowerCase().includes(q);
+      if (match) shown++;
+      return match;
+    });
+    if (!cmds.length) return "";
+    return `<section class="cmd-cat">
+      <h3 class="cmd-cat-title"><span class="cmd-cat-icon">${group.icon}</span>${escapeHTML(group.cat)}</h3>
+      <div class="cmd-cards">
+        ${cmds.map(c => `<button type="button" class="cmd-card" data-copy="${escapeHTML(c.cmd)}" title="Cliquer pour copier la commande">
+            <span class="cmd-card-top">
+              <code class="cmd">${escapeHTML(c.cmd)}</code>
+              <span class="cmd-copy" aria-hidden="true">📋</span>
+            </span>
+            <span class="cmd-desc">${escapeHTML(c.desc)}</span>
+          </button>`).join("")}
+      </div>
+    </section>`;
+  }).join("");
+
+  grid.innerHTML = html || `<p style="color:var(--muted);padding:2rem 0;text-align:center;">Aucune commande trouvée pour « ${escapeHTML(q)} »</p>`;
+
+  const countEl = document.getElementById("cmds-count");
+  if (countEl) countEl.textContent = (q && shown < total)
+    ? `${shown} commande${shown !== 1 ? "s" : ""} trouvée${shown !== 1 ? "s" : ""}`
+    : "";
+}
+
+/* Clic sur une carte → copie la commande + retour visuel */
+document.getElementById("commands-grid").addEventListener("click", e => {
+  const card = e.target.closest(".cmd-card");
+  if (!card || !navigator.clipboard) return;
+  navigator.clipboard.writeText(card.dataset.copy).then(() => {
+    const tip = card.querySelector(".cmd-copy");
+    if (!tip || card.classList.contains("copied")) return;
+    const prev = tip.textContent;
+    card.classList.add("copied");
+    tip.textContent = "✓";
+    setTimeout(() => { card.classList.remove("copied"); tip.textContent = prev; }, 1200);
+  }).catch(() => {});
+});
+
 (function () {
-  const input    = document.getElementById("cmds-search");
-  const countEl  = document.getElementById("cmds-count");
-  const grid     = document.getElementById("commands-grid");
-  if (!input || !grid) return;
-
-  // Compte et affiche le total initial
-  function refreshCount() {
-    const visible = grid.querySelectorAll(".command-card:not([hidden])").length;
-    const total   = grid.querySelectorAll(".command-card").length;
-    countEl.textContent = visible < total
-      ? `${visible} commande${visible !== 1 ? "s" : ""} trouvée${visible !== 1 ? "s" : ""}`
-      : "";
+  const input = document.getElementById("cmds-search");
+  if (input) {
+    input.addEventListener("input", renderCommands);
+    input.addEventListener("keydown", e => { if (e.key === "Escape") { input.value = ""; renderCommands(); } });
   }
-
-  const hide = el => { el.style.display = "none"; };
-  const show = el => { el.style.display = ""; };
-  const isVisible = el => el.style.display !== "none";
-
-  input.addEventListener("input", () => {
-    const q = input.value.toLowerCase().trim();
-    // Filtre chaque command-card
-    grid.querySelectorAll(".command-card").forEach(card => {
-      (q === "" || card.textContent.toLowerCase().includes(q)) ? show(card) : hide(card);
-    });
-    // Masque les catégories sans aucune commande visible
-    grid.querySelectorAll(".command-category").forEach(cat => {
-      [...cat.querySelectorAll(".command-card")].some(isVisible) ? show(cat) : hide(cat);
-    });
-    // Masque les colonnes sans catégorie visible
-    grid.querySelectorAll(".command-col-stack").forEach(col => {
-      [...col.querySelectorAll(".command-category")].some(isVisible) ? show(col) : hide(col);
-    });
-    refreshCount();
-  });
-
-  input.addEventListener("keydown", e => { if (e.key === "Escape") { input.value = ""; input.dispatchEvent(new Event("input")); } });
+  renderCommands();
 })();
 
 /* =====================================================================
