@@ -626,3 +626,26 @@ details[open] summary::after { transform:rotate(90deg); }
   .cl-day { font-size: 0.85rem; }
   .cl-my { font-size: 0.4rem; }
 }
+
+/* =====================================================================
+   ÉCRAN DE MAINTENANCE — visible uniquement si <html class="is-maintenance">
+   (activé par window.SITE_MAINTENANCE dans le <head> de index.html)
+===================================================================== */
+.maintenance-overlay { display: none; }
+html.is-maintenance, html.is-maintenance body { overflow: hidden; }
+html.is-maintenance .maintenance-overlay {
+  display: flex; position: fixed; inset: 0; z-index: 99999;
+  align-items: center; justify-content: center; padding: 2rem;
+  background: radial-gradient(circle at 50% 28%, #1a1730 0%, var(--bg) 72%);
+}
+.maintenance-box { text-align: center; max-width: 460px; }
+.maintenance-logo { width: 96px; height: 96px; border-radius: 16px; box-shadow: 0 0 40px rgba(167,139,250,0.3); animation: logo-float 6s ease-in-out infinite; }
+.maintenance-badge { display: inline-block; margin-top: 1.6rem; font-family: var(--font-pixel); font-size: 0.55rem; color: var(--accent); background: rgba(167,139,250,0.12); border: 1px solid rgba(167,139,250,0.3); padding: 0.45rem 0.9rem; border-radius: 100px; letter-spacing: 1px; }
+.maintenance-title { font-family: var(--font-pixel); font-size: 1rem; color: #fff; margin: 1.3rem 0 0.9rem; line-height: 1.5; }
+.maintenance-text { color: var(--muted); font-size: 0.9rem; line-height: 1.65; }
+.maintenance-spinner { width: 34px; height: 34px; margin: 1.9rem auto 0; border: 3px solid rgba(167,139,250,0.2); border-top-color: var(--accent); border-radius: 50%; animation: maint-spin 0.9s linear infinite; }
+@keyframes maint-spin { to { transform: rotate(360deg); } }
+@media (max-width: 480px) {
+  .maintenance-title { font-size: 0.82rem; }
+  .maintenance-text { font-size: 0.84rem; }
+}

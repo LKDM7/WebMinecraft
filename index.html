@@ -24,9 +24,29 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+  <!-- ===================================================================
+       MAINTENANCE — mettez true pour BLOQUER le site, false pour ROUVRIR.
+       (puis commit + push). Affiche un écran plein écran masquant tout.
+  =================================================================== -->
+  <script>
+    window.SITE_MAINTENANCE = true;
+    if (window.SITE_MAINTENANCE) document.documentElement.classList.add("is-maintenance");
+  </script>
+
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
+  <!-- ===== ÉCRAN DE MAINTENANCE (affiché si window.SITE_MAINTENANCE = true) ===== -->
+  <div class="maintenance-overlay" role="alert" aria-live="assertive">
+    <div class="maintenance-box">
+      <img src="img/logo.jpg" alt="DonjonMC" class="maintenance-logo">
+      <span class="maintenance-badge">🛠 MAINTENANCE</span>
+      <h1 class="maintenance-title">Maintenance en cours</h1>
+      <p class="maintenance-text">Le site de DonjonMC est temporairement indisponible le temps de quelques améliorations. Reviens dans un instant — l'aventure t'attend.</p>
+      <div class="maintenance-spinner" aria-hidden="true"></div>
+    </div>
+  </div>
 
   <!-- ===== HEADER ===== -->
   <header class="site-header">
