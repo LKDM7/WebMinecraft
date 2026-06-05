@@ -655,6 +655,17 @@ document.getElementById("filter-pills").addEventListener("click", e => {
   renderMods();
 });
 
+document.addEventListener("keydown", e => {
+  const tag = document.activeElement.tagName;
+  if (tag === "INPUT" || tag === "TEXTAREA") return;
+  if (e.key === "/" || (e.key === "f" && (e.ctrlKey || e.metaKey))) {
+    e.preventDefault();
+    activateTab("mods");
+    document.getElementById("info").scrollIntoView({ behavior: "smooth" });
+    document.getElementById("mods-search").focus();
+  }
+});
+
 /* Skeleton loader — affiché pendant 280ms avant le rendu réel */
 const skeletonHTML = Array(12).fill('<div class="skeleton-item"></div>').join("");
 document.getElementById("mods-list-container").innerHTML = skeletonHTML;
