@@ -397,7 +397,11 @@ function tick() {
 }
 
 /* Récupère l'heure RÉELLE depuis internet (anti triche d'horloge).
-   Essaie 2 services ; en cas d'échec total, retombe sur l'horloge locale. */
+   1) Services d'heure publics (précision ms).
+   2) En-tête HTTP "Date" d'une requête réseau — c'est l'horloge du SERVEUR,
+      impossible à falsifier en changeant l'horloge du PC. Le same-origin
+      (GitHub Pages) est toujours lisible et fiable, même si les API tombent.
+   3) Dernier recours : horloge locale. */
 async function getRealNow() {
   const sources = [
     ["https://worldtimeapi.org/api/timezone/Etc/UTC", d => d.unixtime * 1000],
@@ -411,6 +415,20 @@ async function getRealNow() {
       if (t && !isNaN(t)) return t;
     } catch (_) { /* source suivante */ }
   }
+
+  // Repli robuste : en-tête "Date" (HEAD = jamais mis en cache par le SW car non-GET).
+  const headerSources = [
+    location.origin + "/?t=" + Date.now(),          // same-origin : toujours lisible
+    "https://www.cloudflare.com/cdn-cgi/trace",      // bonus externe (best-effort)
+  ];
+  for (const url of headerSources) {
+    try {
+      const r = await fetch(url, { method: "HEAD", cache: "no-store" });
+      const d = r.headers.get("date");
+      if (d) { const t = new Date(d).getTime(); if (!isNaN(t)) return t; }
+    } catch (_) { /* source suivante */ }
+  }
+
   return Date.now(); // dernier recours : horloge locale
 }
 
@@ -459,7 +477,13 @@ async function tryReveal() {
   }
 }
 
+// Respecte le réglage système "réduire les animations".
+function prefersReducedMotion() {
+  return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
 function launchConfetti() {
+  if (prefersReducedMotion()) return; // pas d'animation festive si l'utilisateur l'a désactivé
   const colors = ["#a78bfa","#22d3ee","#c4b5fd","#ffffff","#7c3aed","#06b6d4"];
   const wrap = document.createElement("div");
   Object.assign(wrap.style, { position:"fixed", inset:"0", pointerEvents:"none", zIndex:"999", overflow:"hidden" });
@@ -542,8 +566,32 @@ function showModsRequiredModal() {
   }, { once: true });
 }
 
-tick();
-countdownTimer = setInterval(tick, 1000);
+/* Mode aperçu : ?preview=open affiche le rendu "serveur ouvert" sans rien
+   déchiffrer (IP factice), pour tester la mise en page avant l'ouverture. */
+function isPreviewOpen() {
+  try { return new URLSearchParams(location.search).get("preview") === "open"; }
+  catch (_) { return false; }
+}
+
+function revealPreview() {
+  countdownSection.classList.add("hidden");
+  serverIpEl.textContent = "apercu.donjonmc.fr";
+  serverReveal.classList.remove("hidden");
+  const badge = document.querySelector(".badge");
+  if (badge) badge.textContent = "APERÇU";
+  const dot  = document.getElementById("status-dot");
+  const text = document.getElementById("status-text");
+  if (dot)  dot.className = "status-dot online";
+  if (text) text.textContent = "Aperçu (données factices)";
+  launchConfetti();
+}
+
+if (isPreviewOpen()) {
+  revealPreview();
+} else {
+  tick();
+  countdownTimer = setInterval(tick, 1000);
+}
 
 /* =====================================================================
    NOTIFICATION NAVIGATEUR — opt-in avant l'ouverture
@@ -614,18 +662,57 @@ function fallback(cb) {
 }
 
 /* =====================================================================
-   ONGLETS
+   ONGLETS — état reflété dans l'URL (?tab=) + navigation clavier ARIA
 ===================================================================== */
-function activateTab(id) {
+const TAB_IDS = ["mods", "commands", "changelog", "donjonmc", "dashboard"];
+
+// Met à jour (ou retire) un paramètre d'URL sans recharger la page.
+function setQueryParam(key, value) {
+  const url = new URL(location.href);
+  if (value == null || value === "") url.searchParams.delete(key);
+  else url.searchParams.set(key, value);
+  history.replaceState(null, "", url);
+}
+
+function activateTab(id, syncUrl = true) {
+  if (!TAB_IDS.includes(id)) id = "mods";
   document.querySelectorAll(".tab-btn").forEach(b => {
-    b.classList.toggle("active", b.dataset.tab === id);
-    b.setAttribute("aria-selected", b.dataset.tab === id);
+    const on = b.dataset.tab === id;
+    b.classList.toggle("active", on);
+    b.setAttribute("aria-selected", on ? "true" : "false");
+    b.setAttribute("tabindex", on ? "0" : "-1"); // roving tabindex
   });
   document.querySelectorAll(".tab-content").forEach(c => {
     c.classList.toggle("active", c.id === "tab-" + id);
   });
+  if (syncUrl) setQueryParam("tab", id === "mods" ? null : id); // mods = défaut → URL propre
 }
+
+function currentTab() {
+  const b = document.querySelector(".tab-btn.active");
+  return b ? b.dataset.tab : "mods";
+}
+
 document.querySelectorAll(".tab-btn").forEach(b => b.addEventListener("click", () => activateTab(b.dataset.tab)));
+
+// Flèches ← →, Home, End pour naviguer entre onglets (motif ARIA tabs).
+const tablist = document.querySelector(".tabs[role='tablist']");
+if (tablist) {
+  tablist.addEventListener("keydown", e => {
+    const moves = { ArrowRight: 1, ArrowLeft: -1, Home: "home", End: "end" };
+    if (!(e.key in moves)) return;
+    e.preventDefault();
+    const btns = [...tablist.querySelectorAll(".tab-btn")];
+    const cur = btns.findIndex(b => b.dataset.tab === currentTab());
+    let next;
+    if (moves[e.key] === "home") next = 0;
+    else if (moves[e.key] === "end") next = btns.length - 1;
+    else next = (cur + moves[e.key] + btns.length) % btns.length;
+    activateTab(btns[next].dataset.tab);
+    btns[next].focus();
+  });
+}
+
 document.querySelectorAll(".nav-pill a[data-tab]").forEach(a => {
   a.addEventListener("click", e => {
     e.preventDefault();
@@ -751,42 +838,109 @@ document.getElementById("commands-grid").addEventListener("click", e => {
 })();
 
 /* =====================================================================
-   LISTE DES MODS — rendu + recherche + filtres
+   LISTE DES MODS — stats + pills à compteurs + sections par catégorie
+
+   CAT_META = ordre d'affichage + icône de chaque catégorie. Pour ajouter
+   une catégorie : ajoutez-la ici ET utilisez son nom dans le tableau MODS.
+   Les compteurs, la barre de répartition et les sections se calculent seuls.
 ===================================================================== */
+const CAT_META = [
+  ["Monde", "🌿"], ["Structures", "🏛"], ["Mobs", "🐾"], ["Nourriture", "🍖"],
+  ["Create", "⚙"], ["Combat", "⚔"], ["Déco", "🎨"], ["Performance", "⚡"],
+  ["Interface", "🖥"], ["API", "📚"],
+];
+
 let currentFilter = "all";
 let currentSearch = "";
+let hideDead = false;
 
-// Échappe les caractères HTML pour éviter toute injection (XSS) via la recherche
+// Échappe les caractères HTML pour éviter toute injection (XSS).
 function escapeHTML(str) {
   return String(str).replace(/[&<>"']/g, c => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
   })[c]);
 }
 
+function modIcon(cat) { const m = CAT_META.find(x => x[0] === cat); return m ? m[1] : ""; }
+
+// Effectifs par catégorie + nombre de mods sans lien.
+function modCounts() {
+  const c = {}; let dead = 0;
+  MODS.forEach(([, cat, url]) => { c[cat] = (c[cat] || 0) + 1; if (!url) dead++; });
+  return { c, dead };
+}
+
+/* ① + ③ — bandeau de stats + barre de répartition */
+function renderModStats() {
+  const el = document.getElementById("mods-stats");
+  if (!el) return;
+  const { c, dead } = modCounts();
+  const total = MODS.length, withLink = total - dead;
+  const bar = CAT_META.map(([cat]) => {
+    const n = c[cat] || 0;
+    if (!n) return "";
+    const pct = (n / total * 100).toFixed(3);
+    return `<span class="mods-bar-seg badge-${cat}" style="width:${pct}%" title="${escapeHTML(cat)} · ${n}"></span>`;
+  }).join("");
+  el.innerHTML =
+    `<div class="mods-stats-figures">
+      <span><strong>${total}</strong> mods</span>
+      <span class="dot">·</span>
+      <span><strong>${CAT_META.length}</strong> catégories</span>
+      <span class="dot">·</span>
+      <span><strong>${withLink}</strong> avec lien</span>
+    </div>
+    <div class="mods-bar" role="img" aria-label="Répartition des mods par catégorie">${bar}</div>`;
+}
+
+/* ① — pills de filtre avec compteurs */
+function renderPills() {
+  const { c } = modCounts();
+  const pill = (filter, label, n, active) =>
+    `<button type="button" class="filter-pill${active ? " active" : ""}" data-filter="${escapeHTML(filter)}">${label} <span class="pill-count">${n}</span></button>`;
+  const html = [pill("all", "Tous", MODS.length, currentFilter === "all")]
+    .concat(CAT_META.map(([cat, icon]) => pill(cat, `${icon} ${escapeHTML(cat)}`, c[cat] || 0, currentFilter === cat)))
+    .join("");
+  document.getElementById("filter-pills").innerHTML = html;
+}
+
+/* ② + ④ — sections par catégorie, mods sans lien gérés */
 function renderMods() {
-  const q = currentSearch.toLowerCase();
-  const filtered = MODS.filter(([name, cat]) =>
-    (currentFilter === "all" || cat === currentFilter) &&
-    name.toLowerCase().includes(q)
-  );
+  const q = currentSearch.toLowerCase().trim();
+  const cats = currentFilter === "all" ? CAT_META.map(m => m[0]) : [currentFilter];
+
+  let shown = 0;
+  const html = cats.map(cat => {
+    const items = MODS.filter(([name, c, url]) =>
+      c === cat && name.toLowerCase().includes(q) && (!hideDead || url)
+    );
+    if (!items.length) return "";
+    shown += items.length;
+    return `<section class="mod-cat">
+      <h3 class="mod-cat-title"><span class="mod-cat-icon">${modIcon(cat)}</span>${escapeHTML(cat)} <span class="mod-cat-count">${items.length}</span></h3>
+      <div class="mod-list">
+        ${items.map(([name, c, url]) =>
+          url
+            ? `<a href="${url}" target="_blank" rel="noopener noreferrer" class="mod-item">
+                <span class="mod-item-name">${escapeHTML(name)}</span>
+                <span class="mod-item-badge badge-${c}">${escapeHTML(c)}</span>
+                <span class="mod-item-link" aria-hidden="true">↗</span>
+              </a>`
+            : `<div class="mod-item mod-item-dead" title="Pas de page publique">
+                <span class="mod-item-name">${escapeHTML(name)}</span>
+                <span class="mod-item-badge badge-${c}">${escapeHTML(c)}</span>
+                <span class="mod-item-link mod-item-nolink" aria-hidden="true">∅</span>
+              </div>`
+        ).join("")}
+      </div>
+    </section>`;
+  }).join("");
+
+  document.getElementById("mods-list-container").innerHTML =
+    html || `<p class="mods-empty">Aucun mod trouvé pour « ${escapeHTML(currentSearch)} »</p>`;
 
   const count = document.getElementById("mods-count");
-  count.textContent = `${filtered.length} mod${filtered.length !== 1 ? "s" : ""} affiché${filtered.length !== 1 ? "s" : ""}`;
-
-  document.getElementById("mods-list-container").innerHTML = filtered.length
-    ? filtered.map(([name, cat, url]) =>
-        url
-          ? `<a href="${url}" target="_blank" rel="noopener noreferrer" class="mod-item">
-              <span class="mod-item-name">${name}</span>
-              <span class="mod-item-badge badge-${cat}">${cat}</span>
-              <span class="mod-item-link">↗</span>
-            </a>`
-          : `<div class="mod-item mod-item-dead">
-              <span class="mod-item-name">${name}</span>
-              <span class="mod-item-badge badge-${cat}">${cat}</span>
-            </div>`
-      ).join("")
-    : `<p style="color:var(--muted);padding:2rem 0;text-align:center;">Aucun mod trouvé pour « ${escapeHTML(currentSearch)} »</p>`;
+  if (count) count.textContent = `${shown} mod${shown !== 1 ? "s" : ""} affiché${shown !== 1 ? "s" : ""}`;
 }
 
 document.getElementById("mods-search").addEventListener("input", e => {
@@ -798,7 +952,14 @@ document.getElementById("filter-pills").addEventListener("click", e => {
   const pill = e.target.closest(".filter-pill");
   if (!pill) return;
   currentFilter = pill.dataset.filter;
-  document.querySelectorAll(".filter-pill").forEach(p => p.classList.toggle("active", p === pill));
+  setQueryParam("cat", currentFilter === "all" ? null : currentFilter); // "all" = défaut → URL propre
+  renderPills();
+  renderMods();
+});
+
+const hideDeadToggle = document.getElementById("mods-hide-dead");
+if (hideDeadToggle) hideDeadToggle.addEventListener("change", e => {
+  hideDead = e.target.checked;
   renderMods();
 });
 
@@ -813,10 +974,25 @@ document.addEventListener("keydown", e => {
   }
 });
 
-/* Skeleton loader — affiché pendant 280ms avant le rendu réel */
+/* Init : stats + pills tout de suite, liste après un court skeleton */
+renderModStats();
+renderPills();
 const skeletonHTML = Array(12).fill('<div class="skeleton-item"></div>').join("");
 document.getElementById("mods-list-container").innerHTML = skeletonHTML;
 setTimeout(renderMods, 280);
+
+/* Restaure l'état depuis l'URL au chargement : ?tab=commands&cat=Monde */
+(function initFromUrl() {
+  const params = new URLSearchParams(location.search);
+  const tab = params.get("tab");
+  if (tab && TAB_IDS.includes(tab)) activateTab(tab, false);
+  const cat = params.get("cat");
+  if (cat && CAT_META.some(m => m[0] === cat)) {
+    currentFilter = cat;
+    renderPills();
+    renderMods();
+  }
+})();
 
 /* =====================================================================
    BURGER MENU MOBILE
@@ -846,6 +1022,7 @@ mobileNav.querySelectorAll(".mnav-link").forEach(link => {
 (function () {
   const canvas = document.getElementById("particles-canvas");
   if (!canvas) return;
+  if (prefersReducedMotion()) return; // pas de particules animées si l'utilisateur l'a désactivé
   const ctx = canvas.getContext("2d");
   const COLORS = ["167,139,250", "34,211,238", "196,149,255"];
   let pts = [];

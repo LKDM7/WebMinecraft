@@ -37,10 +37,13 @@
 </head>
 <body>
 
+  <!-- Lien d'évitement (accessibilité clavier/lecteur d'écran) -->
+  <a href="#info" class="skip-link">Aller au contenu</a>
+
   <!-- ===== ÉCRAN DE MAINTENANCE (affiché si window.SITE_MAINTENANCE = true) ===== -->
   <div class="maintenance-overlay" role="alert" aria-live="assertive">
     <div class="maintenance-box">
-      <img src="img/logo.jpg" alt="DonjonMC" class="maintenance-logo">
+      <img src="img/logo.jpg" alt="DonjonMC" class="maintenance-logo" width="140" height="140">
       <span class="maintenance-badge">🛠 MAINTENANCE</span>
       <h1 class="maintenance-title">Maintenance en cours</h1>
       <p class="maintenance-text">Le site de DonjonMC est temporairement indisponible le temps de quelques améliorations. Reviens dans un instant — l'aventure t'attend.</p>
@@ -52,7 +55,7 @@
   <header class="site-header">
     <div class="container header-inner">
       <a href="#hero" class="logo">
-        <img src="img/logo.jpg" alt="DonjonMC" class="logo-img">
+        <img src="img/logo.jpg" alt="DonjonMC" class="logo-img" width="34" height="34">
         <span class="logo-text">DonjonMC</span>
       </a>
       <nav class="nav-pill" role="navigation">
@@ -85,7 +88,7 @@
     <canvas id="particles-canvas" aria-hidden="true"></canvas>
 
     <div class="container hero-content">
-      <img src="img/logo.jpg" alt="DonjonMC Logo" class="hero-logo">
+     <div class="hero-left">
       <span class="badge">BIENTÔT DISPONIBLE</span>
 
       <!-- MODIFIER : nom du serveur -->
@@ -147,6 +150,17 @@
         <div class="status-playerlist" id="status-playerlist" aria-live="polite"></div>
 
         <p class="reveal-subtitle">Lancez Minecraft et rejoignez-nous dès maintenant !</p>
+      </div>
+     </div>
+
+      <!-- PORTAIL — visuel animé (remplace l'ancien logo carré) -->
+      <div class="hero-portal" aria-hidden="true">
+        <span class="portal-ring portal-ring-1"></span>
+        <span class="portal-ring portal-ring-2"></span>
+        <span class="portal-glow"></span>
+        <div class="portal-core">
+          <img src="img/logo.jpg" alt="" class="portal-logo" width="140" height="140" fetchpriority="high">
+        </div>
       </div>
     </div>
   </section>
@@ -218,21 +232,21 @@
   </section>
 
   <!-- ===== INFORMATIONS (Onglets) ===== -->
-  <section class="info-section" id="info">
+  <section class="info-section" id="info" tabindex="-1">
     <div class="container">
       <h2 class="section-title"><span class="grad">Informations du Serveur</span></h2>
 
       <!-- Navigation onglets -->
-      <div class="tabs" role="tablist">
-        <button class="tab-btn active" data-tab="mods" role="tab" aria-selected="true">⚙ Mods Requis</button>
-        <button class="tab-btn" data-tab="commands" role="tab" aria-selected="false">📋 Commandes</button>
-        <button class="tab-btn" data-tab="changelog" role="tab" aria-selected="false">📰 Actualités</button>
-        <button class="tab-btn" data-tab="donjonmc" role="tab" aria-selected="false">⚔ DonjonMC</button>
-        <button class="tab-btn" data-tab="dashboard" role="tab" aria-selected="false">📊 DashBoard</button>
+      <div class="tabs" role="tablist" aria-label="Informations du serveur">
+        <button class="tab-btn active" id="tabbtn-mods" data-tab="mods" role="tab" aria-selected="true" aria-controls="tab-mods" tabindex="0">⚙ Mods Requis</button>
+        <button class="tab-btn" id="tabbtn-commands" data-tab="commands" role="tab" aria-selected="false" aria-controls="tab-commands" tabindex="-1">📋 Commandes</button>
+        <button class="tab-btn" id="tabbtn-changelog" data-tab="changelog" role="tab" aria-selected="false" aria-controls="tab-changelog" tabindex="-1">📰 Actualités</button>
+        <button class="tab-btn" id="tabbtn-donjonmc" data-tab="donjonmc" role="tab" aria-selected="false" aria-controls="tab-donjonmc" tabindex="-1">⚔ DonjonMC</button>
+        <button class="tab-btn" id="tabbtn-dashboard" data-tab="dashboard" role="tab" aria-selected="false" aria-controls="tab-dashboard" tabindex="-1">📊 DashBoard</button>
       </div>
 
       <!-- ===== ONGLET : MODS ===== -->
-      <div id="tab-mods" class="tab-content active" role="tabpanel">
+      <div id="tab-mods" class="tab-content active" role="tabpanel" aria-labelledby="tabbtn-mods" tabindex="0">
         <p class="tab-intro">
           <strong><span class="js-mod-count">244</span> mods</strong> — NeoForge 1.21.1. Utilisez le bouton ci-dessous pour tout installer d'un coup,
           ou cliquez sur chaque mod pour le télécharger manuellement.
@@ -247,35 +261,27 @@
           <a href="https://www.curseforge.com/minecraft/share/6YIJ4L9J" target="_blank" rel="noopener noreferrer" class="btn btn-primary">⬇ Télécharger le Modpack</a>
         </div>
 
-        <!-- Recherche + filtres catégories (alimentés par js/app.js) -->
+        <!-- Stats + recherche + filtres + liste — tout alimenté par js/app.js -->
         <div class="mods-controls">
-          <input type="text" id="mods-search" class="mods-search-input" placeholder="🔍 Rechercher un mod…" autocomplete="off">
-          <div class="filter-pills" id="filter-pills">
-            <button class="filter-pill active" data-filter="all">Tous</button>
-            <button class="filter-pill" data-filter="Monde">🌿 Monde</button>
-            <button class="filter-pill" data-filter="Structures">🏛 Structures</button>
-            <button class="filter-pill" data-filter="Mobs">🐾 Mobs</button>
-            <button class="filter-pill" data-filter="Nourriture">🍖 Nourriture</button>
-            <button class="filter-pill" data-filter="Create">⚙ Create</button>
-            <button class="filter-pill" data-filter="Combat">⚔ Combat</button>
-            <button class="filter-pill" data-filter="Déco">🎨 Déco</button>
-            <button class="filter-pill" data-filter="Performance">⚡ Performance</button>
-            <button class="filter-pill" data-filter="Interface">🖥 Interface</button>
-            <button class="filter-pill" data-filter="API">📚 API</button>
+          <div class="mods-stats" id="mods-stats"></div>
+          <input type="search" id="mods-search" class="mods-search-input" placeholder="🔍 Rechercher un mod…" autocomplete="off" aria-label="Rechercher un mod">
+          <div class="filter-pills" id="filter-pills"></div>
+          <div class="mods-controls-foot">
+            <p class="mods-count" id="mods-count"></p>
+            <label class="mods-hide-dead"><input type="checkbox" id="mods-hide-dead"> Masquer les mods sans lien</label>
           </div>
-          <p class="mods-count" id="mods-count"></p>
         </div>
 
-        <!-- Conteneur généré dynamiquement par JS -->
-        <div class="mod-list" id="mods-list-container"></div>
+        <!-- Sections par catégorie générées dynamiquement par JS -->
+        <div id="mods-list-container"></div>
       </div>
 
       <!-- ===== ONGLET : COMMANDES ===== -->
-      <div id="tab-commands" class="tab-content" role="tabpanel">
+      <div id="tab-commands" class="tab-content" role="tabpanel" aria-labelledby="tabbtn-commands" tabindex="0">
         <p class="tab-intro">Toutes les commandes disponibles sur DonjonMC. <span style="color:var(--accent);">Cliquez sur une commande pour la copier.</span></p>
 
         <div class="cmds-search-wrap">
-          <input type="text" id="cmds-search" class="cmds-search-input" placeholder="🔍 Rechercher une commande…" autocomplete="off" aria-label="Rechercher une commande">
+          <input type="search" id="cmds-search" class="cmds-search-input" placeholder="🔍 Rechercher une commande…" autocomplete="off" aria-label="Rechercher une commande">
           <p class="cmds-count" id="cmds-count"></p>
         </div>
 
@@ -284,14 +290,14 @@
       </div>
 
       <!-- ===== ONGLET : ACTUALITÉS ===== -->
-      <div id="tab-changelog" class="tab-content" role="tabpanel">
+      <div id="tab-changelog" class="tab-content" role="tabpanel" aria-labelledby="tabbtn-changelog" tabindex="0">
         <p class="tab-intro">Actualités, mises à jour et événements du serveur.</p>
         <!-- Timeline générée dynamiquement par JS — pour ajouter une actu, éditez le tableau NEWS dans js/app.js -->
         <div class="changelog-list" id="changelog-list"></div>
       </div>
 
       <!-- ===== ONGLET : DONJONMC ===== -->
-      <div id="tab-donjonmc" class="tab-content" role="tabpanel">
+      <div id="tab-donjonmc" class="tab-content" role="tabpanel" aria-labelledby="tabbtn-donjonmc" tabindex="0">
         <div class="download-banner">
           <div>
             <strong>⬇ Mod requis — DonjonMC</strong>
@@ -446,7 +452,7 @@
       </div>
 
       <!-- ===== ONGLET : DASHBOARD ===== -->
-      <div id="tab-dashboard" class="tab-content" role="tabpanel">
+      <div id="tab-dashboard" class="tab-content" role="tabpanel" aria-labelledby="tabbtn-dashboard" tabindex="0">
         <div class="download-banner">
           <div>
             <strong>⬇ Mod requis — Dashboard Admin</strong>
@@ -601,7 +607,7 @@
   <!-- ===== FOOTER ===== -->
   <footer class="site-footer">
     <div class="container">
-      <p class="footer-brand"><img src="img/logo.jpg" alt="" style="height:24px;border-radius:4px;vertical-align:middle;margin-right:0.4rem;"> DonjonMC</p>
+      <p class="footer-brand"><img src="img/logo.jpg" alt="" width="24" height="24" loading="lazy" style="height:24px;border-radius:4px;vertical-align:middle;margin-right:0.4rem;"> DonjonMC</p>
       <p class="footer-legal">Non affilié à Mojang Studios / Microsoft. Minecraft® est une marque de Microsoft.</p>
       <p class="footer-love">Fait avec ❤ par @LKDM · <span style="color:var(--green);"></span></p>
     </div>
