@@ -84,7 +84,6 @@ const MODS = [
 ["YUNG's Better Strongholds","Structures",CF+"yungs-better-strongholds"],
 ["YUNG's Better Witch Huts","Structures",CF+"yungs-better-witch-huts"],
 ["YUNG's Extras","Structures",CF+"yungs-extras"],
-["T&T","Structures",CF+"towns-and-towers"],
 // --- Mobs ---
 ["Alex's Mobs","Mobs",CF+"alexs-mobs"],
 ["Mowzie's Mobs","Mobs",CF+"mowzies-mobs"],
@@ -370,6 +369,11 @@ async function tryReveal() {
       countdownSection.classList.add("hidden");
       serverIpEl.textContent = revealedIP;
       serverReveal.classList.remove("hidden");
+      document.title = "DonjonMC — Serveur ouvert !";
+      document.querySelector("meta[property='og:title']")?.setAttribute("content", "DonjonMC — Serveur ouvert !");
+      document.querySelector("meta[name='description']")?.setAttribute("content", "DonjonMC est maintenant ouvert. Rejoignez l'aventure !");
+      const badge = document.querySelector(".badge");
+      if (badge) badge.textContent = "OUVERT";
       showModsRequiredModal();
       startServerStatus(revealedIP);
     } else {
