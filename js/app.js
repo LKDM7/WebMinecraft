@@ -36,12 +36,12 @@ const MODS = [
 ["Regions Unexplored","Monde",CF+"regions-unexplored"],
 ["Geophilic","Monde",MR+"geophilic"],
 ["Geofisica","Monde",CF+"geofisica"],
-["Geolosy","Monde",CF+"geolosy"],
-["Additions to Modded Biomes","Monde",CF+"additions-to-modded-biomes"],
+["Geolosy","Monde",null],
+["Additions to Modded Biomes","Monde",null],
 ["Aeroblender","Monde",CF+"aeroblender"],
 ["Dynamic Trees","Monde",CF+"dynamictrees"],
 ["DT-BiomesOPlenty","Monde",CF+"dtbop"],
-["Climate Rules","Monde",CF+"climaterules"],
+["Climate Rules","Monde",null],
 ["YUNG's Cave Biomes","Monde",CF+"yungs-cave-biomes"],
 ["Distant Horizons","Monde",MR+"distanthorizons"],
 // --- Structures ---
@@ -50,30 +50,30 @@ const MODS = [
 ["Towns and Towers","Structures",CF+"towns-and-towers"],
 ["Additional Structures","Structures",CF+"additional-structures"],
 ["Oh The Structures You'll Go","Structures",CF+"oh-the-structures-youll-go"],
-["Moog's Structures","Structures",CF+"moog-structures"],
-["Moog's End Structures","Structures",CF+"moogis-end-structures"],
-["Moog's Nether Structures","Structures",CF+"moogis-nether-structures"],
-["Moog's Ocean Structures","Structures",CF+"moogis-ocean-structures"],
-["Moog's Villages","Structures",CF+"moogis-villages"],
+["Moog's Structures","Structures",null],
+["Moog's End Structures","Structures",null],
+["Moog's Nether Structures","Structures",null],
+["Moog's Ocean Structures","Structures",null],
+["Moog's Villages","Structures",null],
 ["Watchtowers","Structures",CF+"watch-tower"],
 ["Abandoned Watchtowers","Structures",CF+"abandoned-watchtowers"],
 ["Ancient Ruins","Structures",CF+"ancient-structures"],
 ["Medieval Buildings","Structures",CF+"medieval-buildings"],
-["Medieval Buildings Edition 1","Structures",CF+"medieval-buildings-edition-1"],
+["Medieval Buildings Edition 1","Structures",null],
 ["Sky Villages","Structures",MR+"sky-villages"],
-["Old Villages","Structures",CF+"old-villages"],
+["Old Villages","Structures",null],
 ["Villages Plus","Structures",MR+"villages-plus"],
 ["Village More","Structures",CF+"more-villages"],
-["Villager Gardens","Structures",CF+"villager-gardens"],
+["Villager Gardens","Structures",null],
 ["Ruined Buildings","Structures",CF+"ruins"],
 ["Simply Houses","Structures",CF+"simply-houses"],
-["Structure Essential","Structures",CF+"structure-essential"],
-["Structures Towers","Structures",CF+"structures-towers"],
+["Structure Essential","Structures",null],
+["Structures Towers","Structures",null],
 ["Create: Structures","Structures",CF+"create-structures"],
-["Hope Better Underwater Ruins","Structures",CF+"hope-better-underwater-ruins"],
-["Living Space","Structures",CF+"livingspace"],
-["Kurtis' Interiors","Structures",CF+"kurtis-interiors"],
-["Universal Bonus Chest","Structures",CF+"universal-bonus-chest"],
+["Hope Better Underwater Ruins","Structures",null],
+["Living Space","Structures",null],
+["Kurtis' Interiors","Structures",null],
+["Universal Bonus Chest","Structures",null],
 ["YUNG's Better Caves","Structures",CF+"yungs-better-caves"],
 ["YUNG's Better Desert Temples","Structures",CF+"yungs-better-desert-temples"],
 ["YUNG's Better Dungeons","Structures",CF+"yungs-better-dungeons"],
@@ -100,7 +100,7 @@ const MODS = [
 ["Aquamirae","Mobs",CF+"aquamirae"],
 ["Darker Depths","Mobs",CF+"darker-depths"],
 ["Dragon Flight","Mobs",CF+"dragonflight"],
-["More Drago","Mobs",CF+"moredrago"],
+["More Drago","Mobs",null],
 ["Toy Soldiers","Mobs",CF+"toy-soldiers"],
 ["Companion","Mobs",CF+"companion"],
 ["Illagers Wear","Mobs",CF+"illagers-wear"],
@@ -110,7 +110,7 @@ const MODS = [
 ["Farmer's Resplendent","Nourriture",CF+"farmers-resplendent"],
 ["Barbeque's Delight","Nourriture",CF+"barbeques-delight"],
 ["Brewin' And Chewin'","Nourriture",CF+"brewin-and-chewin"],
-["Allocave Delight","Nourriture",CF+"allocave-delight"],
+["Allocave Delight","Nourriture",null],
 ["Crabber's Delight","Nourriture",CF+"crabbers-delight"],
 ["Delightful","Nourriture",CF+"delightful"],
 ["End's Delight","Nourriture",CF+"enders-delight"],
@@ -130,8 +130,8 @@ const MODS = [
 ["Cuisines","Nourriture",CF+"cuisines"],
 ["Aquaculture","Nourriture",CF+"aquaculture-2"],
 ["Stardew Fishing","Nourriture",CF+"stardew-fishing"],
-["Farms and Furnitures","Nourriture",CF+"farms-and-furnitures"],
-["DoN Brewery","Nourriture",CF+"don-brewery"],
+["Farms and Furnitures","Nourriture",null],
+["DoN Brewery","Nourriture",null],
 // --- Create ---
 ["Create","Create",CF+"create"],
 ["Create Addition","Create",CF+"createaddition"],
@@ -140,12 +140,12 @@ const MODS = [
 ["Create: Recycling","Create",CF+"create-recycling"],
 ["Create: Things and Misc","Create",CF+"create-things-and-misc"],
 ["Create Aeronautics","Create",MR+"create-aeronautics"],
-["Create Better","Create",CF+"createbetter"],
+["Create Better","Create",null],
 ["Create: Big Cannons","Create",CF+"create-big-cannons"],
 ["Create: Confectionery","Create",CF+"create-confectionery"],
 ["Create Deco","Create",CF+"create-deco"],
 ["Create Generators","Create",CF+"create-generators"],
-["Create: Cavation","Create",CF+"create-cavation"],
+["Create: Cavation","Create",null],
 // --- Combat & Magie ---
 ["Iron's Spellbooks","Combat",CF+"irons-spells-n-spellbooks"],
 ["Better Combat","Combat",MR+"better-combat"],
@@ -156,18 +156,18 @@ const MODS = [
 ["Fantasy Armor","Combat",CF+"fantasy-armor"],
 ["Cataclysm","Combat",CF+"cataclysm-mod"],
 ["L_Ender's Cataclysm","Combat",CF+"l-enders-cataclysm"],
-["Hellish Tridents","Combat",CF+"hellish-tridents"],
-["Ranged Weapons","Combat",CF+"ranged-weapons"],
+["Hellish Tridents","Combat",null],
+["Ranged Weapons","Combat",null],
 ["Armored Redstone","Combat",CF+"armored-redstone"],
-["Dawn of it","Combat",CF+"dawnofit"],
+["Dawn of it","Combat",null],
 ["Accessories","Combat",MR+"accessories"],
 ["Backpacked","Combat",CF+"backpacked"],
 ["Cosmetic Armor Reworked","Combat",CF+"cosmetic-armor-reworked"],
 ["Spell Engine","Combat",MR+"spell-engine"],
 ["Spell Power","Combat",MR+"spell-power"],
 ["Immersive Engineering","Combat",CF+"immersive-engineering"],
-["Paxii","Combat",CF+"paxii"],
-["Royal Variants","Combat",CF+"royal-variants"],
+["Paxii","Combat",null],
+["Royal Variants","Combat",null],
 ["DonjonMC","Combat","https://github.com/LKDM7/DonjonMC/raw/refs/heads/master/releases/donjonmc-2.0.0.jar"],
 // --- Décoration ---
 ["Macaw's Bridges","Déco",CF+"macaws-bridges"],
@@ -185,7 +185,7 @@ const MODS = [
 ["MrCrayfish's Furniture","Déco",CF+"mrcrayfishs-furniture-mod"],
 ["Supplementaries","Déco",CF+"supplementaries"],
 ["Refurbished Furniture","Déco",CF+"refurbished-furniture"],
-["Design and Decor","Déco",CF+"design-n-decor"],
+["Design and Decor","Déco",null],
 ["Rustic","Déco",CF+"rustic"],
 ["Display Case","Déco",CF+"displaycase"],
 ["Variant Chests","Déco",CF+"variantchests"],
@@ -194,7 +194,7 @@ const MODS = [
 ["Quark","Déco",CF+"quark"],
 ["Prickle","Déco",CF+"prickle"],
 ["Chimes","Déco",CF+"chimes"],
-["DoN Lanterns","Déco",CF+"don-lanterns"],
+["DoN Lanterns","Déco",null],
 ["Subtle Effects","Déco",CF+"subtle-effects"],
 ["Ecologics","Déco",CF+"ecologics"],
 ["Fusion (textures)","Déco",CF+"fusion-connected-textures"],
@@ -236,11 +236,11 @@ const MODS = [
 ["Better Archeology","Interface",CF+"better-archeology"],
 ["Sound Physics Remastered","Interface",CF+"sound-physics-remastered"],
 ["Diagonal Fences","Interface",MR+"diagonal-fences"],
-["Block Faster Bypasser","Interface",CF+"block-faster-bypasser"],
+["Block Faster Bypasser","Interface",null],
 ["Packet Fixer","Interface",CF+"packet-fixer"],
 ["LambDynamicLights","Interface",MR+"lambdynamiclights"],
 ["Nether Portal Fix","Interface",CF+"netherportalfix"],
-["More Mob Griefing Options","Interface",CF+"more-mob-griefing-options"],
+["More Mob Griefing Options","Interface",null],
 ["Tombstone","Interface",CF+"tombstone"],
 ["Easy NPC","Interface",CF+"easy-npc"],
 ["Dashboard Admin","Interface","https://github.com/LKDM7/DashBoardAdmin/raw/refs/heads/master/releases/dashboardadmin-1.0.4.jar"],
@@ -282,8 +282,8 @@ const MODS = [
 ["Just Hammers","API",CF+"just-hammers"],
 ["Just Ores","API",CF+"just-ores"],
 ["Lettuce Mod","API",CF+"lettuce"],
-["TermBand","API",CF+"termband"],
-["JLine","API",CF+"jline"],
+["TermBand","API",null],
+["JLine","API",null],
 ];
 
 /* =====================================================================
@@ -628,11 +628,17 @@ function renderMods() {
 
   document.getElementById("mods-list-container").innerHTML = filtered.length
     ? filtered.map(([name, cat, url]) =>
-        `<a href="${url}" target="_blank" rel="noopener noreferrer" class="mod-item">
-          <span class="mod-item-name">${name}</span>
-          <span class="mod-item-badge badge-${cat}">${cat}</span>
-          <span class="mod-item-link">↗</span>
-        </a>`).join("")
+        url
+          ? `<a href="${url}" target="_blank" rel="noopener noreferrer" class="mod-item">
+              <span class="mod-item-name">${name}</span>
+              <span class="mod-item-badge badge-${cat}">${cat}</span>
+              <span class="mod-item-link">↗</span>
+            </a>`
+          : `<div class="mod-item mod-item-dead">
+              <span class="mod-item-name">${name}</span>
+              <span class="mod-item-badge badge-${cat}">${cat}</span>
+            </div>`
+      ).join("")
     : `<p style="color:var(--muted);padding:2rem 0;text-align:center;">Aucun mod trouvé pour « ${escapeHTML(currentSearch)} »</p>`;
 }
 
