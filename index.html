@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://worldtimeapi.org https://timeapi.io https://api.mcsrvstat.us; manifest-src 'self'; worker-src 'self'; base-uri 'self';">
-  <meta name="referrer" content="no-referrer-when-downgrade">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>DonjonMC — Serveur Minecraft Moddé</title>
@@ -97,7 +97,7 @@
     <canvas id="particles-canvas" aria-hidden="true"></canvas>
 
     <div class="hero-content">
-      <span class="badge"><span class="badge-dot" aria-hidden="true"></span> Serveur en ligne</span>
+      <span class="badge hidden" id="online-badge"><span class="badge-dot" aria-hidden="true"></span> Serveur en ligne</span>
 
       <!-- MODIFIER : accroche -->
       <h1 class="hero-title">Forge ta légende sur<br><span class="grad">DonjonMC</span></h1>

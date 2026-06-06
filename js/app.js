@@ -495,22 +495,24 @@ const NEWS = [
 
 const NEWS_LABELS = { new: "NOUVEAU", event: "ÉVÉNEMENT", fix: "MISE À JOUR", requis: "REQUIS" };
 
+const safeUrl = url => /^https:\/\//i.test(url) ? url : "#";
+
 function renderNews() {
   const container = document.getElementById("changelog-list");
   if (!container) return;
   container.innerHTML = NEWS.map((n, i) => {
-    const label = n.label || NEWS_LABELS[n.tag] || "";
+    const label = escapeHTML(n.label || NEWS_LABELS[n.tag] || "");
     const dls = (!n.obsolete && n.dls && n.dls.length)
       ? `<div class="cl-dl-row">${n.dls.map(d =>
-          `<a href="${d.url}" class="btn btn-primary cl-dl-btn" download>${d.label}</a>`
+          `<a href="${safeUrl(d.url)}" class="btn btn-primary cl-dl-btn" download>${escapeHTML(d.label)}</a>`
         ).join("")}</div>`
       : "";
     const cls = ["cl-item", i === 0 ? "is-latest" : "", n.obsolete ? "is-obsolete" : ""].filter(Boolean).join(" ");
     return `<article class="${cls}">
-      <div class="cl-date"><span class="cl-day">${n.day}</span><span class="cl-my">${n.my}</span></div>
+      <div class="cl-date"><span class="cl-day">${escapeHTML(n.day)}</span><span class="cl-my">${escapeHTML(n.my)}</span></div>
       <div class="cl-content">
-        <span class="cl-tag tag-${n.tag}">${label}</span>
-        <h3>${n.title}</h3>
+        <span class="cl-tag tag-${escapeHTML(n.tag)}">${label}</span>
+        <h3>${escapeHTML(n.title)}</h3>
         <p>${n.body}</p>
         ${dls}
       </div>
@@ -534,13 +536,19 @@ let revealing = false;
       (GitHub Pages) est toujours lisible et fiable, même si les API tombent.
    3) Dernier recours : horloge locale. */
 async function getRealNow() {
+  const fetchWithTimeout = (url, opts = {}, ms = 6000) => {
+    const ctrl = new AbortController();
+    const id = setTimeout(() => ctrl.abort(), ms);
+    return fetch(url, { ...opts, signal: ctrl.signal }).finally(() => clearTimeout(id));
+  };
+
   const sources = [
     ["https://worldtimeapi.org/api/timezone/Etc/UTC", d => d.unixtime * 1000],
     ["https://timeapi.io/api/Time/current/zone?timeZone=UTC", d => new Date(d.dateTime + "Z").getTime()],
   ];
   for (const [url, parse] of sources) {
     try {
-      const r = await fetch(url, { cache: "no-store" });
+      const r = await fetchWithTimeout(url, { cache: "no-store" });
       if (!r.ok) continue;
       const t = parse(await r.json());
       const MIN_TS = 1700000000000, MAX_TS = 1900000000000; // 2023–2030
@@ -548,18 +556,12 @@ async function getRealNow() {
     } catch (_) { /* source suivante */ }
   }
 
-  // Repli robuste : en-tête "Date" (HEAD = jamais mis en cache par le SW car non-GET).
-  const headerSources = [
-    location.origin + "/?t=" + Date.now(),          // same-origin : toujours lisible
-    "https://www.cloudflare.com/cdn-cgi/trace",      // bonus externe (best-effort)
-  ];
-  for (const url of headerSources) {
-    try {
-      const r = await fetch(url, { method: "HEAD", cache: "no-store" });
-      const d = r.headers.get("date");
-      if (d) { const t = new Date(d).getTime(); if (!isNaN(t)) return t; }
-    } catch (_) { /* source suivante */ }
-  }
+  // Repli robuste : en-tête "Date" same-origin (jamais mis en cache par le SW, HEAD non-GET).
+  try {
+    const r = await fetchWithTimeout(location.origin + "/?t=" + Date.now(), { method: "HEAD", cache: "no-store" });
+    const d = r.headers.get("date");
+    if (d) { const t = new Date(d).getTime(); if (!isNaN(t)) return t; }
+  } catch (_) { /* source suivante */ }
 
   return Date.now(); // dernier recours : horloge locale
 }
@@ -595,7 +597,9 @@ async function tryReveal() {
       setTimeout(() => { revealing = false; tryReveal(); }, wait);
     }
   } catch (_) {
-    setTimeout(() => { revealing = false; }, 5000);
+    revealedIP = null;
+    revealing = false;
+    setTimeout(tryReveal, 5000);
   }
 }
 
@@ -607,7 +611,7 @@ function prefersReducedMotion() {
 /* =====================================================================
    STATUT LIVE DU SERVEUR  (api.mcsrvstat.us — public, sans clé)
    Affiche En ligne / Hors ligne + joueurs connectés + noms.
-   Démarre une fois l'IP révélée, puis rafraîchit toutes les 60 sec.
+   Démarre une fois l'IP révélée, puis rafraîchit toutes les 30 sec.
 ===================================================================== */
 let statusTimer = null;
 
@@ -622,9 +626,11 @@ async function fetchServerStatus(ip) {
     const r = await fetch("https://api.mcsrvstat.us/3/" + encodeURIComponent(ip), { cache: "no-store" });
     const d = await r.json();
 
+    const onlineBadge = document.getElementById("online-badge");
     if (d && d.online) {
       dot.className = "status-dot online";
       text.textContent = "En ligne";
+      if (onlineBadge) onlineBadge.classList.remove("hidden");
       const on  = d.players ? (parseInt(d.players.online, 10) || 0) : 0;
       const max = d.players ? (parseInt(d.players.max, 10) || 0) : 0;
       players.innerHTML = `· <strong>${on}</strong>/${max} joueur${on !== 1 ? "s" : ""}`;
@@ -637,6 +643,7 @@ async function fetchServerStatus(ip) {
     } else {
       dot.className = "status-dot offline";
       text.textContent = "Hors ligne";
+      if (onlineBadge) onlineBadge.classList.add("hidden");
       players.textContent = "";
       list.innerHTML = "";
       document.title = "DonjonMC — Serveur Minecraft Moddé";
