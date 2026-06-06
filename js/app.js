@@ -446,6 +446,15 @@ document.querySelectorAll(".js-mod-count").forEach(el => { el.textContent = MODS
 ===================================================================== */
 const NEWS = [
   {
+    day: "07", my: "JUIN 2026", tag: "fix", label: "MISE À JOUR",
+    title: "Mettez à jour vos 2 mods personnalisés",
+    body: `Les deux mods maison ont reçu des correctifs importants. <strong>DonjonMC</strong> corrige un bug où les portails pouvaient spawner sous terre (Y &lt; 1). <strong>Dashboard Admin</strong> ajoute la compatibilité avec le mod Accessories pour conserver les items équipés à la mort. Re-téléchargez les deux mods et remplacez les anciennes versions dans votre dossier <code class="inline-path">mods</code>.`,
+    dls: [
+      { label: "⬇ DonjonMC v2.0.0", url: "https://github.com/LKDM7/DonjonMC/raw/refs/heads/master/releases/donjonmc-2.0.0.jar" },
+      { label: "⬇ Dashboard Admin v1.0.4", url: "https://github.com/LKDM7/DashBoardAdmin/raw/refs/heads/master/releases/dashboardadmin-1.0.4.jar" },
+    ],
+  },
+  {
     day: "06", my: "JUIN 2026", tag: "new", label: "MODPACK V2",
     title: "On repart sur une V2",
     body: `Soyons honnêtes : la première version a été un fiasco. Trop de crashs et d'incompatibilités, bref ça ne tenait pas la route. On a donc tout remis à plat et on revient avec une <strong>V2</strong> entièrement retravaillée, ${MODS.length} mods en NeoForge 1.21.1. On croise les doigts pour que cette fois soit la bonne. Téléchargez le nouveau modpack et remontez-nous le moindre bug.`,
@@ -469,6 +478,7 @@ const NEWS = [
   },
   {
     day: "05", my: "JUIN 2026", tag: "requis", label: "REQUIS",
+    obsolete: true,
     title: "2 mods à télécharger avant de rejoindre le serveur",
     body: `DonjonMC utilise 2 mods personnalisés qui ne sont <strong>pas inclus</strong> dans le modpack CurseForge. Télécharge-les et place-les dans le dossier <strong>mods</strong> du modpack : ouvre CurseForge, repère le modpack DonjonMC, clique sur les <strong>3 points ⋮</strong> à côté du bouton Play → <strong>Open Folder</strong> → dépose les 2 mods dans le dossier <code class="inline-path">mods</code>.`,
     dls: [
