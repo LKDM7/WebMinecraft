@@ -450,7 +450,7 @@ const NEWS = [
     title: "On repart sur une V2",
     body: `Soyons honnêtes : la première version a été un fiasco. Trop de crashs et d'incompatibilités, bref ça ne tenait pas la route. On a donc tout remis à plat et on revient avec une <strong>V2</strong> entièrement retravaillée, ${MODS.length} mods en NeoForge 1.21.1. On croise les doigts pour que cette fois soit la bonne. Téléchargez le nouveau modpack et remontez-nous le moindre bug.`,
     dls: [
-      { label: "⬇ Télécharger le Modpack V2", url: "https://www.curseforge.com/minecraft/share/JkTxJlIy" },
+      { label: "⬇ Télécharger le Modpack V2", url: "https://www.curseforge.com/minecraft/share/V37Or6S1" },
     ],
   },
   {
