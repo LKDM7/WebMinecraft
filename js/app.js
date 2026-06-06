@@ -764,6 +764,7 @@ function activateTab(id, syncUrl = true) {
     c.classList.toggle("active", c.id === "tab-" + id);
   });
   if (syncUrl) setQueryParam("tab", id === "mods" ? null : id); // mods = défaut → URL propre
+  try { localStorage.setItem("donjonmc-tab", id); } catch (_) {}
 }
 
 function currentTab() {
@@ -1063,7 +1064,7 @@ setTimeout(renderMods, 280);
 /* Restaure l'état depuis l'URL au chargement : ?tab=commands&cat=Monde */
 (function initFromUrl() {
   const params = new URLSearchParams(location.search);
-  const tab = params.get("tab");
+  const tab = params.get("tab") || (function(){ try { return localStorage.getItem("donjonmc-tab"); } catch(_){ return null; } })();
   if (tab && TAB_IDS.includes(tab)) activateTab(tab, false);
   const cat = params.get("cat");
   if (cat && CAT_META.some(m => m[0] === cat)) {
