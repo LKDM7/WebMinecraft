@@ -590,6 +590,8 @@ async function tryReveal() {
       revealedIP = await decryptIP();
       serverIpEl.textContent = revealedIP;
       serverReveal.classList.remove("hidden");
+      const copyBtn = document.getElementById("copy-btn");
+      if (copyBtn) { copyBtn.removeAttribute("disabled"); copyBtn.removeAttribute("aria-disabled"); }
       startServerStatus(revealedIP);
     } else {
       // Pas encore l'heure réelle → on retente, sans rien révéler
@@ -691,11 +693,16 @@ function showModsRequiredModal() {
 
   overlay.addEventListener("keydown", trapFocus);
 
-  document.getElementById("mods-modal-confirm")?.addEventListener("click", () => {
+  function closeModal() {
     overlay.removeEventListener("keydown", trapFocus);
+    document.removeEventListener("keydown", handleEsc);
     overlay.setAttribute("hidden", "");
     prevFocus?.focus();
-  }, { once: true });
+  }
+  function handleEsc(e) { if (e.key === "Escape") closeModal(); }
+  document.addEventListener("keydown", handleEsc);
+
+  document.getElementById("mods-modal-confirm")?.addEventListener("click", closeModal, { once: true });
 }
 
 /* Mode aperçu : ?preview=open affiche le rendu "serveur ouvert" sans rien
@@ -708,6 +715,8 @@ function isPreviewOpen() {
 function revealPreview() {
   serverIpEl.textContent = "apercu.donjonmc.fr";
   serverReveal.classList.remove("hidden");
+  const copyBtn = document.getElementById("copy-btn");
+  if (copyBtn) { copyBtn.removeAttribute("disabled"); copyBtn.removeAttribute("aria-disabled"); }
   const dot  = document.getElementById("status-dot");
   const text = document.getElementById("status-text");
   if (dot)  dot.className = "status-dot online";
@@ -771,7 +780,10 @@ function activateTab(id, syncUrl = true) {
     b.setAttribute("tabindex", on ? "0" : "-1"); // roving tabindex
   });
   document.querySelectorAll(".tab-content").forEach(c => {
-    c.classList.toggle("active", c.id === "tab-" + id);
+    const active = c.id === "tab-" + id;
+    c.classList.toggle("active", active);
+    if (active) c.removeAttribute("hidden");
+    else c.setAttribute("hidden", "");
   });
   if (syncUrl) setQueryParam("tab", id === "mods" ? null : id); // mods = défaut → URL propre
   try { localStorage.setItem("donjonmc-tab", id); } catch (_) {}
@@ -806,7 +818,9 @@ document.querySelectorAll(".nav-pill a[data-tab]").forEach(a => {
   a.addEventListener("click", e => {
     e.preventDefault();
     activateTab(a.dataset.tab);
-    document.getElementById("info").scrollIntoView({ behavior: "smooth" });
+    document.getElementById("info").scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth" });
+    const panel = document.getElementById("tab-" + a.dataset.tab);
+    if (panel) panel.focus();
   });
 });
 
@@ -920,7 +934,7 @@ document.getElementById("commands-grid").addEventListener("click", e => {
 (function () {
   const input = document.getElementById("cmds-search");
   if (input) {
-    input.addEventListener("input", renderCommands);
+    input.addEventListener("input", debounce(renderCommands, 150));
     input.addEventListener("keydown", e => { if (e.key === "Escape") { input.value = ""; renderCommands(); } });
   }
   renderCommands();
@@ -943,6 +957,11 @@ const CAT_META = [
 let currentFilter = "all";
 let currentSearch = "";
 let hideDead = false;
+
+function debounce(fn, ms) {
+  let t;
+  return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+}
 
 // Échappe les caractères HTML pour éviter toute injection (XSS).
 function escapeHTML(str) {
@@ -1033,10 +1052,10 @@ function renderMods() {
   if (count) count.textContent = `${shown} mod${shown !== 1 ? "s" : ""} affiché${shown !== 1 ? "s" : ""}`;
 }
 
-document.getElementById("mods-search").addEventListener("input", e => {
+document.getElementById("mods-search").addEventListener("input", debounce(e => {
   currentSearch = e.target.value;
   renderMods();
-});
+}, 150));
 
 document.getElementById("filter-pills").addEventListener("click", e => {
   const pill = e.target.closest(".filter-pill");
@@ -1059,7 +1078,7 @@ document.addEventListener("keydown", e => {
   if (e.key === "/" || (e.key === "f" && (e.ctrlKey || e.metaKey))) {
     e.preventDefault();
     activateTab("mods");
-    document.getElementById("info").scrollIntoView({ behavior: "smooth" });
+    document.getElementById("info").scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth" });
     document.getElementById("mods-search").focus();
   }
 });
@@ -1069,7 +1088,7 @@ renderModStats();
 renderPills();
 const skeletonHTML = Array(12).fill('<div class="skeleton-item"></div>').join("");
 document.getElementById("mods-list-container").innerHTML = skeletonHTML;
-setTimeout(renderMods, 280);
+renderMods();
 
 /* Restaure l'état depuis l'URL au chargement : ?tab=commands&cat=Monde */
 (function initFromUrl() {
@@ -1093,7 +1112,8 @@ const mobileNav  = document.getElementById("mobile-nav");
 burgerBtn.addEventListener("click", () => {
   const open = burgerBtn.classList.toggle("open");
   mobileNav.classList.toggle("open", open);
-  mobileNav.setAttribute("aria-hidden", !open);
+  mobileNav.setAttribute("aria-hidden", String(!open));
+  burgerBtn.setAttribute("aria-expanded", String(open));
 });
 
 mobileNav.querySelectorAll(".mnav-link").forEach(link => {
@@ -1102,7 +1122,12 @@ mobileNav.querySelectorAll(".mnav-link").forEach(link => {
     mobileNav.classList.remove("open");
     mobileNav.setAttribute("aria-hidden", "true");
     const tab = link.dataset.tab;
-    if (tab) { activateTab(tab); document.getElementById("info").scrollIntoView({ behavior: "smooth" }); }
+    if (tab) {
+      activateTab(tab);
+      document.getElementById("info").scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth" });
+      const panel = document.getElementById("tab-" + tab);
+      if (panel) panel.focus();
+    }
   });
 });
 
@@ -1140,7 +1165,9 @@ mobileNav.querySelectorAll(".mnav-link").forEach(link => {
   for (let i = 0; i < 55; i++) { const p = make(); p.y = Math.random() * canvas.height; pts.push(p); }
   window.addEventListener("resize", () => { resize(); pts = []; for (let i = 0; i < 55; i++) { const p = make(); p.y = Math.random() * canvas.height; pts.push(p); } });
 
-  (function loop() {
+  let running = false;
+  let rafId = null;
+  function loop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     pts.forEach((p, i) => {
       p.x += p.vx; p.y += p.vy; p.o -= 0.0008;
@@ -1150,8 +1177,20 @@ mobileNav.querySelectorAll(".mnav-link").forEach(link => {
       ctx.fillStyle = `rgba(${p.c},${p.o})`;
       ctx.fill();
     });
-    requestAnimationFrame(loop);
-  })();
+    if (running) rafId = requestAnimationFrame(loop);
+  }
+  const obs = new IntersectionObserver(([entry]) => {
+    if (entry.isIntersecting && !running) {
+      running = true;
+      rafId = requestAnimationFrame(loop);
+    } else if (!entry.isIntersecting && running) {
+      running = false;
+      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    }
+  }, { threshold: 0 });
+  obs.observe(hero);
+  running = true;
+  rafId = requestAnimationFrame(loop);
 })();
 
 /* =====================================================================
@@ -1162,7 +1201,7 @@ document.querySelectorAll('a[data-scroll]').forEach(a => {
     const target = document.querySelector(a.getAttribute("href"));
     if (!target) return;
     e.preventDefault();
-    target.scrollIntoView({ behavior: "smooth" });
+    target.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth" });
   });
 });
 

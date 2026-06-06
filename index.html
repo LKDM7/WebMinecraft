@@ -25,10 +25,14 @@
   <link rel="apple-touch-icon" href="img/logo.jpg">
   <link rel="manifest" href="site.webmanifest">
   <meta name="theme-color" content="#07060d">
+  <meta name="color-scheme" content="dark">
+
+  <link rel="preload" as="image" href="img/logo.jpg">
 
   <!-- Google Fonts : Inter (UI) + JetBrains Mono (code/IP) + Press Start 2P (accent Minecraft subtil) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://api.mcsrvstat.us">
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- ===================================================================
@@ -58,10 +62,10 @@
   <header class="site-header">
     <div class="container header-inner">
       <a href="#hero" class="logo">
-        <img src="img/logo.jpg" alt="DonjonMC" class="logo-img" width="34" height="34">
+        <img src="img/logo.jpg" alt="DonjonMC" class="logo-img" width="34" height="34" fetchpriority="high">
         <span class="logo-text">DonjonMC</span>
       </a>
-      <nav class="nav-pill" role="navigation">
+      <nav class="nav-pill">
         <a href="#info" data-tab="mods">Mods</a>
         <a href="#info" data-tab="commands">Commandes</a>
         <a href="#info" data-tab="changelog">Actualités</a>
@@ -69,14 +73,14 @@
         <a href="#info" data-tab="dashboard">DashBoard</a>
       </nav>
       <a href="https://www.curseforge.com/minecraft/share/V37Or6S1" target="_blank" rel="noopener noreferrer" class="header-cta">⬇ Modpack</a>
-      <button class="burger" id="burger-btn" aria-label="Menu">
+      <button class="burger" id="burger-btn" aria-label="Menu" aria-expanded="false" aria-controls="mobile-nav">
         <span></span><span></span><span></span>
       </button>
     </div>
   </header>
 
   <!-- Mobile nav drawer -->
-  <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Menu mobile" aria-hidden="true">
     <a href="#info" data-tab="mods" class="mnav-link">⚙ Mods Requis</a>
     <a href="#info" data-tab="commands" class="mnav-link">📋 Commandes</a>
     <a href="#info" data-tab="changelog" class="mnav-link">📰 Actualités</a>
@@ -88,7 +92,7 @@
   <main id="main" tabindex="-1">
 
   <!-- ===== HERO ===== -->
-  <section class="hero" id="hero">
+  <section class="hero" id="hero" aria-labelledby="hero-title">
     <div class="hero-aurora" aria-hidden="true">
       <span class="aurora-blob blob-1"></span>
       <span class="aurora-blob blob-2"></span>
@@ -100,7 +104,7 @@
       <span class="badge hidden" id="online-badge"><span class="badge-dot" aria-hidden="true"></span> Serveur en ligne</span>
 
       <!-- MODIFIER : accroche -->
-      <h1 class="hero-title">Forge ta légende sur<br><span class="grad">DonjonMC</span></h1>
+      <h1 class="hero-title" id="hero-title">Forge ta légende sur<br><span class="grad">DonjonMC</span></h1>
 
       <p class="hero-subtitle">
         Un univers RPG inspiré de <strong>Solo Leveling</strong> sur Minecraft. Affronte les donjons,
@@ -115,7 +119,7 @@
             <!-- L'IP est déchiffrée côté client après vérification de l'heure réelle — jamais en clair ici -->
             <span class="ip-address" id="server-ip">Connexion…</span>
           </div>
-          <button class="btn btn-copy" id="copy-btn">Copier l'IP</button>
+          <button class="btn btn-copy" id="copy-btn" disabled aria-disabled="true">Copier l'IP</button>
         </div>
 
         <!-- STATUT LIVE DU SERVEUR (via api.mcsrvstat.us) -->
@@ -177,9 +181,9 @@
   </div>
 
   <!-- ===== COMMENT REJOINDRE ===== -->
-  <section class="steps-section">
+  <section class="steps-section" aria-labelledby="steps-heading">
     <div class="container">
-      <h2 class="section-title"><span class="grad">Comment Rejoindre ?</span></h2>
+      <h2 class="section-title" id="steps-heading"><span class="grad">Comment Rejoindre ?</span></h2>
       <div class="steps-grid">
         <div class="step-card">
           <div class="step-num">01</div>
@@ -245,7 +249,7 @@
           <input type="search" id="mods-search" class="mods-search-input" placeholder="🔍 Rechercher un mod…" autocomplete="off" aria-label="Rechercher un mod">
           <div class="filter-pills" id="filter-pills"></div>
           <div class="mods-controls-foot">
-            <p class="mods-count" id="mods-count"></p>
+            <p class="mods-count" id="mods-count" aria-live="polite" aria-atomic="true"></p>
             <label class="mods-hide-dead"><input type="checkbox" id="mods-hide-dead"> Masquer les mods sans lien</label>
           </div>
         </div>
@@ -255,13 +259,13 @@
       </div>
 
       <!-- ===== ONGLET : COMMANDES ===== -->
-      <div id="tab-commands" class="tab-content" role="tabpanel" aria-labelledby="tabbtn-commands" tabindex="0">
+      <div id="tab-commands" class="tab-content" role="tabpanel" aria-labelledby="tabbtn-commands" tabindex="0" hidden>
         <p class="tab-intro">Toutes les commandes disponibles sur DonjonMC. <span style="color:var(--accent);">Cliquez sur une commande pour la copier.</span></p>
 
         <div class="cmds-search-wrap">
           <label for="cmds-search" class="sr-only">Rechercher une commande</label>
           <input type="search" id="cmds-search" class="cmds-search-input" placeholder="🔍 Rechercher une commande…" autocomplete="off" aria-label="Rechercher une commande">
-          <p class="cmds-count" id="cmds-count"></p>
+          <p class="cmds-count" id="cmds-count" aria-live="polite" aria-atomic="true"></p>
         </div>
 
         <!-- Grille générée dynamiquement par JS — pour ajouter une commande, éditez le tableau COMMANDS dans js/app.js -->
@@ -269,14 +273,14 @@
       </div>
 
       <!-- ===== ONGLET : ACTUALITÉS ===== -->
-      <div id="tab-changelog" class="tab-content" role="tabpanel" aria-labelledby="tabbtn-changelog" tabindex="0">
+      <div id="tab-changelog" class="tab-content" role="tabpanel" aria-labelledby="tabbtn-changelog" tabindex="0" hidden>
         <p class="tab-intro">Actualités, mises à jour et événements du serveur.</p>
         <!-- Timeline générée dynamiquement par JS — pour ajouter une actu, éditez le tableau NEWS dans js/app.js -->
         <div class="changelog-list" id="changelog-list"></div>
       </div>
 
       <!-- ===== ONGLET : DONJONMC ===== -->
-      <div id="tab-donjonmc" class="tab-content" role="tabpanel" aria-labelledby="tabbtn-donjonmc" tabindex="0">
+      <div id="tab-donjonmc" class="tab-content" role="tabpanel" aria-labelledby="tabbtn-donjonmc" tabindex="0" hidden>
         <div class="install-card">
           <div class="install-head">
             <div class="install-head-text">
@@ -439,7 +443,7 @@
       </div>
 
       <!-- ===== ONGLET : DASHBOARD ===== -->
-      <div id="tab-dashboard" class="tab-content" role="tabpanel" aria-labelledby="tabbtn-dashboard" tabindex="0">
+      <div id="tab-dashboard" class="tab-content" role="tabpanel" aria-labelledby="tabbtn-dashboard" tabindex="0" hidden>
         <div class="install-card">
           <div class="install-head">
             <div class="install-head-text">
@@ -597,7 +601,7 @@
       </div>
 
       <!-- ===== ONGLET : FAQ ===== -->
-      <div id="tab-faq" class="tab-content" role="tabpanel" aria-labelledby="tabbtn-faq" tabindex="0">
+      <div id="tab-faq" class="tab-content" role="tabpanel" aria-labelledby="tabbtn-faq" tabindex="0" hidden>
         <p class="tab-intro">Les questions qui reviennent le plus souvent. Si la tienne n'est pas là, contacte un admin.</p>
 
         <details open>
@@ -705,6 +709,6 @@
     </div>
   </div>
 
-  <script src="js/app.js"></script>
+  <script src="js/app.js" defer></script>
 </body>
 </html>
