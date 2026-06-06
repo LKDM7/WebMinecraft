@@ -531,6 +531,33 @@ function renderNews() {
 }
 renderNews();
 
+(function initNewsToast() {
+  const latest = NEWS.find(n => !n.obsolete);
+  if (!latest) return;
+  const key = `toast_${latest.day}_${latest.my.replace(/\s+/g, "_")}`;
+  if (localStorage.getItem(key)) return;
+  const toast = document.getElementById("news-toast");
+  const titleEl = document.getElementById("news-toast-title");
+  if (!toast || !titleEl) return;
+  titleEl.textContent = latest.title;
+  setTimeout(() => toast.classList.add("toast-visible"), 900);
+  function dismiss() {
+    localStorage.setItem(key, "1");
+    toast.classList.remove("toast-visible");
+    setTimeout(() => toast.remove(), 400);
+  }
+  document.getElementById("news-toast-close").addEventListener("click", e => {
+    e.stopPropagation();
+    dismiss();
+  });
+  toast.addEventListener("click", () => {
+    dismiss();
+    const btn = document.querySelector('[data-tab="changelog"]');
+    if (btn) btn.click();
+  });
+})();
+
+
 /* =====================================================================
    RÉVÉLATION DU SERVEUR  (le compte à rebours a été retiré)
 ===================================================================== */
