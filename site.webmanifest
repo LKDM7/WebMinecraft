@@ -1,14 +1,15 @@
 {
   "name": "DonjonMC",
   "short_name": "DonjonMC",
-  "description": "Le serveur Minecraft qui repousse les limites de l'aventure. Plus de 240 mods, NeoForge 1.21.1.",
-  "start_url": "/",
+  "description": "Serveur Minecraft moddé sur NeoForge 1.21.1 avec 385 mods. Serveur ouvert !",
+  "start_url": "/WebMinecraft/",
+  "scope": "/WebMinecraft/",
   "display": "standalone",
-  "background_color": "#0c0b12",
+  "background_color": "#07060d",
   "theme_color": "#a78bfa",
   "lang": "fr",
   "icons": [
-    { "src": "icon.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "icon.png", "sizes": "512x512", "type": "image/png" }
+    { "src": "img/logo.jpg", "sizes": "192x192", "type": "image/jpeg", "purpose": "any" },
+    { "src": "img/logo.jpg", "sizes": "512x512", "type": "image/jpeg", "purpose": "any" }
   ]
 }

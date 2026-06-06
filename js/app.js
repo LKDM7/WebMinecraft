@@ -628,6 +628,7 @@ async function fetchServerStatus(ip) {
       const on  = d.players ? (parseInt(d.players.online, 10) || 0) : 0;
       const max = d.players ? (parseInt(d.players.max, 10) || 0) : 0;
       players.innerHTML = `· <strong>${on}</strong>/${max} joueur${on !== 1 ? "s" : ""}`;
+      document.title = `DonjonMC (${on}/${max})`;
 
       const names = (d.players && Array.isArray(d.players.list)) ? d.players.list : [];
       list.innerHTML = names
@@ -638,12 +639,14 @@ async function fetchServerStatus(ip) {
       text.textContent = "Hors ligne";
       players.textContent = "";
       list.innerHTML = "";
+      document.title = "DonjonMC — Serveur Minecraft Moddé";
     }
   } catch (_) {
     dot.className = "status-dot offline";
     text.textContent = "Statut indisponible";
     players.textContent = "";
     list.innerHTML = "";
+    document.title = "DonjonMC — Serveur Minecraft Moddé";
   }
 }
 
@@ -742,7 +745,7 @@ function fallback(cb) {
 /* =====================================================================
    ONGLETS — état reflété dans l'URL (?tab=) + navigation clavier ARIA
 ===================================================================== */
-const TAB_IDS = ["mods", "commands", "changelog", "donjonmc", "dashboard"];
+const TAB_IDS = ["mods", "commands", "changelog", "donjonmc", "dashboard", "faq"];
 
 // Met à jour (ou retire) un paramètre d'URL sans recharger la page.
 function setQueryParam(key, value) {

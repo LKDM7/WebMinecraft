@@ -221,6 +221,7 @@
           <button class="tab-btn" id="tabbtn-changelog" data-tab="changelog" role="tab" aria-selected="false" aria-controls="tab-changelog" tabindex="-1">📰 Actualités</button>
           <button class="tab-btn" id="tabbtn-donjonmc" data-tab="donjonmc" role="tab" aria-selected="false" aria-controls="tab-donjonmc" tabindex="-1">⚔ DonjonMC</button>
           <button class="tab-btn" id="tabbtn-dashboard" data-tab="dashboard" role="tab" aria-selected="false" aria-controls="tab-dashboard" tabindex="-1">📊 DashBoard</button>
+          <button class="tab-btn" id="tabbtn-faq" data-tab="faq" role="tab" aria-selected="false" aria-controls="tab-faq" tabindex="-1">❓ FAQ</button>
         </div>
       </div>
 
@@ -596,6 +597,74 @@
             <p class="donjon-note">▎ Le rapport est envoyé aux admins connectés avec un webhook Discord si configuré.</p>
           </div>
         </details>
+      <!-- ===== ONGLET : FAQ ===== -->
+      <div id="tab-faq" class="tab-content" role="tabpanel" aria-labelledby="tabbtn-faq" tabindex="0">
+        <p class="tab-intro">Les questions qui reviennent le plus souvent. Si la tienne n'est pas là, contacte un admin.</p>
+
+        <details open>
+          <summary>Quel launcher utiliser pour jouer ?</summary>
+          <div class="detail-body">
+            <p>Le plus simple est <strong>CurseForge</strong> — il installe le modpack en un clic et gère les mises à jour automatiquement. Si tu préfères éviter CurseForge, tu peux utiliser <strong>ATLauncher</strong> ou <strong>Prism Launcher</strong> avec une instance NeoForge 1.21.1 et le dossier <code class="inline-path">mods</code> téléchargé manuellement depuis l'onglet Actualités.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Comment rejoindre le serveur après avoir installé le modpack ?</summary>
+          <div class="detail-body">
+            <p>Lance le modpack DonjonMC depuis CurseForge, puis dans le menu Minecraft : <strong>Multijoueur</strong> → <strong>Ajouter un serveur</strong> → colle l'IP affichée en haut de cette page. Assure-toi d'avoir aussi installé les 2 mods personnalisés (voir onglet <strong>Mods Requis</strong>).</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Pourquoi les 2 mods personnalisés ne sont pas dans CurseForge ?</summary>
+          <div class="detail-body">
+            <p>DonjonMC et Dashboard Admin sont des mods développés spécifiquement pour ce serveur. Ils ne sont pas publiés sur CurseForge. Télécharge-les depuis les liens dans l'onglet <strong>Mods Requis</strong> et dépose-les dans le dossier <code class="inline-path">mods</code> du modpack.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Le jeu crashe au démarrage, que faire ?</summary>
+          <div class="detail-body">
+            <p>Dans l'ordre :</p>
+            <ol style="color:var(--muted);font-size:0.85rem;line-height:2;padding-left:1.2rem;">
+              <li>Vérifie que les <strong>2 mods personnalisés</strong> sont bien dans le dossier <code class="inline-path">mods</code>.</li>
+              <li>Alloue plus de RAM à l'instance : minimum <strong>6 Go</strong> recommandés (8 Go idéalement).</li>
+              <li>Vérifie que tu es sur <strong>Java 21</strong> (NeoForge 1.21.1 le requiert).</li>
+              <li>Si le crash persiste, envoie le fichier <code class="inline-path">crash-reports/latest.txt</code> à un admin.</li>
+            </ol>
+          </div>
+        </details>
+
+        <details>
+          <summary>Combien de RAM allouer au modpack ?</summary>
+          <div class="detail-body">
+            <p>Minimum <strong>6 Go</strong> pour jouer correctement. Avec 8 Go tu auras moins de micro-freezes. Ne dépasse pas 12 Go sauf si tu as 32 Go de RAM — allouer trop de mémoire peut causer des lags de garbage collection.</p>
+            <p style="margin-top:0.6rem;">Dans CurseForge : roue dentée → Paramètres → Minecraft → allocation mémoire.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Comment protéger mes coffres et mes blocs ?</summary>
+          <div class="detail-body">
+            <p>Regarde le bloc que tu veux protéger et tape <code class="cmd">/lock</code>. Pour donner l'accès à un ami : <code class="cmd">/trust &lt;joueur&gt;</code>. Pour voir qui a accès : <code class="cmd">/lockinfo</code>. Tout est gérable via <code class="cmd">/menu</code> aussi.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Est-ce que le PvP est activé ?</summary>
+          <div class="detail-body">
+            <p>Le PvP est configurable par les admins — son état peut changer selon les événements. Vérifie avec <code class="cmd">/menu</code> ou demande en jeu. En mode AFK tu es protégé des dégâts dans tous les cas.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Comment contacter un admin ?</summary>
+          <div class="detail-body">
+            <p>En jeu : <code class="cmd">/report [message]</code> envoie un signalement immédiat. Hors jeu, contacte directement un admin via Discord. Pour les bugs du site ou du modpack, ouvre une issue sur le dépôt GitHub.</p>
+          </div>
+        </details>
+      </div>
+
       </div>
 
     </div>
