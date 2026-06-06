@@ -1,8 +1,9 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" data-maintenance="false">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://worldtimeapi.org https://timeapi.io https://www.cloudflare.com https://api.mcsrvstat.us; manifest-src 'self'; worker-src 'self'; base-uri 'self';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://worldtimeapi.org https://timeapi.io https://api.mcsrvstat.us; manifest-src 'self'; worker-src 'self'; base-uri 'self';">
+  <meta name="referrer" content="no-referrer-when-downgrade">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>DonjonMC — Serveur Minecraft Moddé</title>
@@ -31,13 +32,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- ===================================================================
-       MAINTENANCE — mettez true pour BLOQUER le site, false pour ROUVRIR.
-       (puis commit + push). Affiche un écran plein écran masquant tout.
+       MAINTENANCE — mettez "true" sur l'attribut data-maintenance de <html>
+       pour BLOQUER le site, "false" pour ROUVRIR. (puis commit + push).
   =================================================================== -->
-  <script>
-    window.SITE_MAINTENANCE = false;
-    if (window.SITE_MAINTENANCE) document.documentElement.classList.add("is-maintenance");
-  </script>
 
   <link rel="stylesheet" href="css/style.css">
 </head>

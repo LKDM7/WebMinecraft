@@ -719,8 +719,8 @@ details[open] summary::after { transform: rotate(90deg); background: var(--accen
    ÉCRAN DE MAINTENANCE
 ===================================================================== */
 .maintenance-overlay { display: none; }
-html.is-maintenance, html.is-maintenance body { overflow: hidden; }
-html.is-maintenance .maintenance-overlay {
+html[data-maintenance="true"], html[data-maintenance="true"] body { overflow: hidden; }
+html[data-maintenance="true"] .maintenance-overlay {
   display: flex; position: fixed; inset: 0; z-index: 99999;
   align-items: center; justify-content: center; padding: 2rem;
   background: radial-gradient(circle at 50% 28%, #1a1730 0%, var(--bg) 72%);
