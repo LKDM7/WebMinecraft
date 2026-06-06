@@ -25,265 +25,404 @@ let revealedIP = null;
    DONNÉES MODS  [Nom, Catégorie, URL]
    Sources : CurseForge (CF) et Modrinth (MR)
 ===================================================================== */
-const CF = "https://www.curseforge.com/minecraft/mc-mods/";
-const MR = "https://modrinth.com/mod/";
-
 const MODS = [
 // --- Monde & Biomes ---
-["The Aether","Monde",CF+"the-aether"],
-["Biomes O' Plenty","Monde",CF+"biomes-o-plenty"],
-["Oh The Biomes We've Gone","Monde",CF+"oh-the-biomes-weve-gone"],
-["Regions Unexplored","Monde",CF+"regions-unexplored"],
-["Geophilic","Monde",MR+"geophilic"],
-["Geofisica","Monde",CF+"geofisica"],
-["Geolosy","Monde",null],
-["Additions to Modded Biomes","Monde",null],
-["Aeroblender","Monde",CF+"aeroblender"],
-["Dynamic Trees","Monde",CF+"dynamictrees"],
-["DT-BiomesOPlenty","Monde",CF+"dtbop"],
-["Climate Rules","Monde",null],
-["YUNG's Cave Biomes","Monde",CF+"yungs-cave-biomes"],
-["Distant Horizons","Monde",MR+"distanthorizons"],
+["AeroBlender","Monde","https://www.curseforge.com/minecraft/mc-mods/aeroblender"],
+["Aether Addon: Enhanced Extinguishing","Monde","https://www.curseforge.com/minecraft/mc-mods/aether-enhanced-extinguishing"],
+["Aether Addon: Protect Your Moa","Monde","https://www.curseforge.com/minecraft/mc-mods/aether-protect-your-moa"],
+["Aether Addon: Treasure Reforging","Monde","https://www.curseforge.com/minecraft/mc-mods/aether-treasure-reforging"],
+["Aether Villages","Monde","https://www.curseforge.com/minecraft/mc-mods/aether-villages"],
+["Bedrockoid","Monde","https://www.curseforge.com/minecraft/mc-mods/bedrockoid"],
+["Better Biome Reblend","Monde","https://www.curseforge.com/minecraft/mc-mods/bbrb"],
+["Biome Music","Monde","https://www.curseforge.com/minecraft/mc-mods/biome-music"],
+["Climate Rivers","Monde","https://www.curseforge.com/minecraft/mc-mods/climate-rivers"],
+["Deep Aether","Monde","https://www.curseforge.com/minecraft/mc-mods/deep-aether"],
+["Deeper and Darker","Monde","https://www.curseforge.com/minecraft/mc-mods/deeperdarker"],
+["Eternal Nether","Monde","https://www.curseforge.com/minecraft/mc-mods/eternal-nether"],
+["FallingTree","Monde","https://www.curseforge.com/minecraft/mc-mods/falling-tree"],
+["Gardens of the Dead","Monde","https://www.curseforge.com/minecraft/mc-mods/gardens-of-the-dead"],
+["Geophilic – Vanilla Biome Overhauls","Monde","https://www.curseforge.com/minecraft/mc-mods/geophilic"],
+["Hearths","Monde","https://www.curseforge.com/minecraft/mc-mods/hearths"],
+["Leaves Be Gone","Monde","https://www.curseforge.com/minecraft/mc-mods/leaves-be-gone"],
+["Nature's Compass","Monde","https://www.curseforge.com/minecraft/mc-mods/natures-compass"],
+["Oh The Biomes We've Gone","Monde","https://www.curseforge.com/minecraft/mc-mods/oh-the-biomes-weve-gone"],
+["Oh The Trees You'll Grow","Monde","https://www.curseforge.com/minecraft/mc-mods/oh-the-trees-youll-grow"],
+["Pufferfish's Biome Dither","Monde","https://www.curseforge.com/minecraft/mc-mods/puffish-biome-dither"],
+["Seasonal Integration","Monde","https://www.curseforge.com/minecraft/mc-mods/seasonal-integration"],
+["Serene Seasons","Monde","https://www.curseforge.com/minecraft/mc-mods/serene-seasons"],
+["Simple Snowy Fix","Monde","https://www.curseforge.com/minecraft/mc-mods/simple-snowy-fix-forge-fabric"],
+["Snow Under Trees","Monde","https://www.curseforge.com/minecraft/mc-mods/snow-under-trees"],
+["Snow! Real Magic!","Monde","https://www.curseforge.com/minecraft/mc-mods/snow-real-magic"],
+["Stoneworks","Monde","https://www.curseforge.com/minecraft/mc-mods/stoneworks"],
+["Stony Cliffs Are Cool","Monde","https://www.curseforge.com/minecraft/mc-mods/stony-cliffs-are-cool"],
+["The Aether","Monde","https://www.curseforge.com/minecraft/mc-mods/aether"],
+["The Twilight Forest","Monde","https://www.curseforge.com/minecraft/mc-mods/the-twilight-forest"],
+["TwilightForest Thread Safety Addon","Monde","https://www.curseforge.com/minecraft/mc-mods/tfthreadsafetyaddon"],
+["Wetland Whimsy","Monde","https://www.curseforge.com/minecraft/mc-mods/wetland-whimsy"],
 // --- Structures ---
-["Dungeons and Taverns","Structures",CF+"dungeons-and-taverns"],
-["Repurposed Structures","Structures",CF+"repurposed-structures-forge"],
-["Towns and Towers","Structures",CF+"towns-and-towers"],
-["Additional Structures","Structures",CF+"additional-structures"],
-["Oh The Structures You'll Go","Structures",CF+"oh-the-structures-youll-go"],
-["Moog's Structures","Structures",null],
-["Moog's End Structures","Structures",null],
-["Moog's Nether Structures","Structures",null],
-["Moog's Ocean Structures","Structures",null],
-["Moog's Villages","Structures",null],
-["Watchtowers","Structures",CF+"watch-tower"],
-["Abandoned Watchtowers","Structures",CF+"abandoned-watchtowers"],
-["Ancient Ruins","Structures",CF+"ancient-structures"],
-["Medieval Buildings","Structures",CF+"medieval-buildings"],
-["Medieval Buildings Edition 1","Structures",null],
-["Sky Villages","Structures",MR+"sky-villages"],
-["Old Villages","Structures",null],
-["Villages Plus","Structures",MR+"villages-plus"],
-["Village More","Structures",CF+"more-villages"],
-["Villager Gardens","Structures",null],
-["Ruined Buildings","Structures",CF+"ruins"],
-["Simply Houses","Structures",CF+"simply-houses"],
-["Structure Essential","Structures",null],
-["Structures Towers","Structures",null],
-["Create: Structures","Structures",CF+"create-structures"],
-["Hope Better Underwater Ruins","Structures",null],
-["Living Space","Structures",null],
-["Kurtis' Interiors","Structures",null],
-["Universal Bonus Chest","Structures",null],
-["YUNG's Better Caves","Structures",CF+"yungs-better-caves"],
-["YUNG's Better Desert Temples","Structures",CF+"yungs-better-desert-temples"],
-["YUNG's Better Dungeons","Structures",CF+"yungs-better-dungeons"],
-["YUNG's Better Jungle Temples","Structures",CF+"yungs-better-jungle-temples"],
-["YUNG's Better Mineshafts","Structures",CF+"yungs-better-mineshafts"],
-["YUNG's Better Nether Fortresses","Structures",CF+"yungs-better-nether-fortresses"],
-["YUNG's Better Ocean Monuments","Structures",CF+"yungs-better-ocean-monuments"],
-["YUNG's Better Strongholds","Structures",CF+"yungs-better-strongholds"],
-["YUNG's Better Witch Huts","Structures",CF+"yungs-better-witch-huts"],
-["YUNG's Extras","Structures",CF+"yungs-extras"],
+["AdoraBuild: Structures","Structures","https://www.curseforge.com/minecraft/mc-mods/adorabuild-structures"],
+["Adventure Dungeons","Structures","https://www.curseforge.com/minecraft/mc-mods/adventure-dungeons-mod-edition"],
+["Cataclysm x YUNG's Better Nether Fortresses Compat","Structures","https://www.curseforge.com/minecraft/mc-mods/cataclysm-x-yungs"],
+["DnT Ancient City Overhaul","Structures","https://www.curseforge.com/minecraft/mc-mods/dnt-ancient-city-overhaul"],
+["DnT Swamp Hut Overhaul","Structures","https://www.curseforge.com/minecraft/mc-mods/dnt-swamp-hut-overhaul"],
+["DnT Woodland Mansion Overhaul","Structures","https://www.curseforge.com/minecraft/mc-mods/dnt-woodland-mansion-overhaul"],
+["Explorations","Structures","https://www.curseforge.com/minecraft/mc-mods/explorations"],
+["Explorify – Dungeons & Structures","Structures","https://www.curseforge.com/minecraft/mc-mods/explorify"],
+["Farmers Structures","Structures","https://www.curseforge.com/minecraft/mc-mods/farmers-structures"],
+["Formations Nether","Structures","https://www.curseforge.com/minecraft/mc-mods/formations-nether"],
+["Formations Overworld","Structures","https://www.curseforge.com/minecraft/mc-mods/formations-overworld"],
+["Improved Village Placement","Structures","https://www.curseforge.com/minecraft/mc-mods/improved-village-placement"],
+["Integrated Dungeons and Structures","Structures","https://www.curseforge.com/minecraft/mc-mods/idas"],
+["It Takes a Pillage Continuation","Structures","https://www.curseforge.com/minecraft/mc-mods/it-takes-a-pillage-continuation"],
+["Lootr","Structures","https://www.curseforge.com/minecraft/mc-mods/lootr"],
+["Luki's Crazy Chambers","Structures","https://www.curseforge.com/minecraft/mc-mods/lukis-crazy-chambers"],
+["MES - Moog's End Structures","Structures","https://www.curseforge.com/minecraft/mc-mods/moogs-end-structures"],
+["MMV - Moog's Missing Villages","Structures","https://www.curseforge.com/minecraft/mc-mods/mmv-moogs-missing-villages"],
+["MNS - Moog's Nether Structures","Structures","https://www.curseforge.com/minecraft/mc-mods/mns-moogs-nether-structures"],
+["Moog's Glow Up","Structures","https://www.curseforge.com/minecraft/mc-mods/moogs-glow-up"],
+["MVS - Moog's Voyager Structures","Structures","https://www.curseforge.com/minecraft/mc-mods/moogs-voyager-structures"],
+["Nether Trials & Chambers","Structures","https://www.curseforge.com/minecraft/mc-mods/hellish-trials"],
+["Raided","Structures","https://www.curseforge.com/minecraft/mc-mods/raided"],
+["Repurposed Structures","Structures","https://www.curseforge.com/minecraft/mc-mods/repurposed-structures"],
+["Sparse Structures","Structures","https://www.curseforge.com/minecraft/mc-mods/sparse-structures"],
+["Structory","Structures","https://www.curseforge.com/minecraft/mc-mods/structory"],
+["Structory: Towers","Structures","https://www.curseforge.com/minecraft/mc-mods/structory-towers"],
+["Structure Essentials","Structures","https://www.curseforge.com/minecraft/mc-mods/structure-essentials-forge-fabric"],
+["Villages&Pillages","Structures","https://www.curseforge.com/minecraft/mc-mods/villages-and-pillages"],
+["When Dungeons Arise - Forge!","Structures","https://www.curseforge.com/minecraft/mc-mods/when-dungeons-arise"],
+["YUNG's Better Dungeons","Structures","https://www.curseforge.com/minecraft/mc-mods/yungs-better-dungeons-neoforge"],
+["YUNG's Better End Island","Structures","https://www.curseforge.com/minecraft/mc-mods/yungs-better-end-island-neoforge"],
+["YUNG's Better Jungle Temples","Structures","https://www.curseforge.com/minecraft/mc-mods/yungs-better-jungle-temples-neoforge"],
+["YUNG's Better Mineshafts","Structures","https://www.curseforge.com/minecraft/mc-mods/yungs-better-mineshafts-neoforge"],
+["YUNG's Better Nether Fortresses","Structures","https://www.curseforge.com/minecraft/mc-mods/yungs-better-nether-fortresses-neoforge"],
+["YUNG's Better Ocean Monuments","Structures","https://www.curseforge.com/minecraft/mc-mods/yungs-better-ocean-monuments-neoforge"],
+["YUNG's Better Strongholds","Structures","https://www.curseforge.com/minecraft/mc-mods/yungs-better-strongholds-neoforge"],
+["YUNG's Better Witch Huts","Structures","https://www.curseforge.com/minecraft/mc-mods/yungs-better-witch-huts-neoforge"],
 // --- Mobs ---
-["Alex's Mobs","Mobs",CF+"alexs-mobs"],
-["Mowzie's Mobs","Mobs",CF+"mowzies-mobs"],
-["Naturalist","Mobs",CF+"naturalist"],
-["Friends and Foes","Mobs",CF+"friends-and-foes"],
-["Mutant Monsters","Mobs",CF+"mutant-monsters"],
-["More Golems","Mobs",CF+"more-golems"],
-["Creeper Overhaul","Mobs",CF+"creeper-overhaul"],
-["More Sniffers","Mobs",CF+"more-sniffers"],
-["More Villagers","Mobs",CF+"more-villagers"],
-["Guard Villagers","Mobs",CF+"guard-villagers"],
-["Little Blue Demon","Mobs",CF+"little-blue-demon"],
-["Horror Element Mod","Mobs",CF+"horror-elements-mod"],
-["Aquamirae","Mobs",CF+"aquamirae"],
-["Darker Depths","Mobs",CF+"darker-depths"],
-["Dragon Flight","Mobs",CF+"dragonflight"],
-["More Drago","Mobs",null],
-["Toy Soldiers","Mobs",CF+"toy-soldiers"],
-["Companion","Mobs",CF+"companion"],
-["Illagers Wear","Mobs",CF+"illagers-wear"],
+["Alex's Mobs","Mobs","https://www.curseforge.com/minecraft/mc-mods/alexs-mobs-1-21-1-port"],
+["Dragon Mounts Remastered","Mobs","https://www.curseforge.com/minecraft/mc-mods/dmr"],
+["Friends&Foes","Mobs","https://www.curseforge.com/minecraft/mc-mods/friends-and-foes-forge"],
+["Goblin Traders","Mobs","https://www.curseforge.com/minecraft/mc-mods/goblin-traders"],
+["Hybrid Aquatic","Mobs","https://www.curseforge.com/minecraft/mc-mods/hybrid-aquatic"],
+["Illager Invasion","Mobs","https://www.curseforge.com/minecraft/mc-mods/illager-invasion"],
+["Just Enough Breeding (JEBr)","Mobs","https://www.curseforge.com/minecraft/mc-mods/justenoughbreeding"],
+["More Mobs","Mobs","https://www.curseforge.com/minecraft/data-packs/more-mobs"],
+["More Villagers : Re-employed","Mobs","https://www.curseforge.com/minecraft/mc-mods/more-villagers-re-employed"],
+["Mowzie's Mobs","Mobs","https://www.curseforge.com/minecraft/mc-mods/mowzies-mobs"],
+["Piglin Proliferation","Mobs","https://www.curseforge.com/minecraft/mc-mods/piglin-proliferation"],
+["RevampedWolf","Mobs","https://www.curseforge.com/minecraft/mc-mods/revampedwolf"],
+["Rewithered","Mobs","https://www.curseforge.com/minecraft/mc-mods/rewithered"],
+["Smarter Farmers (farmers replant)","Mobs","https://www.curseforge.com/minecraft/mc-mods/smarter-farmers-farmers-replant"],
+["Variants&Ventures","Mobs","https://www.curseforge.com/minecraft/mc-mods/variants-and-ventures"],
+["Villager Names","Mobs","https://www.curseforge.com/minecraft/mc-mods/villager-names"],
+["Zombie Improvements","Mobs","https://www.curseforge.com/minecraft/mc-mods/zombie-improvements"],
 // --- Nourriture ---
-["Farmer's Delight","Nourriture",CF+"farmers-delight"],
-["Farmer's Knives","Nourriture",CF+"farmers-knives"],
-["Farmer's Resplendent","Nourriture",CF+"farmers-resplendent"],
-["Barbeque's Delight","Nourriture",CF+"barbeques-delight"],
-["Brewin' And Chewin'","Nourriture",CF+"brewin-and-chewin"],
-["Allocave Delight","Nourriture",null],
-["Crabber's Delight","Nourriture",CF+"crabbers-delight"],
-["Delightful","Nourriture",CF+"delightful"],
-["End's Delight","Nourriture",CF+"enders-delight"],
-["Engineer's Delight","Nourriture",CF+"engineers-delight"],
-["Fruits Delight","Nourriture",CF+"fruitsdelight"],
-["Miner's Delight","Nourriture",CF+"miners-delight"],
-["My Nether Delight","Nourriture",CF+"my-nether-delight"],
-["Oceanic Delight","Nourriture",CF+"oceanic-delight"],
-["Twilight Delight","Nourriture",CF+"twilight-delight"],
-["Twilight Forest - Dungeons & Villages","Structures",CF+"twilightforest-dungeons-and-villages"],
-["When Dungeons Arise","Structures",CF+"when-dungeons-arise"],
-["Dungeons Delight","Nourriture",CF+"dungeons-delight"],
-["Loot Integrations: WDA & Co","API",CF+"loot-integrations-when-dungeons-arise"],
-["RunicLib","API",CF+"runiclib"],
-["Connoisseur's Delight","Nourriture",CF+"connoisseurs-delight"],
-["Iron's Spells Delight","Nourriture",CF+"irons-spells-delight"],
-["Cuisines","Nourriture",CF+"cuisines"],
-["Aquaculture","Nourriture",CF+"aquaculture-2"],
-["Stardew Fishing","Nourriture",CF+"stardew-fishing"],
-["Farms and Furnitures","Nourriture",null],
-["DoN Brewery","Nourriture",null],
+["Autochef's Delight","Nourriture","https://www.curseforge.com/minecraft/mc-mods/autochefs-delight"],
+["Ender's Delight","Nourriture","https://www.curseforge.com/minecraft/mc-mods/enders-delight"],
+["Farmer's Cutting: Oh The Biomes We've Gone","Nourriture","https://www.curseforge.com/minecraft/mc-mods/farmers-cutting-oh-the-biomes-weve-gone"],
+["Farmer's Delight","Nourriture","https://www.curseforge.com/minecraft/mc-mods/farmers-delight"],
+["My Nether's Delight","Nourriture","https://www.curseforge.com/minecraft/mc-mods/my-nethers-delight"],
+["Ocean's Delight","Nourriture","https://www.curseforge.com/minecraft/mc-mods/oceans-delight"],
+["Repurposed Structures - Farmer's Delight Compat Mod","Nourriture","https://www.curseforge.com/minecraft/mc-mods/repurposed-structures-farmers-delight-compat-mod"],
+["RightClickHarvest","Nourriture","https://www.curseforge.com/minecraft/mc-mods/rightclickharvest"],
+["Twilight's Flavors & Delight","Nourriture","https://www.curseforge.com/minecraft/mc-mods/twilights-flavors-delight"],
 // --- Create ---
-["Create","Create",CF+"create"],
-["Create Addition","Create",CF+"createaddition"],
-["Create: Aquatic Ambition","Create",CF+"create-aquatic-ambition"],
-["Create: Connected","Create",CF+"create-connected"],
-["Create: Recycling","Create",CF+"create-recycling"],
-["Create: Things and Misc","Create",CF+"create-things-and-misc"],
-["Create Aeronautics","Create",MR+"create-aeronautics"],
-["Create Better","Create",null],
-["Create: Big Cannons","Create",CF+"create-big-cannons"],
-["Create: Confectionery","Create",CF+"create-confectionery"],
-["Create Deco","Create",CF+"create-deco"],
-["Create Generators","Create",CF+"create-generators"],
-["Create: Cavation","Create",null],
+["Colorwheel","Create","https://www.curseforge.com/minecraft/mc-mods/colorwheel"],
+["Create","Create","https://www.curseforge.com/minecraft/mc-mods/create"],
+["Create Big Cannons","Create","https://www.curseforge.com/minecraft/mc-mods/create-big-cannons"],
+["Create Crafts & Additions","Create","https://www.curseforge.com/minecraft/mc-mods/createaddition"],
+["Create Deco","Create","https://www.curseforge.com/minecraft/mc-mods/create-deco"],
+["Create Ore Excavation","Create","https://www.curseforge.com/minecraft/mc-mods/create-ore-excavation"],
+["Create Slice & Dice","Create","https://www.curseforge.com/minecraft/mc-mods/slice-and-dice"],
+["Create Stuff 'N Additions","Create","https://www.curseforge.com/minecraft/mc-mods/create-stuff-additions"],
+["Create: Central Kitchen","Create","https://www.curseforge.com/minecraft/mc-mods/create-central-kitchen"],
+["Create: Copycats+","Create","https://www.curseforge.com/minecraft/mc-mods/copycats"],
+["Create: Design n' Decor","Create","https://www.curseforge.com/minecraft/mc-mods/create-design-n-decor"],
+["Create: Dragons Plus","Create","https://www.curseforge.com/minecraft/mc-mods/create-dragons-plus"],
+["Create: Enchantment Industry","Create","https://www.curseforge.com/minecraft/mc-mods/create-enchantment-industry"],
+["Create: Interiors","Create","https://www.curseforge.com/minecraft/mc-mods/interiors"],
+["Create: New Age","Create","https://www.curseforge.com/minecraft/mc-mods/create-new-age"],
+["Create: Radars","Create","https://www.curseforge.com/minecraft/mc-mods/create-radars"],
+["Vanillin","Create","https://www.curseforge.com/minecraft/mc-mods/vanillin"],
 // --- Combat & Magie ---
-["Iron's Spellbooks","Combat",CF+"irons-spells-n-spellbooks"],
-["Better Combat","Combat",MR+"better-combat"],
-["Simply Swords","Combat",CF+"simply-swords"],
-["Artifacts","Combat",CF+"artifacts"],
-["Epic Knights","Combat",CF+"epic-knights-shields-and-armor"],
-["Immersive Armors","Combat",MR+"immersive-armors"],
-["Fantasy Armor","Combat",CF+"fantasy-armor"],
-["Cataclysm","Combat",CF+"cataclysm-mod"],
-["L_Ender's Cataclysm","Combat",CF+"l-enders-cataclysm"],
-["Hellish Tridents","Combat",null],
-["Ranged Weapons","Combat",null],
-["Armored Redstone","Combat",CF+"armored-redstone"],
-["Dawn of it","Combat",null],
-["Accessories","Combat",MR+"accessories"],
-["Backpacked","Combat",CF+"backpacked"],
-["Cosmetic Armor Reworked","Combat",CF+"cosmetic-armor-reworked"],
-["Spell Engine","Combat",MR+"spell-engine"],
-["Spell Power","Combat",MR+"spell-power"],
-["Immersive Engineering","Combat",CF+"immersive-engineering"],
-["Paxii","Combat",null],
-["Royal Variants","Combat",null],
+["Advanced Netherite","Combat","https://www.curseforge.com/minecraft/mc-mods/advanced-netherite"],
 ["DonjonMC","Combat","https://github.com/LKDM7/DonjonMC/raw/refs/heads/master/releases/donjonmc-2.0.0.jar"],
+["Easy Magic","Combat","https://www.curseforge.com/minecraft/mc-mods/easy-magic"],
+["Enderdragon Loot","Combat","https://www.curseforge.com/minecraft/mc-mods/enderdragon-loot"],
+["Iron's Spells 'n Spellbooks","Combat","https://www.curseforge.com/minecraft/mc-mods/irons-spells-n-spellbooks"],
+["L_Ender 's Cataclysm","Combat","https://www.curseforge.com/minecraft/mc-mods/lendercataclysm"],
+["MmmMmmMmmMmm (Target Dummy)","Combat","https://www.curseforge.com/minecraft/mc-mods/mmmmmmmmmmmm"],
+["Netherite Tweaks & Fixes","Combat","https://www.curseforge.com/minecraft/mc-mods/netherite-tweaks"],
+["Simply Swords","Combat","https://www.curseforge.com/minecraft/mc-mods/simply-swords"],
 // --- Décoration ---
-["Macaw's Bridges","Déco",CF+"macaws-bridges"],
-["Macaw's Doors","Déco",CF+"macaws-doors"],
-["Macaw's Furniture","Déco",CF+"macaws-furniture"],
-["Macaw's Lights & Lamps","Déco",CF+"macaws-lights-and-lamps"],
-["Macaw's Paintings","Déco",CF+"macaws-paintings"],
-["Macaw's Paths & Pavings","Déco",CF+"macaws-paths-and-pavings"],
-["Macaw's Roofs","Déco",CF+"macaws-roofs"],
-["Macaw's Fences & Walls","Déco",CF+"macaws-fences-and-walls"],
-["Macaw's Windows","Déco",CF+"macaws-windows"],
-["Macaw's BYG compat","Déco",CF+"mcw-byg"],
-["Macaw's Biomes compat","Déco",CF+"mcwbiomesushi"],
-["Another Furniture","Déco",MR+"anotherfurniture"],
-["MrCrayfish's Furniture","Déco",CF+"mrcrayfishs-furniture-mod"],
-["Supplementaries","Déco",CF+"supplementaries"],
-["Refurbished Furniture","Déco",CF+"refurbished-furniture"],
-["Design and Decor","Déco",null],
-["Rustic","Déco",CF+"rustic"],
-["Display Case","Déco",CF+"displaycase"],
-["Variant Chests","Déco",CF+"variantchests"],
-["Copycats+","Déco",MR+"copycats"],
-["Paintings","Déco",MR+"paintings"],
-["Quark","Déco",CF+"quark"],
-["Prickle","Déco",CF+"prickle"],
-["Chimes","Déco",CF+"chimes"],
-["DoN Lanterns","Déco",null],
-["Subtle Effects","Déco",CF+"subtle-effects"],
-["Ecologics","Déco",CF+"ecologics"],
-["Fusion (textures)","Déco",CF+"fusion-connected-textures"],
+["Amendments","Déco","https://www.curseforge.com/minecraft/mc-mods/amendments"],
+["Another Furniture","Déco","https://www.curseforge.com/minecraft/mc-mods/another-furniture"],
+["Aurelj's Paintings","Déco","https://www.curseforge.com/minecraft/mc-mods/aureljs-paintings"],
+["Chipped","Déco","https://www.curseforge.com/minecraft/mc-mods/chipped"],
+["Cut Through","Déco","https://www.curseforge.com/minecraft/mc-mods/cut-through"],
+["Diagonal Fences","Déco","https://www.curseforge.com/minecraft/mc-mods/diagonal-fences"],
+["Diagonal Walls","Déco","https://www.curseforge.com/minecraft/mc-mods/diagonal-walls"],
+["Dyed Flames","Déco","https://www.curseforge.com/minecraft/mc-mods/dyed-flames"],
+["Handcrafted","Déco","https://www.curseforge.com/minecraft/mc-mods/handcrafted"],
+["KleeSlabs","Déco","https://www.curseforge.com/minecraft/mc-mods/kleeslabs"],
+["Particle Effects","Déco","https://www.curseforge.com/minecraft/mc-mods/particle-effects"],
+["Quark","Déco","https://www.curseforge.com/minecraft/mc-mods/quark"],
+["Sawmill","Déco","https://www.curseforge.com/minecraft/mc-mods/sawmill"],
+["Subtle Effects","Déco","https://www.curseforge.com/minecraft/mc-mods/subtle-effects"],
+["Supplementaries","Déco","https://www.curseforge.com/minecraft/mc-mods/supplementaries"],
+["Toni's Immersive Lanterns","Déco","https://www.curseforge.com/minecraft/mc-mods/immersive-lanterns"],
+["Underlay","Déco","https://www.curseforge.com/minecraft/mc-mods/underlay"],
+["Wakes Reforged","Déco","https://www.curseforge.com/minecraft/mc-mods/wakes-reforged"],
 // --- Performance ---
-["Sodium","Performance",MR+"sodium"],
-["FerriteCore","Performance",MR+"ferrite-core"],
-["ModernFix","Performance",CF+"modernfix"],
-["Chunky","Performance",MR+"chunky"],
-["Entity Culling","Performance",MR+"entityculling"],
-["Saturn","Performance",MR+"saturn"],
-["Krypton","Performance",MR+"krypton"],
-["Oculus","Performance",CF+"oculus"],
-["Spark","Performance",MR+"spark"],
-["AI Improvements","Performance",CF+"ai-improvements"],
-["Let Me Despawn","Performance",MR+"let-me-despawn"],
+["AllTheLeaks (Memory Leak Fix)","Performance","https://www.curseforge.com/minecraft/mc-mods/alltheleaks"],
+["Alternate Current","Performance","https://www.curseforge.com/minecraft/mc-mods/alternate-current"],
+["BadOptimizations","Performance","https://www.curseforge.com/minecraft/mc-mods/badoptimizations"],
+["Better World Loading","Performance","https://www.curseforge.com/minecraft/mc-mods/better-world-loading-forge"],
+["BMC \"Datafixer\"","Performance","https://www.curseforge.com/minecraft/mc-mods/bmc-patcher"],
+["Chunk Activity Tracker","Performance","https://www.curseforge.com/minecraft/mc-mods/chunk-activity-tracker"],
+["Chunk Sending","Performance","https://www.curseforge.com/minecraft/mc-mods/chunk-sending-forge-fabric"],
+["Chunky","Performance","https://www.curseforge.com/minecraft/mc-mods/chunky-pregenerator-forge"],
+["Concurrent Chunk Management Engine","Performance","https://www.curseforge.com/minecraft/mc-mods/c2me"],
+["Connectivity","Performance","https://www.curseforge.com/minecraft/mc-mods/connectivity"],
+["Crash Assistant","Performance","https://www.curseforge.com/minecraft/mc-mods/crash-assistant"],
+["Disconnect Packet Fix","Performance","https://www.curseforge.com/minecraft/mc-mods/disconnect-packet-fix"],
+["Does It Tick?","Performance","https://www.curseforge.com/minecraft/mc-mods/does-it-tick"],
+["Dolphin Fix","Performance","https://www.curseforge.com/minecraft/mc-mods/dolphin-fix"],
+["Entity Culling Fabric/Forge","Performance","https://www.curseforge.com/minecraft/mc-mods/entityculling"],
+["Farsight","Performance","https://www.curseforge.com/minecraft/mc-mods/farsight"],
+["Fast Async World Save","Performance","https://www.curseforge.com/minecraft/mc-mods/fast-async-world-save-forge-fabric"],
+["Fast IP Ping","Performance","https://www.curseforge.com/minecraft/mc-mods/fast-ip-ping"],
+["Fast Item Frames","Performance","https://www.curseforge.com/minecraft/mc-mods/fast-item-frames"],
+["Fast Paintings","Performance","https://www.curseforge.com/minecraft/mc-mods/fast-paintings"],
+["FerriteCore","Performance","https://www.curseforge.com/minecraft/mc-mods/ferritecore"],
+["fix GPU memory leak","Performance","https://www.curseforge.com/minecraft/mc-mods/fix-gpu-memory-leak"],
+["Golem Spawn Fix","Performance","https://www.curseforge.com/minecraft/mc-mods/golem-spawn-fix"],
+["Horse Breeding Fix","Performance","https://www.curseforge.com/minecraft/mc-mods/horse-breeding-fix"],
+["HRTF Fix","Performance","https://www.curseforge.com/minecraft/mc-mods/hrtffix"],
+["ImmediatelyFast","Performance","https://www.curseforge.com/minecraft/mc-mods/immediatelyfast"],
+["Krypton Reno","Performance","https://www.curseforge.com/minecraft/mc-mods/krypton-fnp"],
+["Lithium","Performance","https://www.curseforge.com/minecraft/mc-mods/lithium"],
+["Loading Protection","Performance","https://www.curseforge.com/minecraft/mc-mods/loading-protection"],
+["Log Begone","Performance","https://www.curseforge.com/minecraft/mc-mods/log-begone"],
+["Long NBT Killer","Performance","https://www.curseforge.com/minecraft/mc-mods/long-nbt-killer"],
+["Memory Settings","Performance","https://www.curseforge.com/minecraft/mc-mods/memory-settings"],
+["Missing Mods Checker","Performance","https://www.curseforge.com/minecraft/mc-mods/missing-mods-checker"],
+["MixinTrace Resmithed","Performance","https://www.curseforge.com/minecraft/mc-mods/mixintrace-resmithed"],
+["ModernFix","Performance","https://www.curseforge.com/minecraft/mc-mods/modernfix"],
+["Modpack Update Checker","Performance","https://www.curseforge.com/minecraft/mc-mods/modpack-update-checker"],
+["NaNny (Fix NaN Health / Absorption)","Performance","https://www.curseforge.com/minecraft/mc-mods/nanny"],
+["Neo Bee Fix","Performance","https://www.curseforge.com/minecraft/mc-mods/neo-bee-fix"],
+["Neruina - Ticking Entity Fixer","Performance","https://www.curseforge.com/minecraft/mc-mods/neruina"],
+["Pack Analytics","Performance","https://www.curseforge.com/minecraft/mc-mods/pack-analytics"],
+["Packet Fixer","Performance","https://www.curseforge.com/minecraft/mc-mods/packet-fixer"],
+["Random Enchant Fix","Performance","https://www.curseforge.com/minecraft/mc-mods/random-enchant-fix"],
+["Recipe Essentials","Performance","https://www.curseforge.com/minecraft/mc-mods/recipe-essentials-forge-fabric"],
+["Redirected","Performance","https://www.curseforge.com/minecraft/mc-mods/redirected"],
+["Reese's Sodium Options","Performance","https://www.curseforge.com/minecraft/mc-mods/reeses-sodium-options"],
+["ScalableLux","Performance","https://www.curseforge.com/minecraft/mc-mods/scalablelux"],
+["Server Performance - Smooth Chunk Save","Performance","https://www.curseforge.com/minecraft/mc-mods/smooth-chunk-save"],
+["Skeleton AI Fix","Performance","https://www.curseforge.com/minecraft/mc-mods/skeleton-ai-fix"],
+["Smooth Movement","Performance","https://www.curseforge.com/minecraft/mc-mods/smooth-movement"],
+["Sodium","Performance","https://www.curseforge.com/minecraft/mc-mods/sodium"],
+["Sodium Leaf Culling","Performance","https://www.curseforge.com/minecraft/mc-mods/sodium-leaf-culling"],
+["Sodium/Embeddium Extras","Performance","https://www.curseforge.com/minecraft/mc-mods/magnesium-extras"],
+["Sodium/Embeddium Options API","Performance","https://www.curseforge.com/minecraft/mc-mods/sodium-options-api"],
+["Sodium/Embeddium Options Mod Compat","Performance","https://www.curseforge.com/minecraft/mc-mods/sodium-embeddium-options-mod-compat"],
+["spark","Performance","https://www.curseforge.com/minecraft/mc-mods/spark"],
+["Structure Layout Optimizer","Performance","https://www.curseforge.com/minecraft/mc-mods/structure-layout-optimizer"],
 // --- Interface & Utilitaires ---
-["Jade","Interface",CF+"jade"],
-["JEI (Just Enough Items)","Interface",CF+"jei"],
-["AppleSkin","Interface",CF+"appleskin"],
-["Xaero's Minimap","Interface",CF+"xaeros-minimap"],
-["Xaero's World Map","Interface",CF+"xaeros-world-map"],
-["Mouse Tweaks","Interface",CF+"mouse-tweaks"],
-["InvMove","Interface",CF+"invmove"],
-["Clumps","Interface",CF+"clumps"],
-["Enchantment Descriptions","Interface",CF+"enchantment-descriptions"],
-["Camera Overhaul","Interface",MR+"cameraoverhaul"],
-["Camera Utils","Interface",CF+"camera-utils"],
-["Better Third Person","Interface",MR+"better-third-person"],
-["Enhanced Boss Bars","Interface",CF+"enhanced-boss-bars"],
-["Resourcify","Interface",CF+"resourcify"],
-["Entity Model Features","Interface",MR+"entity-model-features"],
-["Entity Texture Features","Interface",MR+"entitytexturefeatures"],
-["Forgematica","Interface",CF+"forgematica"],
-["CMDCam","Interface",CF+"cmdcam"],
-["Simple Voice Chat","Interface",CF+"simple-voice-chat"],
-["WorldEdit","Interface",CF+"worldedit"],
-["Transparent","Interface",CF+"transparent"],
-["More Leash","Interface",MR+"moreleash"],
-["Better Archeology","Interface",CF+"better-archeology"],
-["Sound Physics Remastered","Interface",CF+"sound-physics-remastered"],
-["Diagonal Fences","Interface",MR+"diagonal-fences"],
-["Block Faster Bypasser","Interface",null],
-["Packet Fixer","Interface",CF+"packet-fixer"],
-["LambDynamicLights","Interface",MR+"lambdynamiclights"],
-["Nether Portal Fix","Interface",CF+"netherportalfix"],
-["More Mob Griefing Options","Interface",null],
-["Tombstone","Interface",CF+"tombstone"],
-["Easy NPC","Interface",CF+"easy-npc"],
+["Accessorify","Interface","https://www.curseforge.com/minecraft/mc-mods/accessorify"],
+["Advanced Loot Info","Interface","https://www.curseforge.com/minecraft/mc-mods/advanced-loot-info"],
+["Audio Improvements","Interface","https://www.curseforge.com/minecraft/mc-mods/audio-improvements"],
+["Backpacked","Interface","https://www.curseforge.com/minecraft/mc-mods/backpacked"],
+["Bartering Station","Interface","https://www.curseforge.com/minecraft/mc-mods/bartering-station"],
+["Better Advancements","Interface","https://www.curseforge.com/minecraft/mc-mods/better-advancements"],
+["Better Client","Interface","https://www.curseforge.com/minecraft/mc-mods/better-client"],
+["Better Mods Button","Interface","https://www.curseforge.com/minecraft/mc-mods/better-mods-button"],
+["BisectHosting Server Integration Menu","Interface","https://www.curseforge.com/minecraft/mc-mods/bisecthosting-server-integration-menu-neoforge"],
+["Boat Item View","Interface","https://www.curseforge.com/minecraft/mc-mods/boat-item-view-forge"],
+["Carry On","Interface","https://www.curseforge.com/minecraft/mc-mods/carry-on"],
+["Certain Questing Additions","Interface","https://www.curseforge.com/minecraft/mc-mods/certain-questing-additions"],
+["Chat Heads","Interface","https://www.curseforge.com/minecraft/mc-mods/chat-heads"],
+["Cherished Worlds","Interface","https://www.curseforge.com/minecraft/mc-mods/cherished-worlds"],
+["Client Crafting","Interface","https://www.curseforge.com/minecraft/mc-mods/client-crafting"],
+["Client Sort","Interface","https://www.curseforge.com/minecraft/mc-mods/clientsort"],
+["Clumps","Interface","https://www.curseforge.com/minecraft/mc-mods/clumps"],
+["Comforts","Interface","https://www.curseforge.com/minecraft/mc-mods/comforts"],
+["Controlling","Interface","https://www.curseforge.com/minecraft/mc-mods/controlling"],
+["Convenient Effects","Interface","https://www.curseforge.com/minecraft/mc-mods/convenient-effects"],
 ["Dashboard Admin","Interface","https://github.com/LKDM7/DashBoardAdmin/raw/refs/heads/master/releases/dashboardadmin-1.0.4.jar"],
+["Delete Worlds To Trash","Interface","https://www.curseforge.com/minecraft/mc-mods/delete-worlds-to-trash"],
+["Despawn Tweaks","Interface","https://www.curseforge.com/minecraft/mc-mods/despawn-tweaks"],
+["Distraction Free Recipes (EMI / REI / JEI)","Interface","https://www.curseforge.com/minecraft/mc-mods/distraction-free-recipes"],
+["Double Doors","Interface","https://www.curseforge.com/minecraft/mc-mods/double-doors"],
+["Drippy Loading Screen","Interface","https://www.curseforge.com/minecraft/mc-mods/drippy-loading-screen"],
+["Early Bedtime","Interface","https://www.curseforge.com/minecraft/mc-mods/early-bedtime"],
+["Easy Anvils","Interface","https://www.curseforge.com/minecraft/mc-mods/easy-anvils"],
+["Easy Disenchanting","Interface","https://www.curseforge.com/minecraft/mc-mods/easy-disenchanting"],
+["Enchantment Descriptions","Interface","https://www.curseforge.com/minecraft/mc-mods/enchantment-descriptions"],
+["FancyMenu","Interface","https://www.curseforge.com/minecraft/mc-mods/fancymenu"],
+["Foolproof","Interface","https://www.curseforge.com/minecraft/mc-mods/foolproof"],
+["Fortune Works On Ancient Debris","Interface","https://www.curseforge.com/minecraft/data-packs/fortuneworksonancientdebris"],
+["FTB Filter System","Interface","https://www.curseforge.com/minecraft/mc-mods/ftb-filter-system"],
+["FTB Quests","Interface","https://www.curseforge.com/minecraft/mc-mods/ftb-quests-forge"],
+["FTB Teams","Interface","https://www.curseforge.com/minecraft/mc-mods/ftb-teams-forge"],
+["Immersive Armor HUD","Interface","https://www.curseforge.com/minecraft/mc-mods/immersive-armor-hud"],
+["Immersive Tips","Interface","https://www.curseforge.com/minecraft/mc-mods/immersive-tips"],
+["Inmis","Interface","https://www.curseforge.com/minecraft/mc-mods/inmis-forge-port"],
+["Item Highlighter","Interface","https://www.curseforge.com/minecraft/mc-mods/item-highlighter"],
+["Jade","Interface","https://www.curseforge.com/minecraft/mc-mods/jade"],
+["Jade Addons","Interface","https://www.curseforge.com/minecraft/mc-mods/jade-addons"],
+["Just Enough Items (JEI)","Interface","https://www.curseforge.com/minecraft/mc-mods/jei"],
+["Just Enough Professions (JEP)","Interface","https://www.curseforge.com/minecraft/mc-mods/just-enough-professions-jep"],
+["Just Zoom","Interface","https://www.curseforge.com/minecraft/mc-mods/just-zoom"],
+["Leaderboards","Interface","https://www.curseforge.com/minecraft/mc-mods/leaderboards"],
+["Leave My Bars Alone","Interface","https://www.curseforge.com/minecraft/mc-mods/leave-my-bars-alone"],
+["Luna","Interface","https://www.curseforge.com/minecraft/mc-mods/luna"],
+["Magnum Torch","Interface","https://www.curseforge.com/minecraft/mc-mods/magnum-torch"],
+["Melody","Interface","https://www.curseforge.com/minecraft/mc-mods/melody"],
+["Mining Speed Tooltips","Interface","https://www.curseforge.com/minecraft/mc-mods/mining-speed-tooltips"],
+["Misc Tweaks","Interface","https://www.curseforge.com/minecraft/mc-mods/misc-tweaks"],
+["Mouse Tweaks","Interface","https://www.curseforge.com/minecraft/mc-mods/mouse-tweaks"],
+["MouseTweaks x Accessories Fix","Interface","https://www.curseforge.com/minecraft/mc-mods/mousetweaks-x-accessories-fix"],
+["Nether Chested","Interface","https://www.curseforge.com/minecraft/mc-mods/nether-chested"],
+["NetherPortalFix","Interface","https://www.curseforge.com/minecraft/mc-mods/netherportalfix"],
+["No Chat Reports","Interface","https://www.curseforge.com/minecraft/mc-mods/no-chat-reports"],
+["No Report Button","Interface","https://www.curseforge.com/minecraft/mc-mods/no-report-button"],
+["Non-Directional Damage Tilt Fix","Interface","https://www.curseforge.com/minecraft/mc-mods/nondirectionaldamagetiltfix"],
+["Not Enough Animations","Interface","https://www.curseforge.com/minecraft/mc-mods/not-enough-animations"],
+["Open Parties and Claims","Interface","https://www.curseforge.com/minecraft/mc-mods/open-parties-and-claims"],
+["Overflowing Bars","Interface","https://www.curseforge.com/minecraft/mc-mods/overflowing-bars"],
+["Pick Up Notifier","Interface","https://www.curseforge.com/minecraft/mc-mods/pick-up-notifier"],
+["Ping Wheel","Interface","https://www.curseforge.com/minecraft/mc-mods/ping-wheel"],
+["Polymorph","Interface","https://www.curseforge.com/minecraft/mc-mods/polymorph"],
+["Quests Kill Task Tweaks","Interface","https://www.curseforge.com/minecraft/mc-mods/quests-kill-task-tweaks"],
+["Reset Controls Confirmation","Interface","https://www.curseforge.com/minecraft/mc-mods/reset-controls-confirmation"],
+["Resource Pack Overrides","Interface","https://www.curseforge.com/minecraft/mc-mods/resource-pack-overrides"],
+["Server Browser - In Game Server Listings","Interface","https://www.curseforge.com/minecraft/mc-mods/server-browser"],
+["Simple Discord Rich Presence","Interface","https://www.curseforge.com/minecraft/mc-mods/simple-discord-rich-presence"],
+["Simple Voice Chat","Interface","https://www.curseforge.com/minecraft/mc-mods/simple-voice-chat"],
+["Simply Tooltips","Interface","https://www.curseforge.com/minecraft/mc-mods/simply-tooltips"],
+["Skin Layers 3D","Interface","https://www.curseforge.com/minecraft/mc-mods/skin-layers-3d"],
+["Sodium/Embeddium Dynamic Lights","Interface","https://www.curseforge.com/minecraft/mc-mods/dynamiclights-reforged"],
+["Sound Physics Remastered","Interface","https://www.curseforge.com/minecraft/mc-mods/sound-physics-remastered"],
+["Tom's Simple Storage Mod","Interface","https://www.curseforge.com/minecraft/mc-mods/toms-storage"],
+["Too Fast","Interface","https://www.curseforge.com/minecraft/mc-mods/too-fast"],
+["Trading Post","Interface","https://www.curseforge.com/minecraft/mc-mods/trading-post"],
+["Vein Mining","Interface","https://www.curseforge.com/minecraft/mc-mods/vein-mining"],
+["Visual Workbench","Interface","https://www.curseforge.com/minecraft/mc-mods/visual-workbench"],
+["What Are They Up To (Watut)","Interface","https://www.curseforge.com/minecraft/mc-mods/what-are-they-up-to"],
+["World Play Time","Interface","https://www.curseforge.com/minecraft/mc-mods/world-play-time"],
+["Xaero's Minimap","Interface","https://www.curseforge.com/minecraft/mc-mods/xaeros-minimap"],
+["Xaero's World Map","Interface","https://www.curseforge.com/minecraft/mc-mods/xaeros-world-map"],
+["XaeroPlus","Interface","https://www.curseforge.com/minecraft/mc-mods/xaeroplus"],
+["XP Tome","Interface","https://www.curseforge.com/minecraft/mc-mods/xp-tome"],
+["YUNG's Menu Tweaks","Interface","https://www.curseforge.com/minecraft/mc-mods/yungs-menu-tweaks-neoforge"],
 // --- API & Bibliothèques ---
-["Architectury API","API",MR+"architectury-api"],
-["GeckoLib","API",CF+"geckolib"],
-["Bookshelf","API",CF+"bookshelf"],
-["Balm","API",CF+"balm"],
-["Citadel","API",CF+"citadel"],
-["Cloth Config","API",CF+"cloth-config"],
-["Collective","API",CF+"collective"],
-["Puzzles Lib","API",CF+"puzzles-lib"],
-["Iceberg","API",CF+"iceberg"],
-["Moonlight Lib","API",CF+"moonlight-lib"],
-["Zeta","API",CF+"zeta"],
-["GlitchCore","API",CF+"glitchcore"],
-["Cristellib","API",CF+"cristel-lib"],
-["Lodestone","API",CF+"lodestone"],
-["Structure Gel API","API",CF+"structure-gel-api"],
-["YUNG's API","API",CF+"yungs-api"],
-["Cupboard","API",CF+"cupboard"],
-["Forgified Fabric API","API",CF+"forgified-fabric-api"],
-["Konkrete","API",CF+"konkrete"],
-["Framework","API",CF+"framework"],
-["oωo lib","API",MR+"owo-lib"],
-["Ash API","API",CF+"ash-api"],
-["AttributeFix","API",CF+"attributefix"],
-["Integrated API","API",CF+"integrated-api"],
-["Cyclops Core","API",CF+"cyclopscore"],
-["AzureLib Armor","API",CF+"azurelib-armor"],
-["Player Animation Library","API",MR+"player-animation-lib"],
-["Mysterious Mountain Lib","API",CF+"mysterious-mountain-lib"],
-["More RPG Library","API",MR+"more-rpg-library"],
-["YACL","API",MR+"yacl"],
-["Excavated Variants","API",MR+"excavated-variants"],
-["Loot Integrations","API",CF+"loot-integrations"],
-["MAFGLI","API",CF+"mafglib"],
-["Fuzzy Crafting","API",MR+"fuzzy-crafting"],
-["Just Hammers","API",CF+"just-hammers"],
-["Just Ores","API",CF+"just-ores"],
-["Lettuce Mod","API",CF+"lettuce"],
-["TermBand","API",null],
-["JLine","API",null],
+["Abridged","API","https://www.curseforge.com/minecraft/mc-mods/abridged"],
+["Accessories","API","https://www.curseforge.com/minecraft/mc-mods/accessories"],
+["Accessories Compatibility Layer","API","https://www.curseforge.com/minecraft/mc-mods/accessories-compat-layer"],
+["Almanac Lib","API","https://www.curseforge.com/minecraft/mc-mods/almanac-lib"],
+["Architectury API","API","https://www.curseforge.com/minecraft/mc-mods/architectury-api"],
+["Athena","API","https://www.curseforge.com/minecraft/mc-mods/athena"],
+["AzureLib","API","https://www.curseforge.com/minecraft/mc-mods/azurelib"],
+["Balm","API","https://www.curseforge.com/minecraft/mc-mods/balm"],
+["Better Compatibility Checker","API","https://www.curseforge.com/minecraft/mc-mods/better-compatibility-checker"],
+["Blended Compat","API","https://www.curseforge.com/minecraft/mc-mods/blended-compat"],
+["Bookshelf","API","https://www.curseforge.com/minecraft/mc-mods/bookshelf"],
+["Caelus API","API","https://www.curseforge.com/minecraft/mc-mods/caelus"],
+["Cerulean","API","https://www.curseforge.com/minecraft/mc-mods/cerulean"],
+["Citadel","API","https://www.curseforge.com/minecraft/mc-mods/citadel-1-21-1-port"],
+["Cloth Config API","API","https://www.curseforge.com/minecraft/mc-mods/cloth-config"],
+["Collective","API","https://www.curseforge.com/minecraft/mc-mods/collective"],
+["Configurable","API","https://www.curseforge.com/minecraft/mc-mods/configurable"],
+["Configured","API","https://www.curseforge.com/minecraft/mc-mods/configured"],
+["Configured Defaults","API","https://www.curseforge.com/minecraft/mc-mods/configured-defaults"],
+["Connector Extras","API","https://www.curseforge.com/minecraft/mc-mods/connector-extras"],
+["CorgiLib","API","https://www.curseforge.com/minecraft/mc-mods/corgilib"],
+["CoroUtil","API","https://www.curseforge.com/minecraft/mc-mods/coroutil"],
+["Cristel Lib","API","https://www.curseforge.com/minecraft/mc-mods/cristel-lib"],
+["Cupboard","API","https://www.curseforge.com/minecraft/mc-mods/cupboard"],
+["Curios API","API","https://www.curseforge.com/minecraft/mc-mods/curios"],
+["EpheroLib","API","https://www.curseforge.com/minecraft/mc-mods/epherolib"],
+["Forge Config API Port","API","https://www.curseforge.com/minecraft/mc-mods/forge-config-api-port"],
+["Forgified Fabric API","API","https://www.curseforge.com/minecraft/mc-mods/forgified-fabric-api"],
+["Formations (Structure Library)","API","https://www.curseforge.com/minecraft/mc-mods/formations"],
+["Framework","API","https://www.curseforge.com/minecraft/mc-mods/framework"],
+["FTB Library","API","https://www.curseforge.com/minecraft/mc-mods/ftb-library-forge"],
+["FTB XMod Compat","API","https://www.curseforge.com/minecraft/mc-mods/ftb-xmod-compat"],
+["Fzzy Config","API","https://www.curseforge.com/minecraft/mc-mods/fzzy-config"],
+["GeckoLib","API","https://www.curseforge.com/minecraft/mc-mods/geckolib"],
+["Geophilic Backport - Vanilla Backport Compact","API","https://www.curseforge.com/minecraft/mc-mods/geophilic-backport-vanilla-backport-compact"],
+["GlitchCore","API","https://www.curseforge.com/minecraft/mc-mods/glitchcore"],
+["Iceberg","API","https://www.curseforge.com/minecraft/mc-mods/iceberg"],
+["Immersive Messages API","API","https://www.curseforge.com/minecraft/mc-mods/immersive-messages-api"],
+["Integrated API","API","https://www.curseforge.com/minecraft/mc-mods/integrated-api"],
+["Iron's Lib","API","https://www.curseforge.com/minecraft/mc-mods/irons-lib"],
+["JamLib","API","https://www.curseforge.com/minecraft/mc-mods/jamlib"],
+["Kiwi","API","https://www.curseforge.com/minecraft/mc-mods/kiwi"],
+["Konkrete","API","https://www.curseforge.com/minecraft/mc-mods/konkrete"],
+["Kotlin for Forge","API","https://www.curseforge.com/minecraft/mc-mods/kotlin-for-forge"],
+["Lionfish API","API","https://www.curseforge.com/minecraft/mc-mods/lionfish-api"],
+["Lithostitched","API","https://www.curseforge.com/minecraft/mc-mods/lithostitched"],
+["Load My F***ing Tags","API","https://www.curseforge.com/minecraft/mc-mods/lmft"],
+["Loot Integrations","API","https://www.curseforge.com/minecraft/mc-mods/loot-integrations"],
+["Loot Integrations: Bygone Nether & Eternal Nether & It Takes a Pillage","API","https://www.curseforge.com/minecraft/mc-mods/loot-integrations-bygone-nether-it-takes-a-pillage"],
+["Loot Integrations: Formations Overworld & Nether","API","https://www.curseforge.com/minecraft/mc-mods/loot-integrations-formations-overworld-nether"],
+["Loot Integrations: Moog's Voyager, Soaring, End & Nether Structures","API","https://www.curseforge.com/minecraft/mc-mods/loot-integrations-moogs-voyager-soaring-end-nether"],
+["Loot Integrations: When Dungeons Arise & Co","API","https://www.curseforge.com/minecraft/mc-mods/loot-integrations-when-dungeons-arise"],
+["MidnightLib","API","https://www.curseforge.com/minecraft/mc-mods/midnightlib"],
+["Moog's Structure Lib (moogs_structures)","API","https://www.curseforge.com/minecraft/mc-mods/moogs-structure-lib"],
+["Moonlight Lib","API","https://www.curseforge.com/minecraft/mc-mods/selene"],
+["oωo (owo-lib)","API","https://www.curseforge.com/minecraft/mc-mods/owo-lib"],
+["Particle Core","API","https://www.curseforge.com/minecraft/mc-mods/particle-core"],
+["Patchouli","API","https://www.curseforge.com/minecraft/mc-mods/patchouli"],
+["Paxi","API","https://www.curseforge.com/minecraft/mc-mods/paxi-neoforge"],
+["Platform","API","https://www.curseforge.com/minecraft/mc-mods/platform"],
+["playerAnimator","API","https://www.curseforge.com/minecraft/mc-mods/playeranimator"],
+["Prickle","API","https://www.curseforge.com/minecraft/mc-mods/prickle"],
+["Puzzles Lib","API","https://www.curseforge.com/minecraft/mc-mods/puzzles-lib"],
+["Resourceful Config","API","https://www.curseforge.com/minecraft/mc-mods/resourceful-config"],
+["Resourceful Lib","API","https://www.curseforge.com/minecraft/mc-mods/resourceful-lib"],
+["Ritchie's Projectile Library","API","https://www.curseforge.com/minecraft/mc-mods/ritchies-projectile-library"],
+["Searchables","API","https://www.curseforge.com/minecraft/mc-mods/searchables"],
+["Sinytra Connector","API","https://www.curseforge.com/minecraft/mc-mods/sinytra-connector"],
+["Supplementaries Compat","API","https://www.curseforge.com/minecraft/data-packs/supplementaries-compat"],
+["TerraBlender","API","https://www.curseforge.com/minecraft/mc-mods/terrablender-neoforge"],
+["TxniLib","API","https://www.curseforge.com/minecraft/mc-mods/txnilib"],
+["Van Backport Compat","API","https://www.curseforge.com/minecraft/mc-mods/vb-compat"],
+["Vanilla Backport","API","https://www.curseforge.com/minecraft/mc-mods/vanillabackport"],
+["Villager API","API","https://www.curseforge.com/minecraft/mc-mods/villagerapi"],
+["YetAnotherConfigLib","API","https://www.curseforge.com/minecraft/mc-mods/yacl"],
+["Yung Structures Addon for Loot Integrations","API","https://www.curseforge.com/minecraft/mc-mods/yung-structures-addon-for-loot-integrations"],
+["YUNG's API","API","https://www.curseforge.com/minecraft/mc-mods/yungs-api-neoforge"],
+["Zeta","API","https://www.curseforge.com/minecraft/mc-mods/zeta"],
+// --- Shaders ---
+["BSL Shaders","Shaders","https://www.curseforge.com/minecraft/shaders/bsl-shaders"],
+["Complementary Shaders - Reimagined","Shaders","https://www.curseforge.com/minecraft/shaders/complementary-reimagined"],
+["Complementary Shaders - Unbound","Shaders","https://www.curseforge.com/minecraft/shaders/complementary-unbound"],
+["Euphoria Patches","Shaders","https://www.curseforge.com/minecraft/mc-mods/euphoria-patches"],
+["Iris Shaders","Shaders","https://www.curseforge.com/minecraft/mc-mods/irisshaders"],
+["Iris/Oculus Shader Folder","Shaders","https://www.curseforge.com/minecraft/mc-mods/iris-shader-folder"],
+["MakeUp - Ultra Fast | Shaders","Shaders","https://www.curseforge.com/minecraft/shaders/makeup-ultra-fast-shader"],
+["Sildur's Vibrant shaders","Shaders","https://www.curseforge.com/minecraft/shaders/sildurs-vibrant-shaders"],
+// --- Textures & Ressources ---
+["BetterGrassify","Textures","https://www.curseforge.com/minecraft/mc-mods/bettergrassify"],
+["Boss Refreshed","Textures","https://www.curseforge.com/minecraft/texture-packs/boss-refreshed"],
+["Continuity","Textures","https://www.curseforge.com/minecraft/mc-mods/continuity"],
+["Enhanced Boss Bars","Textures","https://www.curseforge.com/minecraft/texture-packs/enhanced-boss-bars"],
+["Entity Model Features","Textures","https://www.curseforge.com/minecraft/mc-mods/entity-model-features"],
+["Entity Texture Features","Textures","https://www.curseforge.com/minecraft/mc-mods/entity-texture-features-fabric"],
+["Faithful 64x","Textures","https://www.curseforge.com/minecraft/texture-packs/faithful-64x"],
+["Forge CIT","Textures","https://www.curseforge.com/minecraft/mc-mods/forge-cit"],
+["Fresh Animations","Textures","https://www.curseforge.com/minecraft/texture-packs/fresh-animations"],
+["Fresh Animations: Extensions","Textures","https://www.curseforge.com/minecraft/texture-packs/fresh-animations-extensions"],
+["Fresh Moves","Textures","https://www.curseforge.com/minecraft/texture-packs/fresh-moves"],
+["Icon Xaero's","Textures","https://www.curseforge.com/minecraft/texture-packs/icon-xaeros"],
+["Icon Xaero's X FreshAnimations","Textures","https://www.curseforge.com/minecraft/texture-packs/icon-xaeros-x-freshanimations"],
+["Low On Fire","Textures","https://www.curseforge.com/minecraft/texture-packs/low-on-fire"],
+["Mandala's GUI - Dark mode","Textures","https://www.curseforge.com/minecraft/texture-packs/mandalas-gui-dark-mode"],
+["New Glowing Ores","Textures","https://www.curseforge.com/minecraft/texture-packs/new-glowing-ores"],
 ];
 
 /* =====================================================================
@@ -306,6 +445,14 @@ document.querySelectorAll(".js-mod-count").forEach(el => { el.textContent = MODS
    La plus récente se met en HAUT du tableau (elle est mise en avant).
 ===================================================================== */
 const NEWS = [
+  {
+    day: "06", my: "JUIN 2026", tag: "new", label: "MODPACK V2",
+    title: "On repart sur une V2",
+    body: `Soyons honnêtes : la première version a été un fiasco. Trop de crashs et d'incompatibilités, bref ça ne tenait pas la route. On a donc tout remis à plat et on revient avec une <strong>V2</strong> entièrement retravaillée, ${MODS.length} mods en NeoForge 1.21.1. On croise les doigts pour que cette fois soit la bonne. Téléchargez le nouveau modpack et remontez-nous le moindre bug.`,
+    dls: [
+      { label: "⬇ Télécharger le Modpack V2", url: "https://www.curseforge.com/minecraft/share/JkTxJlIy" },
+    ],
+  },
   {
     day: "05", my: "JUIN 2026", tag: "new", label: "SANS CURSEFORGE",
     title: "Télécharger le dossier mods directement",
@@ -335,7 +482,7 @@ const NEWS = [
   },
   {
     day: "01", my: "JUIN 2026", tag: "fix", label: "MISE À JOUR",
-    title: "Finalisation du modpack — v1.0",
+    title: "Finalisation du modpack : v1.0",
     body: `Le modpack est stabilisé. ${MODS.length} mods NeoForge 1.21.1, optimisé et testé. Téléchargement disponible via CurseForge.`,
   },
 ];
@@ -366,35 +513,12 @@ function renderNews() {
 renderNews();
 
 /* =====================================================================
-   COMPTE À REBOURS
+   RÉVÉLATION DU SERVEUR  (le compte à rebours a été retiré)
 ===================================================================== */
-const daysEl    = document.getElementById("days");
-const hoursEl   = document.getElementById("hours");
-const minutesEl = document.getElementById("minutes");
-const secondsEl = document.getElementById("seconds");
-const countdownSection = document.getElementById("countdown-section");
-const serverReveal     = document.getElementById("server-reveal");
-const serverIpEl       = document.getElementById("server-ip");
+const serverReveal = document.getElementById("server-reveal");
+const serverIpEl   = document.getElementById("server-ip");
 
-function pad(n) { return String(n).padStart(2, "0"); }
-
-let countdownTimer = null;
 let revealing = false;
-
-function tick() {
-  const diff = new Date(CONFIG.launchDate).getTime() - Date.now();
-  if (diff <= 0) {
-    // Le compte à rebours visuel est terminé — on demande l'IP au serveur (autorité réelle).
-    // Tant que le Worker ne confirme pas l'ouverture, RIEN n'est révélé.
-    daysEl.textContent = hoursEl.textContent = minutesEl.textContent = secondsEl.textContent = "00";
-    tryReveal();
-    return;
-  }
-  daysEl.textContent    = pad(Math.floor(diff / 86400000));
-  hoursEl.textContent   = pad(Math.floor((diff % 86400000) / 3600000));
-  minutesEl.textContent = pad(Math.floor((diff % 3600000) / 60000));
-  secondsEl.textContent = pad(Math.floor((diff % 60000) / 1000));
-}
 
 /* Récupère l'heure RÉELLE depuis internet (anti triche d'horloge).
    1) Services d'heure publics (précision ms).
@@ -412,7 +536,8 @@ async function getRealNow() {
       const r = await fetch(url, { cache: "no-store" });
       if (!r.ok) continue;
       const t = parse(await r.json());
-      if (t && !isNaN(t)) return t;
+      const MIN_TS = 1700000000000, MAX_TS = 1900000000000; // 2023–2030
+      if (t && !isNaN(t) && t > MIN_TS && t < MAX_TS) return t;
     } catch (_) { /* source suivante */ }
   }
 
@@ -454,18 +579,8 @@ async function tryReveal() {
     const launch  = new Date(CONFIG.launchDate).getTime();
     if (realNow >= launch) {
       revealedIP = await decryptIP();
-      if (countdownTimer) clearInterval(countdownTimer);
-      launchConfetti();
-      fireOpenNotification();
-      countdownSection.classList.add("hidden");
       serverIpEl.textContent = revealedIP;
       serverReveal.classList.remove("hidden");
-      document.title = "DonjonMC — Serveur ouvert !";
-      document.querySelector("meta[property='og:title']")?.setAttribute("content", "DonjonMC — Serveur ouvert !");
-      document.querySelector("meta[name='description']")?.setAttribute("content", "DonjonMC est maintenant ouvert. Rejoignez l'aventure !");
-      const badge = document.querySelector(".badge");
-      if (badge) badge.textContent = "OUVERT";
-      showModsRequiredModal();
       startServerStatus(revealedIP);
     } else {
       // Pas encore l'heure réelle → on retente, sans rien révéler
@@ -480,29 +595,6 @@ async function tryReveal() {
 // Respecte le réglage système "réduire les animations".
 function prefersReducedMotion() {
   return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
-
-function launchConfetti() {
-  if (prefersReducedMotion()) return; // pas d'animation festive si l'utilisateur l'a désactivé
-  const colors = ["#a78bfa","#22d3ee","#c4b5fd","#ffffff","#7c3aed","#06b6d4"];
-  const wrap = document.createElement("div");
-  Object.assign(wrap.style, { position:"fixed", inset:"0", pointerEvents:"none", zIndex:"999", overflow:"hidden" });
-  document.body.appendChild(wrap);
-  for (let i = 0; i < 90; i++) {
-    const el = document.createElement("div");
-    const sz = Math.random() * 9 + 4;
-    Object.assign(el.style, {
-      position:"absolute", top:"-20px",
-      left: Math.random() * 100 + "%",
-      width: sz + "px", height: sz + "px",
-      background: colors[Math.floor(Math.random() * colors.length)],
-      borderRadius: Math.random() > 0.5 ? "50%" : "3px",
-      animation: `confetti-fall ${Math.random()*2+2}s ${Math.random()*1.5}s ease-in forwards`,
-      transform: `rotate(${Math.random()*360}deg)`,
-    });
-    wrap.appendChild(el);
-  }
-  setTimeout(() => wrap.remove(), 5000);
 }
 
 /* =====================================================================
@@ -526,8 +618,8 @@ async function fetchServerStatus(ip) {
     if (d && d.online) {
       dot.className = "status-dot online";
       text.textContent = "En ligne";
-      const on  = d.players ? (d.players.online ?? 0) : 0;
-      const max = d.players ? (d.players.max ?? 0) : 0;
+      const on  = d.players ? (parseInt(d.players.online, 10) || 0) : 0;
+      const max = d.players ? (parseInt(d.players.max, 10) || 0) : 0;
       players.innerHTML = `· <strong>${on}</strong>/${max} joueur${on !== 1 ? "s" : ""}`;
 
       const names = (d.players && Array.isArray(d.players.list)) ? d.players.list : [];
@@ -551,7 +643,7 @@ async function fetchServerStatus(ip) {
 function startServerStatus(ip) {
   if (statusTimer) return;
   fetchServerStatus(ip);
-  statusTimer = setInterval(() => fetchServerStatus(ip), 60000);
+  statusTimer = setInterval(() => fetchServerStatus(ip), 30000);
 }
 
 /* =====================================================================
@@ -560,9 +652,32 @@ function startServerStatus(ip) {
 function showModsRequiredModal() {
   const overlay = document.getElementById("mods-required-overlay");
   if (!overlay) return;
+
+  const prevFocus = document.activeElement;
   overlay.removeAttribute("hidden");
-  document.getElementById("mods-modal-confirm").addEventListener("click", () => {
+
+  const getFocusable = () => [...overlay.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')];
+  const first = getFocusable()[0];
+  if (first) first.focus();
+
+  function trapFocus(e) {
+    if (e.key !== "Tab") return;
+    const els = getFocusable();
+    if (!els.length) return;
+    const firstEl = els[0], lastEl = els[els.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === firstEl) { e.preventDefault(); lastEl.focus(); }
+    } else {
+      if (document.activeElement === lastEl) { e.preventDefault(); firstEl.focus(); }
+    }
+  }
+
+  overlay.addEventListener("keydown", trapFocus);
+
+  document.getElementById("mods-modal-confirm")?.addEventListener("click", () => {
+    overlay.removeEventListener("keydown", trapFocus);
     overlay.setAttribute("hidden", "");
+    prevFocus?.focus();
   }, { once: true });
 }
 
@@ -574,77 +689,33 @@ function isPreviewOpen() {
 }
 
 function revealPreview() {
-  countdownSection.classList.add("hidden");
   serverIpEl.textContent = "apercu.donjonmc.fr";
   serverReveal.classList.remove("hidden");
-  const badge = document.querySelector(".badge");
-  if (badge) badge.textContent = "APERÇU";
   const dot  = document.getElementById("status-dot");
   const text = document.getElementById("status-text");
   if (dot)  dot.className = "status-dot online";
   if (text) text.textContent = "Aperçu (données factices)";
-  launchConfetti();
 }
 
+// Le serveur est ouvert : on tente la révélation de l'IP dès le chargement
+// (toujours protégée par la vérification de l'heure réelle dans tryReveal).
 if (isPreviewOpen()) {
   revealPreview();
 } else {
-  tick();
-  countdownTimer = setInterval(tick, 1000);
-}
-
-/* =====================================================================
-   NOTIFICATION NAVIGATEUR — opt-in avant l'ouverture
-   Fonctionne si l'onglet est ouvert (ou en arrière-plan) au moment
-   du lancement. Pas de serveur push requis.
-===================================================================== */
-const notifBtn  = document.getElementById("notif-btn");
-const notifHint = document.getElementById("notif-hint");
-const notifWrap = document.getElementById("notif-wrap");
-
-function updateNotifUI() {
-  if (!notifBtn) return;
-  if (!("Notification" in window)) { notifWrap.style.display = "none"; return; }
-  if (Notification.permission === "granted") {
-    notifBtn.textContent = "🔔 Notification activée";
-    notifBtn.classList.add("notif-active");
-    notifBtn.disabled = true;
-    if (notifHint) notifHint.textContent = "Tu seras notifié à l'ouverture si cet onglet est ouvert.";
-  } else if (Notification.permission === "denied") {
-    notifWrap.style.display = "none";
-  }
-}
-
-if (notifBtn) {
-  updateNotifUI();
-  notifBtn.addEventListener("click", async () => {
-    if (!("Notification" in window)) return;
-    await Notification.requestPermission();
-    updateNotifUI();
-  });
-}
-
-function fireOpenNotification() {
-  if (!("Notification" in window) || Notification.permission !== "granted") return;
-  try {
-    new Notification("🎉 DonjonMC est maintenant OUVERT !", {
-      body: "Le serveur est en ligne. Rejoignez l'aventure dès maintenant !",
-      icon: "img/logo.jpg",
-      tag: "donjonmc-open",
-      requireInteraction: true,
-    });
-  } catch (_) { /* silencieux */ }
+  tryReveal();
 }
 
 /* =====================================================================
    COPIER L'IP  (utilise l'IP récupérée du Worker, jamais une valeur en dur)
 ===================================================================== */
+let modsModalShown = false;
 document.getElementById("copy-btn").addEventListener("click", function () {
   if (!revealedIP) return;
   const btn = this;
   function done() {
     btn.textContent = "✓ Copié !";
     btn.classList.add("copied");
+    if (!modsModalShown) { modsModalShown = true; showModsRequiredModal(); }
     setTimeout(() => { btn.textContent = "Copier l'IP"; btn.classList.remove("copied"); }, 2000);
   }
   if (navigator.clipboard && window.isSecureContext) {
@@ -848,6 +919,7 @@ const CAT_META = [
   ["Monde", "🌿"], ["Structures", "🏛"], ["Mobs", "🐾"], ["Nourriture", "🍖"],
   ["Create", "⚙"], ["Combat", "⚔"], ["Déco", "🎨"], ["Performance", "⚡"],
   ["Interface", "🖥"], ["API", "📚"],
+  ["Shaders", "🌈"], ["Textures", "🖼"],
 ];
 
 let currentFilter = "all";
@@ -1063,6 +1135,18 @@ mobileNav.querySelectorAll(".mnav-link").forEach(link => {
     requestAnimationFrame(loop);
   })();
 })();
+
+/* =====================================================================
+   ANCRES DOUCES — boutons hero "Comment rejoindre ?"
+===================================================================== */
+document.querySelectorAll('a[data-scroll]').forEach(a => {
+  a.addEventListener("click", e => {
+    const target = document.querySelector(a.getAttribute("href"));
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: "smooth" });
+  });
+});
 
 /* =====================================================================
    PWA — enregistrement du service worker (offline + installable)
