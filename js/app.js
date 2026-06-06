@@ -454,12 +454,18 @@ const NEWS = [
     ],
   },
   {
+    day: "06", my: "JUIN 2026", tag: "new", label: "SANS CURSEFORGE",
+    title: "Modpack V2 sans CurseForge",
+    body: `Pas de CurseForge ? Le dossier <code class="inline-path">mods</code> complet est disponible directement sur GitHub. Téléchargez l'archive, décompressez-la, puis placez son contenu dans le dossier <code class="inline-path">mods</code> de votre instance NeoForge 1.21.1.`,
+    dls: [
+      { label: "⬇ Télécharger le dossier mods (V2)", url: "https://github.com/LKDM7/DonjonMC-modpacks/archive/refs/heads/main.zip" },
+    ],
+  },
+  {
     day: "05", my: "JUIN 2026", tag: "new", label: "SANS CURSEFORGE",
     title: "Télécharger le dossier mods directement",
     body: `Vous ne souhaitez pas ou ne pouvez pas utiliser CurseForge ? Téléchargez l'intégralité du dossier <code class="inline-path">mods</code> directement depuis GitHub en un clic. Placez ensuite son contenu dans le dossier <code class="inline-path">mods</code> de votre instance NeoForge 1.21.1.`,
-    dls: [
-      { label: "⬇ Télécharger le dossier mods", url: "https://github.com/LKDM7/DonjonMC-modpacks/archive/refs/heads/main.zip" },
-    ],
+    obsolete: true,
   },
   {
     day: "05", my: "JUIN 2026", tag: "requis", label: "REQUIS",
@@ -494,12 +500,13 @@ function renderNews() {
   if (!container) return;
   container.innerHTML = NEWS.map((n, i) => {
     const label = n.label || NEWS_LABELS[n.tag] || "";
-    const dls = (n.dls && n.dls.length)
+    const dls = (!n.obsolete && n.dls && n.dls.length)
       ? `<div class="cl-dl-row">${n.dls.map(d =>
           `<a href="${d.url}" class="btn btn-primary cl-dl-btn" download>${d.label}</a>`
         ).join("")}</div>`
       : "";
-    return `<article class="cl-item${i === 0 ? " is-latest" : ""}">
+    const cls = ["cl-item", i === 0 ? "is-latest" : "", n.obsolete ? "is-obsolete" : ""].filter(Boolean).join(" ");
+    return `<article class="${cls}">
       <div class="cl-date"><span class="cl-day">${n.day}</span><span class="cl-my">${n.my}</span></div>
       <div class="cl-content">
         <span class="cl-tag tag-${n.tag}">${label}</span>
