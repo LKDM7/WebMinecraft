@@ -66,3 +66,28 @@ self.addEventListener("fetch", (e) => {
     )
   );
 });
+
+/* ---- Push notifications (prêt pour backend futur) ---- */
+self.addEventListener("push", (e) => {
+  let data = { title: "DonjonMC", body: "Nouvelle mise à jour disponible !" };
+  try { data = { ...data, ...e.data.json() }; } catch (_) {}
+  e.waitUntil(
+    self.registration.showNotification(data.title, {
+      body:  data.body,
+      icon:  "./icon.png",
+      badge: "./icon.png",
+      tag:   "donjonmc-update",
+      renotify: true,
+    })
+  );
+});
+
+self.addEventListener("notificationclick", (e) => {
+  e.notification.close();
+  e.waitUntil(
+    clients.matchAll({ type: "window", includeUncontrolled: true }).then((list) => {
+      const win = list.find((w) => w.url.includes(self.location.origin));
+      return win ? win.focus() : clients.openWindow("./");
+    })
+  );
+});

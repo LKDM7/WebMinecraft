@@ -751,6 +751,62 @@ details[open] summary::after { transform: rotate(90deg); background: var(--accen
 }
 
 /* =====================================================================
+   CARTE (nav link)
+===================================================================== */
+.nav-map-link {
+  background: linear-gradient(135deg, rgba(167,139,250,.15), rgba(99,102,241,.1));
+  border: 1px solid rgba(167,139,250,.35);
+  border-radius: 6px;
+  padding: 0.22rem 0.65rem;
+  font-size: 0.8rem;
+  transition: background 0.2s, border-color 0.2s;
+}
+.nav-map-link:hover { background: rgba(167,139,250,.28); border-color: rgba(167,139,250,.6); }
+
+/* =====================================================================
+   NOTIFICATION BELL
+===================================================================== */
+.cl-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+.cl-header .tab-intro { margin: 0; }
+
+.notif-bell {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  font-size: 1.1rem;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+  flex-shrink: 0;
+  color: var(--muted);
+}
+.notif-bell:hover { border-color: var(--accent); transform: scale(1.1); }
+.notif-bell.active {
+  background: rgba(167,139,250,.18);
+  border-color: var(--accent);
+  color: var(--accent);
+  animation: bell-ring 0.4s ease;
+}
+@keyframes bell-ring {
+  0%,100% { transform: rotate(0); }
+  20%      { transform: rotate(-18deg); }
+  50%      { transform: rotate(18deg); }
+  80%      { transform: rotate(-10deg); }
+}
+
+/* GitHub release badge */
+.tag-github { background: rgba(139,92,246,.18); color: #a78bfa; border: 1px solid rgba(139,92,246,.35); }
+
+/* =====================================================================
    SCROLL PROGRESS BAR
 ===================================================================== */
 @supports (animation-timeline: scroll()) {

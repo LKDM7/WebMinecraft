@@ -513,9 +513,126 @@ const NEWS = [
   },
 ];
 
-const NEWS_LABELS = { new: "NOUVEAU", event: "ÉVÉNEMENT", fix: "MISE À JOUR", requis: "REQUIS" };
+const NEWS_LABELS = { new: "NOUVEAU", event: "ÉVÉNEMENT", fix: "MISE À JOUR", requis: "REQUIS", github: "GITHUB" };
 
 const safeUrl = url => /^https:\/\//i.test(url) ? url : "#";
+
+/* ---- GitHub Releases → NEWS ----------------------------------------- */
+const MONTHS_FR = ["JANV","FÉVR","MARS","AVR","MAI","JUIN","JUIL","AOÛT","SEPT","OCT","NOV","DÉC"];
+
+function mdToHtml(md) {
+  return md
+    .replace(/#{1,6}\s+(.+)/g, "<strong>$1</strong>")
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/`([^`]+)`/g, `<code class="inline-path">$1</code>`)
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, t, u) => /^https:\/\//.test(u) ? `<a href="${escapeHTML(u)}" target="_blank" rel="noopener">${escapeHTML(t)}</a>` : escapeHTML(t))
+    .replace(/\r?\n{2,}/g, " · ")
+    .replace(/\r?\n/g, " ")
+    .trim();
+}
+
+async function fetchGitHubReleases() {
+  const cached = sessionStorage.getItem("gh_releases");
+  if (cached) { try { return JSON.parse(cached); } catch (_) {} }
+
+  const repos = [
+    { repo: "LKDM7/DonjonMC",       name: "DonjonMC"       },
+    { repo: "LKDM7/DashBoardAdmin",  name: "Dashboard Admin" },
+  ];
+  const all = [];
+
+  for (const r of repos) {
+    try {
+      const ctrl = new AbortController();
+      const tid = setTimeout(() => ctrl.abort(), 6000);
+      const res = await fetch(`https://api.github.com/repos/${r.repo}/releases?per_page=5`, {
+        signal: ctrl.signal,
+        headers: { Accept: "application/vnd.github.v3+json" },
+      });
+      clearTimeout(tid);
+      if (!res.ok) continue;
+      const releases = await res.json();
+      for (const rel of releases) {
+        const d = new Date(rel.published_at);
+        all.push({
+          day:  String(d.getUTCDate()).padStart(2, "0"),
+          my:   `${MONTHS_FR[d.getUTCMonth()]} ${d.getUTCFullYear()}`,
+          tag:  /fix|patch|hotfix|bug/i.test(rel.tag_name + (rel.name || "")) ? "fix" : "new",
+          label: `${r.name} ${escapeHTML(rel.tag_name)}`,
+          title: escapeHTML(rel.name || `${r.name} ${rel.tag_name}`),
+          body:  rel.body ? mdToHtml(rel.body) : `Nouvelle version <strong>${escapeHTML(rel.tag_name)}</strong> de ${escapeHTML(r.name)}.`,
+          dls:   (rel.assets || []).slice(0, 3).map(a => ({ label: `⬇ ${escapeHTML(a.name)}`, url: safeUrl(a.browser_download_url) })),
+          githubUrl: safeUrl(rel.html_url),
+          _ts:   d.getTime(),
+          _fromGithub: true,
+        });
+      }
+    } catch (_) {}
+  }
+
+  all.sort((a, b) => b._ts - a._ts);
+  try { sessionStorage.setItem("gh_releases", JSON.stringify(all)); } catch (_) {}
+  return all;
+}
+
+async function loadGitHubReleases() {
+  const releases = await fetchGitHubReleases();
+  if (!releases.length) return;
+
+  /* Évite les doublons : exclut les releases déjà couvertes par les DL statiques */
+  const existingTitles = new Set(NEWS.map(n => n.title));
+  const toAdd = releases.filter(r => !existingTitles.has(r.title));
+  if (!toAdd.length) return;
+
+  NEWS.unshift(...toAdd);
+  renderNews();
+}
+
+/* ---- Notifications ------------------------------------------------------ */
+function initNotifications() {
+  if (!("Notification" in window)) return;
+
+  const bell = document.getElementById("notif-bell");
+  if (!bell) return;
+
+  const BELL_KEY  = "donjon_notif";
+  const LAST_KEY  = "donjon_last_gh";
+
+  const isEnabled = () => localStorage.getItem(BELL_KEY) === "1" && Notification.permission === "granted";
+
+  function syncBell() {
+    bell.classList.toggle("active", isEnabled());
+    bell.title = isEnabled() ? "Désactiver les alertes" : "Activer les alertes de mise à jour";
+  }
+  syncBell();
+
+  bell.addEventListener("click", async () => {
+    if (isEnabled()) {
+      localStorage.removeItem(BELL_KEY);
+      syncBell();
+      return;
+    }
+    const perm = await Notification.requestPermission();
+    if (perm === "granted") {
+      localStorage.setItem(BELL_KEY, "1");
+      syncBell();
+      new Notification("DonjonMC 🔔", { body: "Alertes activées — vous serez prévenu des nouvelles versions.", icon: "./icon.png" });
+    }
+  });
+
+  /* Vérifie s'il y a une nouvelle release à signaler */
+  if (!isEnabled()) return;
+  fetchGitHubReleases().then(releases => {
+    if (!releases.length) return;
+    const latest = releases[0];
+    const lastId = localStorage.getItem(LAST_KEY);
+    const latestId = String(latest._ts);
+    if (lastId && lastId !== latestId) {
+      new Notification(`DonjonMC — ${latest.label}`, { body: latest.title, icon: "./icon.png" });
+    }
+    localStorage.setItem(LAST_KEY, latestId);
+  }).catch(() => {});
+}
 
 function renderNews() {
   const container = document.getElementById("changelog-list");
@@ -567,6 +684,8 @@ renderNews();
   });
 })();
 
+loadGitHubReleases();
+initNotifications();
 
 /* =====================================================================
    RÉVÉLATION DU SERVEUR  (le compte à rebours a été retiré)

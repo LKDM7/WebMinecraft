@@ -2,7 +2,7 @@
 <html lang="fr" data-maintenance="false">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://worldtimeapi.org https://timeapi.io https://api.mcsrvstat.us; manifest-src 'self'; worker-src 'self'; base-uri 'self';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://worldtimeapi.org https://timeapi.io https://api.mcsrvstat.us https://api.github.com; manifest-src 'self'; worker-src 'self'; base-uri 'self';">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -69,6 +69,7 @@
         <a href="#info" data-tab="mods">Mods</a>
         <a href="#info" data-tab="commands">Commandes</a>
         <a href="#info" data-tab="changelog">Actualités</a>
+        <a href="https://badlands.mystrator.com/s/46824d7d-8e38-4564-ba62-3b579dfa3117/#overworld:0:0:0:1500:0:0:0:0:perspective" target="_blank" rel="noopener noreferrer" class="nav-map-link">🗺 Carte</a>
         <a href="#info" data-tab="donjonmc">DonjonMC</a>
         <a href="#info" data-tab="dashboard">DashBoard</a>
       </nav>
@@ -87,6 +88,7 @@
     <a href="#info" data-tab="changelog" class="mnav-link">📰 Actualités</a>
     <a href="#info" data-tab="donjonmc" class="mnav-link">⚔ DonjonMC</a>
     <a href="#info" data-tab="dashboard" class="mnav-link">📊 DashBoard</a>
+    <a href="https://badlands.mystrator.com/s/46824d7d-8e38-4564-ba62-3b579dfa3117/#overworld:0:0:0:1500:0:0:0:0:perspective" target="_blank" rel="noopener noreferrer" class="mnav-link">🗺 Carte du monde</a>
     <a href="https://www.curseforge.com/minecraft/share/V37Or6S1" target="_blank" rel="noopener noreferrer" class="mnav-link">⬇ Télécharger le Modpack</a>
   </nav>
 
@@ -275,7 +277,10 @@
 
       <!-- ===== ONGLET : ACTUALITÉS ===== -->
       <div id="tab-changelog" class="tab-content" role="tabpanel" aria-labelledby="tabbtn-changelog" tabindex="0" hidden>
-        <p class="tab-intro">Actualités, mises à jour et événements du serveur.</p>
+        <div class="cl-header">
+          <p class="tab-intro">Actualités, mises à jour et événements du serveur.</p>
+          <button id="notif-bell" class="notif-bell" aria-label="Activer les alertes de mise à jour" title="Notifications de nouvelles versions">🔔</button>
+        </div>
         <!-- Timeline générée dynamiquement par JS — pour ajouter une actu, éditez le tableau NEWS dans js/app.js -->
         <div class="changelog-list" id="changelog-list"></div>
       </div>
