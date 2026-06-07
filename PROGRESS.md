@@ -30,3 +30,7 @@ Next: committer les améliorations UI/UX (scroll progress, back-to-top, footer, 
 ## 2026-06-07 (session 2)
 Changelog GitHub auto (fetch releases DonjonMC + DashboardAdmin, injection dans NEWS), notifications PWA (cloche + Notification API + SW push handler), carte Bluemap intégrée en onglet iframe lazy-load avec bouton plein écran. Nouvel article mods perso à jour.
 Next: surveiller les releases GitHub pour valider l'affichage auto, envisager backend pour push notifications réelles.
+
+## 2026-06-08
+Mise à jour liens DonjonMC v2.0.0 → v2.0.2 (nouvelle URL GitHub Releases, 6 occurrences index.html + app.js). URLs Dashboard Admin corrigées (raw/refs/heads/master → raw/master). Nouvel article Actualités "DonjonMC v2.0.2", ancien article marqué obsolète.
+Next: committer les changements de liens et l'article.
