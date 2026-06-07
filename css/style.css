@@ -540,9 +540,12 @@ button { cursor: pointer; font-family: var(--font-body); }
 .cl-date { text-align: right; padding-top: 0.2rem; display: flex; flex-direction: column; gap: 0.3rem; line-height: 1; }
 .cl-day { font-size: 1.4rem; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
 .cl-my { font-size: 0.6rem; color: var(--accent); letter-spacing: 0.1em; font-weight: 600; }
-.cl-content { background: var(--surface); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.4rem; transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s; }
+.cl-content { position: relative; background: var(--surface); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.4rem; transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s; }
 .cl-item:hover .cl-content { border-color: rgba(167,139,250,0.35); box-shadow: 0 10px 30px -14px rgba(167,139,250,0.5); transform: translateY(-2px); }
-.cl-content h3 { font-size: 1rem; color: #fff; font-weight: 700; margin-bottom: 0.4rem; }
+.cl-content h3 { font-size: 1rem; color: #fff; font-weight: 700; margin-bottom: 0.4rem; padding-right: 2rem; }
+.cl-link-btn { position: absolute; top: 0.7rem; right: 0.75rem; background: transparent; border: 1px solid var(--border); color: var(--muted); border-radius: 6px; padding: 0.18rem 0.45rem; font-size: 0.65rem; cursor: pointer; line-height: 1; transition: border-color 0.2s, color 0.2s, background 0.2s; user-select: none; }
+.cl-link-btn:hover { border-color: rgba(167,139,250,0.5); color: #a78bfa; background: rgba(167,139,250,0.08); }
+.cl-link-btn.cl-copied { border-color: #34d399; color: #34d399; }
 .cl-content p { font-size: 0.84rem; color: var(--muted); line-height: 1.6; }
 .cl-tag { display: inline-block; font-size: 0.6rem; padding: 0.18rem 0.55rem; border-radius: 6px; margin-bottom: 0.6rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
 .tag-new { background: rgba(167,139,250,0.15); color: #a78bfa; }

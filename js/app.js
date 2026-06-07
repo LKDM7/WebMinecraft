@@ -447,10 +447,11 @@ document.querySelectorAll(".js-mod-count").forEach(el => { el.textContent = MODS
 const NEWS = [
   {
     day: "07", my: "JUIN 2026", tag: "fix", label: "MISE À JOUR",
-    title: "DonjonMC v2.0.2 — mettez à jour le mod",
-    body: `<strong>DonjonMC v2.0.2</strong> est disponible. Remplacez l'ancienne version dans votre dossier <code class="inline-path">mods</code> par le nouveau fichier ci-dessous. Dashboard Admin reste en v1.0.4, pas besoin de le re-télécharger.`,
+    title: "DonjonMC v2.0.2 — mettez à jour vos mods",
+    body: `<strong>DonjonMC v2.0.2</strong> est disponible. Remplacez les anciennes versions dans votre dossier <code class="inline-path">mods</code> par les nouveaux fichiers ci-dessous.`,
     dls: [
       { label: "⬇ DonjonMC v2.0.2", url: "https://github.com/LKDM7/DonjonMC/releases/download/v2.0.2/donjonmc-2.0.2.jar" },
+      { label: "⬇ Dashboard Admin v1.0.4", url: "https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-1.0.4.jar" },
     ],
   },
   {
@@ -508,7 +509,7 @@ const NEWS = [
   {
     day: "05", my: "JUIN 2026", tag: "new", label: "NOUVEAU",
     title: "Ouverture officielle de DonjonMC !",
-    body: `Le serveur ouvre ses portes ce soir à 21h. Rejoignez-nous pour découvrir un monde entièrement forgé pour l'aventure, avec ${MODS.length} mods soigneusement sélectionnés.`,
+    body: `Le serveur ouvre ses portes ce soir à 21h. ${MODS.length} mods NeoForge 1.21.1 vous attendent.`,
   },
   {
     day: "03", my: "JUIN 2026", tag: "event", label: "ÉVÉNEMENT",
@@ -654,9 +655,14 @@ function renderNews() {
         ).join("")}</div>`
       : "";
     const cls = ["cl-item", i === 0 ? "is-latest" : "", n.obsolete ? "is-obsolete" : ""].filter(Boolean).join(" ");
-    return `<article class="${cls}">
+    const articleUrl = escapeHTML(location.origin + location.pathname + "?tab=changelog#cl-" + i);
+    const linkBtn = !n.obsolete
+      ? `<button class="cl-link-btn" data-url="${articleUrl}" title="Copier le lien vers cet article" aria-label="Copier le lien">🔗</button>`
+      : "";
+    return `<article class="${cls}" id="cl-${i}">
       <div class="cl-date"><span class="cl-day">${escapeHTML(n.day)}</span><span class="cl-my">${escapeHTML(n.my)}</span></div>
       <div class="cl-content">
+        ${linkBtn}
         <span class="cl-tag tag-${escapeHTML(n.tag)}">${label}</span>
         <h3>${escapeHTML(n.title)}</h3>
         <p>${n.body}</p>
@@ -665,6 +671,18 @@ function renderNews() {
     </article>`;
   }).join("");
 }
+
+document.getElementById("changelog-list").addEventListener("click", e => {
+  const btn = e.target.closest(".cl-link-btn");
+  if (!btn) return;
+  const url = btn.dataset.url;
+  if (!url || !navigator.clipboard) return;
+  navigator.clipboard.writeText(url).then(() => {
+    btn.textContent = "✓";
+    btn.classList.add("cl-copied");
+    setTimeout(() => { btn.textContent = "🔗"; btn.classList.remove("cl-copied"); }, 1800);
+  }).catch(() => {});
+});
 renderNews();
 
 (function initNewsToast() {
@@ -1278,7 +1296,7 @@ const skeletonHTML = Array(12).fill('<div class="skeleton-item"></div>').join(""
 document.getElementById("mods-list-container").innerHTML = skeletonHTML;
 renderMods();
 
-/* Restaure l'état depuis l'URL au chargement : ?tab=commands&cat=Monde */
+/* Restaure l'état depuis l'URL au chargement : ?tab=commands&cat=Monde&#cl-N */
 (function initFromUrl() {
   const params = new URLSearchParams(location.search);
   const tab = params.get("tab") || (function(){ try { return localStorage.getItem("donjonmc-tab"); } catch(_){ return null; } })();
@@ -1288,6 +1306,14 @@ renderMods();
     currentFilter = cat;
     renderPills();
     renderMods();
+  }
+  const hash = location.hash;
+  if (hash && /^#cl-\d+$/.test(hash)) {
+    activateTab("changelog", false);
+    setTimeout(() => {
+      const el = document.getElementById(hash.slice(1));
+      if (el) el.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "center" });
+    }, 150);
   }
 })();
 
