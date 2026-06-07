@@ -940,7 +940,7 @@ function fallback(cb) {
 /* =====================================================================
    ONGLETS — état reflété dans l'URL (?tab=) + navigation clavier ARIA
 ===================================================================== */
-const TAB_IDS = ["mods", "commands", "changelog", "donjonmc", "dashboard", "faq"];
+const TAB_IDS = ["mods", "commands", "changelog", "donjonmc", "dashboard", "faq", "map"];
 
 // Met à jour (ou retire) un paramètre d'URL sans recharger la page.
 function setQueryParam(key, value) {
