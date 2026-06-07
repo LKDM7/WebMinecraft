@@ -32,5 +32,5 @@ Changelog GitHub auto (fetch releases DonjonMC + DashboardAdmin, injection dans 
 Next: surveiller les releases GitHub pour valider l'affichage auto, envisager backend pour push notifications réelles.
 
 ## 2026-06-08
-Mise à jour liens DonjonMC v2.0.0 → v2.0.2 (nouvelle URL GitHub Releases, 6 occurrences index.html + app.js). URLs Dashboard Admin corrigées (raw/refs/heads/master → raw/master). Nouvel article Actualités "DonjonMC v2.0.2", ancien article marqué obsolète.
-Next: committer les changements de liens et l'article.
+Mise à jour liens DonjonMC v2.0.0 → v2.0.2 + Dashboard Admin URL corrigée. Nouvel article Actualités, ancien obsolète. Bouton 🔗 copier lien sur chaque article (deep-link ?tab=changelog#cl-N). Audit humanizer (tiret cadratin FAQ, actu ouverture). Bannière auto-refresh : HEAD polling toutes les 5 min + détection SW updatefound.
+Next: tester la bannière après le prochain push, vérifier que le SW détecte bien les mises à jour.
