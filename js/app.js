@@ -1421,9 +1421,66 @@ document.querySelectorAll('a[data-scroll]').forEach(a => {
 
 /* =====================================================================
    PWA — enregistrement du service worker (offline + installable)
+   + détection de mise à jour via SW updatefound
 ===================================================================== */
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("sw.js").catch(() => { /* silencieux */ });
+    navigator.serviceWorker.register("sw.js").then(reg => {
+      reg.addEventListener("updatefound", () => {
+        const sw = reg.installing;
+        if (!sw) return;
+        sw.addEventListener("statechange", () => {
+          if (sw.state === "installed" && navigator.serviceWorker.controller) {
+            showUpdateBanner();
+          }
+        });
+      });
+    }).catch(() => {});
   });
 }
+
+/* =====================================================================
+   AUTO-REFRESH — détection de changement via HEAD polling (toutes les 5 min)
+   Comparaison ETag / Last-Modified de la page courante.
+   Fallback au SW updatefound ci-dessus pour les cas où le CDN cache trop.
+===================================================================== */
+function showUpdateBanner() {
+  if (document.getElementById("update-banner")) return;
+  const div = document.createElement("div");
+  div.id = "update-banner";
+  div.setAttribute("role", "status");
+
+  const msg = document.createElement("p");
+  msg.textContent = "🔄 Le site a été mis à jour";
+
+  const reloadBtn = document.createElement("button");
+  reloadBtn.textContent = "Recharger";
+  reloadBtn.className = "update-reload";
+  reloadBtn.addEventListener("click", () => location.reload());
+
+  const closeBtn = document.createElement("button");
+  closeBtn.textContent = "✕";
+  closeBtn.className = "update-close";
+  closeBtn.setAttribute("aria-label", "Fermer");
+  closeBtn.addEventListener("click", () => div.remove());
+
+  div.append(msg, reloadBtn, closeBtn);
+  document.body.appendChild(div);
+}
+
+(function initAutoRefresh() {
+  let knownTag = null;
+
+  async function check() {
+    try {
+      const r = await fetch(location.pathname, { method: "HEAD", cache: "no-store" });
+      const tag = r.headers.get("etag") || r.headers.get("last-modified");
+      if (!tag) return;
+      if (knownTag === null) { knownTag = tag; return; }
+      if (knownTag !== tag) { knownTag = tag; showUpdateBanner(); }
+    } catch (_) {}
+  }
+
+  setTimeout(check, 20000);
+  setInterval(check, 5 * 60 * 1000);
+})();
