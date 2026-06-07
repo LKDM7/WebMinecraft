@@ -751,6 +751,96 @@ details[open] summary::after { transform: rotate(90deg); background: var(--accen
 }
 
 /* =====================================================================
+   SCROLL PROGRESS BAR
+===================================================================== */
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    position: fixed; top: 70px; left: 0; right: 0; height: 2px; z-index: 99;
+    background: var(--grad-main); transform-origin: left center; transform: scaleX(0);
+    animation: scroll-bar linear both; animation-timeline: scroll(root);
+  }
+  @keyframes scroll-bar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+}
+
+/* =====================================================================
+   BACK TO TOP
+===================================================================== */
+.back-to-top {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: linear-gradient(135deg, #a78bfa, #7c5cbf);
+  color: #fff; font-size: 1.15rem; font-weight: 700;
+  display: grid; place-items: center; text-decoration: none;
+  box-shadow: 0 8px 24px -8px rgba(167,139,250,0.65);
+  opacity: 0; pointer-events: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.back-to-top:hover { transform: translateY(-3px); box-shadow: 0 14px 32px -8px rgba(167,139,250,0.85); }
+@supports (animation-timeline: scroll()) {
+  .back-to-top {
+    animation: show-top linear both; animation-timeline: scroll(root); animation-range: 400px 450px;
+  }
+  @keyframes show-top {
+    from { opacity: 0; pointer-events: none; }
+    to   { opacity: 1; pointer-events: auto; }
+  }
+}
+
+/* =====================================================================
+   SECTION TITLE — trait décoratif
+===================================================================== */
+.section-title::after {
+  content: ''; display: block; width: 48px; height: 3px;
+  background: var(--grad-main); border-radius: 100px; margin: 0.7rem auto 0;
+}
+
+/* =====================================================================
+   ANIMATIONS D'ENTRÉE scroll-driven
+===================================================================== */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .feature-item, .step-card {
+      animation: reveal-up 0.45s ease both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+    @keyframes reveal-up {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  }
+}
+
+/* =====================================================================
+   BOUTON PRINCIPAL — shimmer au survol
+===================================================================== */
+.btn-primary { position: relative; overflow: hidden; }
+.btn-primary::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.15) 50%, transparent 60%);
+  transform: translateX(-100%); transition: transform 0.55s ease;
+}
+.btn-primary:hover::after { transform: translateX(100%); }
+
+/* =====================================================================
+   FOOTER AMÉLIORÉ
+===================================================================== */
+.footer-top {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem; margin-bottom: 1.2rem;
+  padding-bottom: 1.2rem; border-bottom: 1px solid var(--border);
+}
+.footer-nav { display: flex; gap: 1.4rem; align-items: center; }
+.footer-nav a { font-size: 0.82rem; color: var(--muted); transition: color 0.2s; }
+.footer-nav a:hover { color: var(--accent); }
+.footer-author { color: var(--accent); transition: color 0.2s; }
+.footer-author:hover { color: var(--text); }
+@media (max-width: 480px) {
+  .back-to-top { bottom: 1.2rem; right: 1.2rem; width: 40px; height: 40px; }
+  .footer-top { flex-direction: column; align-items: flex-start; }
+}
+
+/* =====================================================================
    ÉCRAN DE MAINTENANCE
 ===================================================================== */
 .maintenance-overlay { display: none; }

@@ -78,6 +78,7 @@
       </button>
     </div>
   </header>
+  <div class="scroll-progress" aria-hidden="true"></div>
 
   <!-- Mobile nav drawer -->
   <nav class="mobile-nav" id="mobile-nav" aria-label="Menu mobile" aria-hidden="true">
@@ -676,9 +677,15 @@
   <!-- ===== FOOTER ===== -->
   <footer class="site-footer">
     <div class="container">
-      <p class="footer-brand"><img src="img/logo.jpg" alt="" width="24" height="24" loading="lazy" style="height:24px;border-radius:4px;vertical-align:middle;margin-right:0.4rem;"> DonjonMC</p>
+      <div class="footer-top">
+        <p class="footer-brand"><img src="img/logo.jpg" alt="" width="24" height="24" loading="lazy" style="height:24px;border-radius:4px;vertical-align:middle;margin-right:0.4rem;"> DonjonMC</p>
+        <nav class="footer-nav" aria-label="Liens utiles">
+          <a href="https://www.curseforge.com/minecraft/share/V37Or6S1" target="_blank" rel="noopener noreferrer">CurseForge</a>
+          <a href="https://github.com/LKDM7/WebMinecraft" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </nav>
+      </div>
       <p class="footer-legal">Non affilié à Mojang Studios / Microsoft. Minecraft® est une marque de Microsoft.</p>
-      <p class="footer-love">Fait avec ❤ par @LKDM · <span style="color:var(--green);"></span></p>
+      <p class="footer-love">Fait avec ❤ par <a href="https://github.com/LKDM7" target="_blank" rel="noopener noreferrer" class="footer-author">@LKDM</a> · <span style="color:var(--muted);">© 2026</span></p>
     </div>
   </footer>
 
@@ -720,6 +727,8 @@
     </div>
     <button id="news-toast-close" class="news-toast-close" aria-label="Fermer la notification">✕</button>
   </div>
+
+  <a href="#hero" class="back-to-top" aria-label="Retour en haut">↑</a>
 
   <script src="js/app.js" defer></script>
 </body>
