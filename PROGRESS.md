@@ -26,3 +26,7 @@ Next: committer l'ensemble des changements CSS/HTML/JS.
 ## 2026-06-07 (suite)
 Suppression complète de la scène 3D Ender Dragon : dragon3d.js supprimé, enderdragon.glb supprimé, require retiré de app.js. Three.js n'est plus bundlé.
 Next: committer les améliorations UI/UX (scroll progress, back-to-top, footer, animations).
+
+## 2026-06-07 (session 2)
+Changelog GitHub auto (fetch releases DonjonMC + DashboardAdmin, injection dans NEWS), notifications PWA (cloche + Notification API + SW push handler), carte Bluemap intégrée en onglet iframe lazy-load avec bouton plein écran. Nouvel article mods perso à jour.
+Next: surveiller les releases GitHub pour valider l'affichage auto, envisager backend pour push notifications réelles.
