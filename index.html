@@ -2,7 +2,7 @@
 <html lang="fr" data-maintenance="false">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://worldtimeapi.org https://timeapi.io https://api.mcsrvstat.us https://api.github.com; manifest-src 'self'; worker-src 'self'; base-uri 'self';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://worldtimeapi.org https://timeapi.io https://api.mcsrvstat.us https://api.github.com; frame-src https://badlands.mystrator.com; manifest-src 'self'; worker-src 'self'; base-uri 'self';">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -69,7 +69,7 @@
         <a href="#info" data-tab="mods">Mods</a>
         <a href="#info" data-tab="commands">Commandes</a>
         <a href="#info" data-tab="changelog">Actualités</a>
-        <a href="https://badlands.mystrator.com/s/46824d7d-8e38-4564-ba62-3b579dfa3117/#overworld:0:0:0:1500:0:0:0:0:perspective" target="_blank" rel="noopener noreferrer" class="nav-map-link">🗺 Carte</a>
+        <a href="#info" data-tab="map" class="nav-map-link">🗺 Carte</a>
         <a href="#info" data-tab="donjonmc">DonjonMC</a>
         <a href="#info" data-tab="dashboard">DashBoard</a>
       </nav>
@@ -88,7 +88,7 @@
     <a href="#info" data-tab="changelog" class="mnav-link">📰 Actualités</a>
     <a href="#info" data-tab="donjonmc" class="mnav-link">⚔ DonjonMC</a>
     <a href="#info" data-tab="dashboard" class="mnav-link">📊 DashBoard</a>
-    <a href="https://badlands.mystrator.com/s/46824d7d-8e38-4564-ba62-3b579dfa3117/#overworld:0:0:0:1500:0:0:0:0:perspective" target="_blank" rel="noopener noreferrer" class="mnav-link">🗺 Carte du monde</a>
+    <a href="#info" data-tab="map" class="mnav-link">🗺 Carte du monde</a>
     <a href="https://www.curseforge.com/minecraft/share/V37Or6S1" target="_blank" rel="noopener noreferrer" class="mnav-link">⬇ Télécharger le Modpack</a>
   </nav>
 
@@ -226,6 +226,7 @@
           <button class="tab-btn" id="tabbtn-donjonmc" data-tab="donjonmc" role="tab" aria-selected="false" aria-controls="tab-donjonmc" tabindex="-1">⚔ DonjonMC</button>
           <button class="tab-btn" id="tabbtn-dashboard" data-tab="dashboard" role="tab" aria-selected="false" aria-controls="tab-dashboard" tabindex="-1">📊 DashBoard</button>
           <button class="tab-btn" id="tabbtn-faq" data-tab="faq" role="tab" aria-selected="false" aria-controls="tab-faq" tabindex="-1">❓ FAQ</button>
+          <button class="tab-btn" id="tabbtn-map" data-tab="map" role="tab" aria-selected="false" aria-controls="tab-map" tabindex="-1">🗺 Carte</button>
         </div>
       </div>
 
@@ -672,6 +673,22 @@
             <p>En jeu : <code class="cmd">/report [message]</code> envoie un signalement immédiat. Hors jeu, contacte directement un admin via Discord. Pour les bugs du site ou du modpack, ouvre une issue sur le dépôt GitHub.</p>
           </div>
         </details>
+      </div>
+
+      <!-- ===== ONGLET : CARTE ===== -->
+      <div id="tab-map" class="tab-content" role="tabpanel" aria-labelledby="tabbtn-map" tabindex="0" hidden>
+        <div class="map-container">
+          <iframe
+            id="bluemap-frame"
+            src="about:blank"
+            data-src="https://badlands.mystrator.com/s/46824d7d-8e38-4564-ba62-3b579dfa3117/#overworld:0:0:0:1500:0:0:0:0:perspective"
+            title="Carte du monde DonjonMC — Bluemap"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+          <a href="https://badlands.mystrator.com/s/46824d7d-8e38-4564-ba62-3b579dfa3117/#overworld:0:0:0:1500:0:0:0:0:perspective"
+             target="_blank" rel="noopener noreferrer" class="map-fullscreen-btn" aria-label="Ouvrir en plein écran">⛶ Plein écran</a>
+        </div>
       </div>
 
     </div>

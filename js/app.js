@@ -687,6 +687,19 @@ renderNews();
 loadGitHubReleases();
 initNotifications();
 
+/* ---- Bluemap lazy-load (charge l'iframe seulement au premier clic) --- */
+(function initMap() {
+  const btn = document.getElementById("tabbtn-map");
+  if (!btn) return;
+  btn.addEventListener("click", function onMapClick() {
+    const frame = document.getElementById("bluemap-frame");
+    if (frame && !frame.src.startsWith("https")) {
+      frame.src = frame.dataset.src;
+    }
+    btn.removeEventListener("click", onMapClick);
+  }, { once: false });
+})();
+
 /* =====================================================================
    RÉVÉLATION DU SERVEUR  (le compte à rebours a été retiré)
 ===================================================================== */
