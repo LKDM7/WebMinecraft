@@ -447,6 +447,16 @@ document.querySelectorAll(".js-mod-count").forEach(el => { el.textContent = MODS
 const NEWS = [
   {
     day: "07", my: "JUIN 2026", tag: "fix", label: "MISE À JOUR",
+    title: "Mods personnalisés mis à jour — re-téléchargez-les",
+    body: `Les mods maison <strong>DonjonMC</strong> et <strong>Dashboard Admin</strong> viennent d'être mis à jour avec les dernières modifications. Si vous jouez déjà sur le serveur, remplacez les anciennes versions dans votre dossier <code class="inline-path">mods</code> par les nouvelles ci-dessous.`,
+    dls: [
+      { label: "⬇ DonjonMC (dernière version)", url: "https://github.com/LKDM7/DonjonMC/raw/refs/heads/master/releases/donjonmc-2.0.0.jar" },
+      { label: "⬇ Dashboard Admin (dernière version)", url: "https://github.com/LKDM7/DashBoardAdmin/raw/refs/heads/master/releases/dashboardadmin-1.0.4.jar" },
+    ],
+  },
+  {
+    day: "07", my: "JUIN 2026", tag: "fix", label: "MISE À JOUR",
+    obsolete: true,
     title: "Mettez à jour vos 2 mods personnalisés",
     body: `Les deux mods maison ont reçu des correctifs importants. <strong>DonjonMC</strong> corrige un bug où les portails pouvaient spawner sous terre (Y &lt; 1). <strong>Dashboard Admin</strong> ajoute la compatibilité avec le mod Accessories pour conserver les items équipés à la mort. Re-téléchargez les deux mods et remplacez les anciennes versions dans votre dossier <code class="inline-path">mods</code>.`,
     dls: [
