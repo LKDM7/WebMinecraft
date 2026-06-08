@@ -471,10 +471,22 @@ button { cursor: pointer; font-family: var(--font-body); }
 .mod-item:hover { border-color: var(--accent); background: rgba(167,139,250,0.07); transform: translateX(2px); }
 .mod-item-dead { opacity: 0.42; cursor: default; }
 .mod-item-dead:hover { border-color: var(--border) !important; background: var(--surface-2) !important; transform: none; }
+/* Lien principal (page du mod) : occupe toute la ligne sauf les icônes d'action */
+.mod-item-main { display: flex; align-items: center; gap: 0.6rem; flex: 1; min-width: 0; text-decoration: none; color: inherit; }
 .mod-item-name { flex: 1; min-width: 0; font-size: 0.84rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .mod-item-badge { font-size: 0.62rem; padding: 0.18rem 0.5rem; border-radius: 5px; white-space: nowrap; flex-shrink: 0; font-weight: 700; }
 .mod-item-link { font-size: 0.72rem; color: var(--muted); flex-shrink: 0; }
 .mod-item-nolink { font-size: 0.8rem; opacity: 0.7; }
+/* Icônes d'action additionnelles (wiki / source / issues) */
+.mod-item-actions { display: flex; align-items: center; gap: 0.15rem; flex-shrink: 0; padding-left: 0.4rem; margin-left: 0.2rem; border-left: 1px solid var(--border); }
+.mod-link-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 1.7rem; height: 1.7rem; border-radius: 7px;
+  font-size: 0.82rem; line-height: 1; text-decoration: none; color: var(--muted);
+  transition: background 0.15s, color 0.15s, transform 0.15s;
+}
+.mod-link-icon:hover { background: rgba(167,139,250,0.16); color: var(--text); transform: translateY(-1px); }
+.mod-link-icon:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 /* Couleurs catégories */
 .badge-Monde       { background: rgba(34,197,94,0.15);  color: #4ade80; }
