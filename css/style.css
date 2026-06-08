@@ -433,6 +433,23 @@ button { cursor: pointer; font-family: var(--font-body); }
 .mods-search-input:focus, .cmds-search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 .mods-search-input::placeholder, .cmds-search-input::placeholder { color: var(--muted); }
 
+/* Ligne recherche + tri */
+.mods-search-row { display: flex; gap: 0.6rem; align-items: stretch; margin-bottom: 1rem; }
+.mods-search-row .mods-search-input { margin-bottom: 0; flex: 1; min-width: 0; }
+/* Select natif : couleurs explicites (sinon illisible en thème sombre sur certains OS) */
+.mods-sort {
+  flex-shrink: 0; background-color: var(--surface-2); color: var(--text);
+  border: 1px solid var(--border); border-radius: 12px;
+  font-family: var(--font-body); font-size: 0.88rem; padding: 0.8rem 2.2rem 0.8rem 1rem;
+  cursor: pointer; outline: none; appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239aa' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 0.9rem center;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.mods-sort:focus-visible { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.mods-sort option { background-color: var(--surface-2); color: var(--text); }
+@media (max-width: 540px) { .mods-search-row { flex-direction: column; } }
+
 .filter-pills { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 0.75rem; }
 .filter-pill { background: var(--surface-2); border: 1px solid var(--border); border-radius: 100px; color: var(--muted); font-family: var(--font-body); font-size: 0.78rem; font-weight: 500; padding: 0.4rem 0.85rem; cursor: pointer; transition: color 0.2s, background-color 0.2s, border-color 0.2s; }
 .filter-pill:hover { color: var(--text); border-color: var(--border-strong); }
@@ -485,8 +502,9 @@ button { cursor: pointer; font-family: var(--font-body); }
 .mod-item-badge { font-size: 0.62rem; padding: 0.18rem 0.5rem; border-radius: 5px; white-space: nowrap; flex-shrink: 0; font-weight: 700; }
 .mod-item-link { font-size: 0.72rem; color: var(--muted); flex-shrink: 0; }
 .mod-item-nolink { font-size: 0.8rem; opacity: 0.7; }
-/* Icônes d'action additionnelles (wiki / source / issues) */
-.mod-item-actions { display: flex; align-items: center; gap: 0.15rem; flex-shrink: 0; padding-left: 0.4rem; margin-left: 0.2rem; border-left: 1px solid var(--border); }
+/* Icônes d'action additionnelles (wiki / source / issues).
+   Le badge catégorie suit ces icônes et reste collé au bord droit (aligné d'une carte à l'autre). */
+.mod-item-actions { display: flex; align-items: center; gap: 0.15rem; flex-shrink: 0; }
 .mod-link-icon {
   display: inline-flex; align-items: center; justify-content: center;
   width: 1.7rem; height: 1.7rem; border-radius: 7px;
@@ -609,6 +627,19 @@ summary::after {
 }
 summary:hover::after { border-color: var(--border-strong); }
 details[open] summary::after { transform: rotate(90deg); background: var(--accent-soft); border-color: rgba(167,139,250,0.45); }
+/* FAQ deep-links : bouton 🔗 + ancre avec marge de scroll */
+#tab-faq details { scroll-margin-top: 90px; }
+.faq-link-btn {
+  margin-left: auto; flex-shrink: 0;
+  background: transparent; border: 1px solid var(--border); color: var(--muted);
+  border-radius: 6px; padding: 0.2rem 0.45rem; font-size: 0.7rem; line-height: 1;
+  cursor: pointer; transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.faq-link-btn:hover { border-color: rgba(167,139,250,0.5); color: #a78bfa; background: rgba(167,139,250,0.08); }
+.faq-link-btn.faq-copied { border-color: #34d399; color: #34d399; }
+.faq-link-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* le bouton porte le margin-left:auto → le chevron suit avec un simple écart fixe */
+#tab-faq summary::after { margin-left: 0.5rem; }
 .detail-body { padding: 0.2rem 1.3rem 1.3rem; overflow-x: auto; }
 .detail-body > p:first-child { margin-top: 0.6rem; }
 .detail-body code:not(.cmd):not(.inline-path) { font-family: var(--font-mono); font-size: 0.82em; background: rgba(255,255,255,0.08); color: var(--text); padding: 0.1em 0.4em; border-radius: 5px; }

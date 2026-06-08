@@ -249,8 +249,16 @@
         <!-- Stats + recherche + filtres + liste — tout alimenté par js/app.js -->
         <div class="mods-controls">
           <div class="mods-stats" id="mods-stats"></div>
-          <label for="mods-search" class="sr-only">Rechercher un mod</label>
-          <input type="search" id="mods-search" class="mods-search-input" placeholder="🔍 Rechercher un mod…" autocomplete="off" aria-label="Rechercher un mod">
+          <div class="mods-search-row">
+            <label for="mods-search" class="sr-only">Rechercher un mod</label>
+            <input type="search" id="mods-search" class="mods-search-input" placeholder="🔍 Rechercher un mod…" autocomplete="off" aria-label="Rechercher un mod">
+            <label for="mods-sort" class="sr-only">Trier les mods</label>
+            <select id="mods-sort" class="mods-sort" aria-label="Trier les mods">
+              <option value="cat">Par catégorie</option>
+              <option value="az">Nom A → Z</option>
+              <option value="za">Nom Z → A</option>
+            </select>
+          </div>
           <div class="filter-pills" id="filter-pills"></div>
           <div class="mods-controls-foot">
             <p class="mods-count" id="mods-count" aria-live="polite" aria-atomic="true"></p>

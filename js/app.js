@@ -1511,6 +1511,7 @@ const CAT_META = [
 
 let currentFilter = "all";
 let currentSearch = "";
+let currentSort = "cat"; // "cat" (par catégorie) | "az" | "za"
 let hideDead = false;
 
 function debounce(fn, ms) {
@@ -1542,6 +1543,28 @@ function modExtraIcons(name, url) {
   if (x.source) icons.push(`<a href="${safeUrl(x.source)}" target="_blank" rel="noopener noreferrer" class="mod-link-icon" title="Code source" aria-label="Code source de ${escapeHTML(name)}">&lt;/&gt;</a>`);
   if (x.issues) icons.push(`<a href="${safeUrl(x.issues)}" target="_blank" rel="noopener noreferrer" class="mod-link-icon" title="Signaler un bug (issues)" aria-label="Issues de ${escapeHTML(name)}">🐞</a>`);
   return icons.length ? `<span class="mod-item-actions">${icons.join("")}</span>` : "";
+}
+
+// HTML d'une carte de mod. Le badge catégorie est TOUJOURS le dernier élément
+// (collé au bord droit) → il s'aligne verticalement d'une carte à l'autre,
+// quel que soit le nombre d'icônes wiki/source/issues.
+function modItemHTML([name, c, url]) {
+  if (!url) return `<div class="mod-item mod-item-dead" title="Pas de page publique">
+        <span class="mod-item-main">
+          <span class="mod-item-name">${escapeHTML(name)}</span>
+          <span class="mod-item-link mod-item-nolink" aria-hidden="true">∅</span>
+        </span>
+        <span class="mod-item-badge badge-${c}">${escapeHTML(c)}</span>
+      </div>`;
+  const extra = modExtraIcons(name, url);
+  return `<div class="mod-item${extra ? " has-extra" : ""}">
+        <a href="${url}" target="_blank" rel="noopener noreferrer" class="mod-item-main" title="Page du mod">
+          <span class="mod-item-name">${escapeHTML(name)}</span>
+          <span class="mod-item-link" aria-hidden="true">↗</span>
+        </a>
+        ${extra}
+        <span class="mod-item-badge badge-${c}">${escapeHTML(c)}</span>
+      </div>`;
 }
 
 // Effectifs par catégorie + nombre de mods sans lien.
@@ -1585,40 +1608,37 @@ function renderPills() {
   document.getElementById("filter-pills").innerHTML = html;
 }
 
-/* ② + ④ — sections par catégorie, mods sans lien gérés */
+/* ② + ④ — liste des mods : groupée par catégorie (défaut) ou triée A→Z / Z→A */
 function renderMods() {
   const q = currentSearch.toLowerCase().trim();
   const cats = currentFilter === "all" ? CAT_META.map(m => m[0]) : [currentFilter];
+  const match = ([name, c, url]) => cats.includes(c) && name.toLowerCase().includes(q) && (!hideDead || url);
 
   let shown = 0;
-  const html = cats.map(cat => {
-    const items = MODS.filter(([name, c, url]) =>
-      c === cat && name.toLowerCase().includes(q) && (!hideDead || url)
-    );
-    if (!items.length) return "";
-    shown += items.length;
-    return `<section class="mod-cat">
-      <h3 class="mod-cat-title"><span class="mod-cat-icon">${modIcon(cat)}</span>${escapeHTML(cat)} <span class="mod-cat-count">${items.length}</span></h3>
-      <div class="mod-list">
-        ${items.map(([name, c, url]) => {
-          if (!url) return `<div class="mod-item mod-item-dead" title="Pas de page publique">
-                <span class="mod-item-name">${escapeHTML(name)}</span>
-                <span class="mod-item-badge badge-${c}">${escapeHTML(c)}</span>
-                <span class="mod-item-link mod-item-nolink" aria-hidden="true">∅</span>
-              </div>`;
-          const extra = modExtraIcons(name, url);
-          return `<div class="mod-item${extra ? " has-extra" : ""}">
-                <a href="${url}" target="_blank" rel="noopener noreferrer" class="mod-item-main" title="Page du mod">
-                  <span class="mod-item-name">${escapeHTML(name)}</span>
-                  <span class="mod-item-badge badge-${c}">${escapeHTML(c)}</span>
-                  <span class="mod-item-link" aria-hidden="true">↗</span>
-                </a>
-                ${extra}
-              </div>`;
-        }).join("")}
-      </div>
-    </section>`;
-  }).join("");
+  let html;
+
+  if (currentSort === "az" || currentSort === "za") {
+    // Tri alphabétique : liste plate, sans sections de catégorie (le badge reste visible).
+    const items = MODS.filter(match)
+      .slice()
+      .sort((a, b) => a[0].localeCompare(b[0], "fr", { sensitivity: "base" }));
+    if (currentSort === "za") items.reverse();
+    shown = items.length;
+    html = items.length ? `<div class="mod-list">${items.map(modItemHTML).join("")}</div>` : "";
+  } else {
+    // Défaut : sections par catégorie.
+    html = cats.map(cat => {
+      const items = MODS.filter(([name, c, url]) =>
+        c === cat && name.toLowerCase().includes(q) && (!hideDead || url)
+      );
+      if (!items.length) return "";
+      shown += items.length;
+      return `<section class="mod-cat">
+        <h3 class="mod-cat-title"><span class="mod-cat-icon">${modIcon(cat)}</span>${escapeHTML(cat)} <span class="mod-cat-count">${items.length}</span></h3>
+        <div class="mod-list">${items.map(modItemHTML).join("")}</div>
+      </section>`;
+    }).join("");
+  }
 
   document.getElementById("mods-list-container").innerHTML =
     html || `<div class="mods-empty">
@@ -1634,6 +1654,14 @@ document.getElementById("mods-search").addEventListener("input", debounce(e => {
   currentSearch = e.target.value;
   renderMods();
 }, 150));
+
+// Sélecteur de tri (par catégorie / A→Z / Z→A), reflété dans l'URL ?sort=
+const sortSelect = document.getElementById("mods-sort");
+if (sortSelect) sortSelect.addEventListener("change", e => {
+  currentSort = e.target.value;
+  setQueryParam("sort", currentSort === "cat" ? null : currentSort);
+  renderMods();
+});
 
 // Bouton « Réinitialiser » de l'état vide : efface recherche + filtre.
 document.getElementById("mods-list-container").addEventListener("click", e => {
@@ -1681,7 +1709,53 @@ const skeletonHTML = Array(12).fill('<div class="skeleton-item"></div>').join(""
 document.getElementById("mods-list-container").innerHTML = skeletonHTML;
 renderMods();
 
-/* Restaure l'état depuis l'URL au chargement : ?tab=commands&cat=Monde&#cl-N */
+/* =====================================================================
+   FAQ — deep-links (#faq-N) : id sur chaque question + bouton 🔗 pour copier
+   le lien, et reflet du hash quand on ouvre/ferme une question.
+===================================================================== */
+(function initFaqDeepLinks() {
+  const faq = document.getElementById("tab-faq");
+  if (!faq) return;
+  const items = [...faq.querySelectorAll("details")];
+
+  items.forEach((d, i) => {
+    d.id = "faq-" + i;
+    const summary = d.querySelector("summary");
+    if (summary && !summary.querySelector(".faq-link-btn")) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "faq-link-btn";
+      btn.textContent = "🔗";
+      btn.title = "Copier le lien vers cette question";
+      btn.setAttribute("aria-label", "Copier le lien vers cette question");
+      summary.appendChild(btn);
+    }
+    // Reflète l'ouverture dans l'URL (sans empiler l'historique).
+    d.addEventListener("toggle", () => {
+      if (d.open && currentTab() === "faq") {
+        history.replaceState(null, "", location.pathname + location.search + "#" + d.id);
+      }
+    });
+  });
+
+  // Clic sur 🔗 : copie le lien profond sans ouvrir/fermer la question.
+  faq.addEventListener("click", e => {
+    const btn = e.target.closest(".faq-link-btn");
+    if (!btn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const d = btn.closest("details");
+    if (!d || !navigator.clipboard) return;
+    const url = location.origin + location.pathname + "?tab=faq#" + d.id;
+    navigator.clipboard.writeText(url).then(() => {
+      btn.textContent = "✓";
+      btn.classList.add("faq-copied");
+      setTimeout(() => { btn.textContent = "🔗"; btn.classList.remove("faq-copied"); }, 1800);
+    }).catch(() => {});
+  });
+})();
+
+/* Restaure l'état depuis l'URL au chargement : ?tab=commands&cat=Monde&sort=az&#cl-N|#faq-N */
 (function initFromUrl() {
   const params = new URLSearchParams(location.search);
   const tab = params.get("tab") || (function(){ try { return localStorage.getItem("donjonmc-tab"); } catch(_){ return null; } })();
@@ -1690,14 +1764,27 @@ renderMods();
   if (cat && CAT_META.some(m => m[0] === cat)) {
     currentFilter = cat;
     renderPills();
-    renderMods();
   }
+  const sort = params.get("sort");
+  if (sort === "az" || sort === "za") {
+    currentSort = sort;
+    if (sortSelect) sortSelect.value = sort;
+  }
+  if ((cat && CAT_META.some(m => m[0] === cat)) || currentSort !== "cat") renderMods();
+
   const hash = location.hash;
   if (hash && /^#cl-\d+$/.test(hash)) {
     activateTab("changelog", false);
     setTimeout(() => {
       const el = document.getElementById(hash.slice(1));
       if (el) el.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "center" });
+    }, 150);
+  }
+  if (hash && /^#faq-\d+$/.test(hash)) {
+    activateTab("faq", false);
+    setTimeout(() => {
+      const el = document.getElementById(hash.slice(1));
+      if (el) { el.open = true; el.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "center" }); }
     }, 150);
   }
 })();
