@@ -1621,7 +1621,10 @@ function renderMods() {
   }).join("");
 
   document.getElementById("mods-list-container").innerHTML =
-    html || `<p class="mods-empty">Aucun mod trouvé pour « ${escapeHTML(currentSearch)} »</p>`;
+    html || `<div class="mods-empty">
+      <p>Aucun mod trouvé${currentSearch ? ` pour « ${escapeHTML(currentSearch)} »` : ""}.</p>
+      <button type="button" class="btn btn-ghost mods-reset" id="mods-reset">↺ Réinitialiser la recherche</button>
+    </div>`;
 
   const count = document.getElementById("mods-count");
   if (count) count.textContent = `${shown} mod${shown !== 1 ? "s" : ""} affiché${shown !== 1 ? "s" : ""}`;
@@ -1631,6 +1634,19 @@ document.getElementById("mods-search").addEventListener("input", debounce(e => {
   currentSearch = e.target.value;
   renderMods();
 }, 150));
+
+// Bouton « Réinitialiser » de l'état vide : efface recherche + filtre.
+document.getElementById("mods-list-container").addEventListener("click", e => {
+  if (!e.target.closest("#mods-reset")) return;
+  currentSearch = "";
+  currentFilter = "all";
+  const search = document.getElementById("mods-search");
+  if (search) search.value = "";
+  setQueryParam("cat", null);
+  renderPills();
+  renderMods();
+  if (search) search.focus();
+});
 
 document.getElementById("filter-pills").addEventListener("click", e => {
   const pill = e.target.closest(".filter-pill");

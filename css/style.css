@@ -284,7 +284,10 @@ button { cursor: pointer; font-family: var(--font-body); }
   padding: 0.7rem 1.5rem; font-size: 0.88rem; font-weight: 600;
   border: 1px solid transparent; border-radius: 100px;
   transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s, border-color 0.2s, color 0.2s, filter 0.2s;
+  touch-action: manipulation;
 }
+/* Supprime le délai tactile de 300 ms sur les éléments cliquables custom */
+.tab-btn, .filter-pill, .cmd-card, .mod-item, .mod-link-icon, .nav-pill a, .mnav-link, .notif-bell, .cl-link-btn, .back-to-top, .burger { touch-action: manipulation; }
 .btn-lg { padding: 0.85rem 1.8rem; font-size: 0.95rem; }
 .btn-primary { background: linear-gradient(135deg, #a78bfa, #7c5cbf); color: #fff; box-shadow: 0 10px 30px -10px rgba(167,139,250,0.7); }
 .btn-primary:hover { transform: translateY(-2px); filter: brightness(1.08); box-shadow: 0 16px 40px -12px rgba(167,139,250,0.85); }
@@ -461,7 +464,12 @@ button { cursor: pointer; font-family: var(--font-body); }
 .mod-cat-icon, .cmd-cat-icon { font-size: 1.05rem; }
 .mod-cat-count { margin-left: auto; font-size: 0.85em; color: var(--muted); font-variant-numeric: tabular-nums; background: var(--surface-2); padding: 0.1rem 0.55rem; border-radius: 100px; border: 1px solid var(--border); }
 .mods-empty { color: var(--muted); padding: 2.5rem 0; text-align: center; }
+.mods-empty .mods-reset { margin-top: 1rem; }
 
+/* content-visibility : le navigateur saute le rendu des sections hors écran
+   (gain notable sur la longue liste de mods). intrinsic-size = hauteur estimée
+   pour éviter les sauts de scrollbar. */
+.mod-cat { content-visibility: auto; contain-intrinsic-size: auto 400px; }
 .mod-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.5rem; }
 .mod-item {
   display: flex; align-items: center; gap: 0.6rem;
@@ -645,7 +653,7 @@ details[open] summary::after { transform: rotate(90deg); background: var(--accen
 .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .burger.open span:nth-child(2) { opacity: 0; }
 .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-.mobile-nav { display: none; position: fixed; top: 70px; left: 0; right: 0; z-index: 98; background: rgba(8,7,14,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); flex-direction: column; }
+.mobile-nav { display: none; position: fixed; top: 70px; left: 0; right: 0; z-index: 98; background: rgba(8,7,14,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); flex-direction: column; overscroll-behavior: contain; }
 .mobile-nav.open { display: flex; }
 .mnav-link { padding: 1rem 1.5rem; color: var(--muted); font-size: 0.95rem; border-bottom: 1px solid var(--border); transition: color 0.2s, background 0.2s; }
 .mnav-link:last-child { border-bottom: none; }
@@ -661,7 +669,7 @@ details[open] summary::after { transform: rotate(90deg); background: var(--accen
 /* =====================================================================
    MODAL MODS REQUIS
 ===================================================================== */
-.mods-overlay { position: fixed; inset: 0; background: rgba(7,6,13,0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 1100; padding: 1.5rem; animation: fade-in 0.25s ease; }
+.mods-overlay { position: fixed; inset: 0; background: rgba(7,6,13,0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 1100; padding: 1.5rem; animation: fade-in 0.25s ease; overscroll-behavior: contain; }
 .mods-overlay[hidden] { display: none; }
 .mods-modal { background: var(--surface-3); border: 1px solid rgba(167,139,250,0.35); border-radius: var(--radius-lg); padding: 2.2rem; max-width: 470px; width: 100%; box-shadow: 0 0 80px -20px rgba(167,139,250,0.5); text-align: center; }
 .mods-modal-icon { font-size: 2.2rem; margin-bottom: 0.8rem; }
