@@ -889,6 +889,33 @@ const safeUrl = url => /^https:\/\//i.test(url) ? url : "#";
 /* ---- GitHub Releases → NEWS ----------------------------------------- */
 const MONTHS_FR = ["JANV","FÉVR","MARS","AVR","MAI","JUIN","JUIL","AOÛT","SEPT","OCT","NOV","DÉC"];
 
+/* Horodatage d'un article (statique ou GitHub) pour trier du plus récent au plus ancien */
+function newsTs(n) {
+  if (n._ts) return n._ts;
+  const [mois, annee] = (n.my || "").split(" ");
+  const mo = MONTHS_FR.indexOf(mois);
+  return Date.UTC(parseInt(annee, 10) || 2026, mo < 0 ? 0 : mo, parseInt(n.day, 10) || 1);
+}
+
+/* Identifiant stable d'un article, dérivé du titre (résiste au tri et au re-rendu) */
+function newsSlug(n) {
+  const base = (n.title || "")
+    .toLowerCase()
+    .normalize("NFD").replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 60);
+  return "cl-" + (base || "article");
+}
+
+/* Scrolle vers l'article ciblé par le hash de l'URL (#cl-<slug>) s'il existe */
+function scrollToHashArticle() {
+  const hash = location.hash;
+  if (!hash || !/^#cl-[a-z0-9-]+$/i.test(hash)) return;
+  const el = document.getElementById(hash.slice(1));
+  if (el) el.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "center" });
+}
+
 function mdToHtml(md) {
   return md
     .replace(/#{1,6}\s+(.+)/g, "<strong>$1</strong>")
@@ -953,8 +980,13 @@ async function loadGitHubReleases() {
   const toAdd = releases.filter(r => !existingTitles.has(r.title));
   if (!toAdd.length) return;
 
-  NEWS.unshift(...toAdd);
+  /* Les releases GitHub sont des miroirs auto-générés : l'article curé reste la version active */
+  toAdd.forEach(r => { r.obsolete = true; });
+  NEWS.push(...toAdd);
+  NEWS.sort((a, b) => newsTs(b) - newsTs(a));
   renderNews();
+  /* Le re-rendu a recréé les articles : on re-scrolle si l'URL ciblait un article */
+  scrollToHashArticle();
 }
 
 /* ---- Notifications ------------------------------------------------------ */
@@ -1014,11 +1046,12 @@ function renderNews() {
         ).join("")}</div>`
       : "";
     const cls = ["cl-item", i === 0 ? "is-latest" : "", n.obsolete ? "is-obsolete" : ""].filter(Boolean).join(" ");
-    const articleUrl = escapeHTML(location.origin + location.pathname + "?tab=changelog#cl-" + i);
+    const aid = newsSlug(n);
+    const articleUrl = escapeHTML(location.origin + location.pathname + "?tab=changelog#" + aid);
     const linkBtn = !n.obsolete
       ? `<button class="cl-link-btn" data-url="${articleUrl}" title="Copier le lien vers cet article" aria-label="Copier le lien">🔗</button>`
       : "";
-    return `<article class="${cls}" id="cl-${i}">
+    return `<article class="${cls}" id="${aid}">
       <div class="cl-date"><span class="cl-day">${escapeHTML(n.day)}</span><span class="cl-my">${escapeHTML(n.my)}</span></div>
       <div class="cl-content">
         ${linkBtn}
@@ -1783,12 +1816,9 @@ renderMods();
   if ((cat && CAT_META.some(m => m[0] === cat)) || currentSort !== "cat") renderMods();
 
   const hash = location.hash;
-  if (hash && /^#cl-\d+$/.test(hash)) {
+  if (hash && /^#cl-[a-z0-9-]+$/i.test(hash)) {
     activateTab("changelog", false);
-    setTimeout(() => {
-      const el = document.getElementById(hash.slice(1));
-      if (el) el.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "center" });
-    }, 150);
+    setTimeout(scrollToHashArticle, 150);
   }
   if (hash && /^#faq-\d+$/.test(hash)) {
     activateTab("faq", false);
