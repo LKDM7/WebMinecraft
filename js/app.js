@@ -1996,3 +1996,375 @@ function showUpdateBanner() {
   setTimeout(check, 20000);
   setInterval(check, 5 * 60 * 1000);
 })();
+
+/* =====================================================================
+   Spotlight souris sur cartes — inspiré de 21st.dev (2026-06-09)
+   BLOC AMOVIBLE : supprimer cet IIFE, ou `git restore js/app.js`.
+   Pose --mx/--my (position curseur) sur la carte survolée. rAF-throttle,
+   delegation unique, ignoré au clavier/tactile et si reduced-motion.
+   ===================================================================== */
+(function initCardSpotlight() {
+  const mm = window.matchMedia;
+  if (mm && (mm("(prefers-reduced-motion: reduce)").matches || mm("(hover: none)").matches)) return;
+
+  const SEL = ".step-card, .feature-item, .cmd-card, .download-banner";
+  let queued = false, el = null, x = 0, y = 0;
+
+  document.addEventListener("pointermove", (e) => {
+    if (e.pointerType === "touch") return;
+    const card = e.target.closest(SEL);
+    if (!card) return;
+    el = card; x = e.clientX; y = e.clientY;
+    if (!queued) {
+      queued = true;
+      requestAnimationFrame(() => {
+        queued = false;
+        if (!el) return;
+        const r = el.getBoundingClientRect();
+        el.style.setProperty("--mx", (x - r.left) + "px");
+        el.style.setProperty("--my", (y - r.top) + "px");
+      });
+    }
+  }, { passive: true });
+})();
+
+/* =====================================================================
+   ENHANCEMENTS — Vague 2 · composants communautaires 21st.dev · AMOVIBLE
+   Number Ticker, Retro Grid + Meteors (injectés dans le héros), 3D Tilt.
+   Retrait : supprimer cet IIFE, ou `git restore js/app.js`.
+   ===================================================================== */
+(function initWave2FX() {
+  const mm = window.matchMedia;
+  const reduce = mm && mm("(prefers-reduced-motion: reduce)").matches;
+  const touch  = mm && mm("(hover: none)").matches;
+
+  /* 1 — Number Ticker : compte de 0 → valeur quand le chiffre entre à l'écran */
+  (function numberTicker() {
+    const els = document.querySelectorAll(".js-mod-count");
+    if (!els.length || !("IntersectionObserver" in window)) return;
+    const easeOut = t => 1 - Math.pow(1 - t, 3);
+    const run = (el) => {
+      const target = parseInt((el.textContent || "").replace(/\D/g, ""), 10);
+      if (!target) return;
+      if (reduce) { el.textContent = String(target); return; }
+      const dur = 1100, t0 = performance.now();
+      const step = (now) => {
+        const p = Math.min(1, (now - t0) / dur);
+        el.textContent = String(Math.round(easeOut(p) * target));
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { run(e.target); io.unobserve(e.target); } });
+    }, { threshold: 0.6 });
+    els.forEach(el => io.observe(el));
+  })();
+
+  /* 2 — Retro Grid + Meteors : décor injecté dans le héros (index.html intact) */
+  (function heroDecor() {
+    const hero = document.querySelector(".hero");
+    if (!hero) return;
+
+    const grid = document.createElement("div");
+    grid.className = "dm-retro-grid";
+    grid.setAttribute("aria-hidden", "true");
+    grid.innerHTML = '<div class="dm-retro-grid__plane"></div>';
+    hero.appendChild(grid);
+
+    if (reduce) return;
+    const layer = document.createElement("div");
+    layer.className = "dm-meteor-layer";
+    layer.setAttribute("aria-hidden", "true");
+    for (let i = 0; i < 9; i++) {
+      const m = document.createElement("span");
+      m.className = "dm-meteor";
+      m.style.left = (5 + Math.random() * 90) + "%";
+      m.style.top  = (Math.random() * 45) + "%";
+      m.style.animationDuration = (3.5 + Math.random() * 4) + "s";
+      m.style.animationDelay = (Math.random() * 9) + "s";
+      layer.appendChild(m);
+    }
+    hero.appendChild(layer);
+  })();
+
+  /* 3 — 3D Tilt : les cartes s'inclinent vers le curseur (--rx/--ry) */
+  (function tiltCards() {
+    if (reduce || touch) return;
+    document.querySelectorAll(".step-card, .feature-item").forEach(card => {
+      let raf = false, ev = null;
+      card.addEventListener("pointermove", (e) => {
+        if (e.pointerType === "touch") return;
+        ev = e;
+        if (raf) return;
+        raf = true;
+        requestAnimationFrame(() => {
+          raf = false;
+          const r = card.getBoundingClientRect();
+          const px = (ev.clientX - r.left) / r.width  - 0.5;
+          const py = (ev.clientY - r.top)  / r.height - 0.5;
+          card.style.setProperty("--rx", (px * 7).toFixed(2) + "deg");
+          card.style.setProperty("--ry", (-py * 7).toFixed(2) + "deg");
+        });
+      }, { passive: true });
+      card.addEventListener("pointerleave", () => {
+        card.style.setProperty("--rx", "0deg");
+        card.style.setProperty("--ry", "0deg");
+      }, { passive: true });
+    });
+  })();
+})();
+
+/* =====================================================================
+   DOCS LAYOUT — transforme les accordéons DonjonMC/Dashboard en
+   navigation latérale + panneau (icônes SVG, tablist vertical ARIA).
+   Les <details> d'index.html sont reconstruits au runtime ; la FAQ n'est
+   pas touchée. Retrait : `git restore js/app.js css/style.css`.
+   ===================================================================== */
+(function initDocsLayout() {
+  const svg = (inner) =>
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${inner}</svg>`;
+
+  const ICONS = {
+    progression: svg('<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>'),
+    stats:       svg('<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>'),
+    spells:      svg('<path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15l-1.9-4.1L5.5 9l4.6-1.4z"/><path d="M19 14v4"/><path d="M21 16h-4"/><path d="M5 5v3"/><path d="M6.5 6.5h-3"/>'),
+    quests:      svg('<rect width="8" height="4" x="8" y="2" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 12h6"/><path d="M9 16h6"/>'),
+    punishment:  svg('<path d="m21.7 18-8-14a2 2 0 0 0-3.4 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/>'),
+    dungeons:    svg('<line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/>'),
+    classes:     svg('<polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" x2="19" y1="19" y2="13"/><line x1="16" x2="20" y1="16" y2="20"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" x2="9" y1="14" y2="18"/><line x1="7" x2="4" y1="17" y2="20"/>'),
+    raid:        svg('<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>'),
+    path:        svg('<circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/>'),
+    navigation:  svg('<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>'),
+    protection:  svg('<rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>'),
+    comms:       svg('<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>'),
+    deal:        svg('<path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/>'),
+    chest:       svg('<path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/>'),
+    menu:        svg('<line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="1" x2="7" y1="14" y2="14"/><line x1="9" x2="15" y1="8" y2="8"/><line x1="17" x2="23" y1="16" y2="16"/>'),
+    build:       svg('<path d="m15 12-8.4 8.4a1.4 1.4 0 1 1-3-3L12 9"/><path d="m18 15 3-3"/><path d="m21.5 11.5-1.9-1.9A2 2 0 0 1 19 8.2V7l-2.3-2.3a6 6 0 0 0-4.2-1.7L9 3l.9.8A6 6 0 0 1 12 8.4V10l2 2h1.2a2 2 0 0 1 1.4.6L18.5 14.5"/>'),
+    passive:     svg('<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/>'),
+    info:        svg('<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>'),
+  };
+
+  /* Détection de l'icône via l'emoji du <summary> (plus fiable que le texte) */
+  const EMOJI_TO_ICON = [
+    ["📈", "progression"], ["⚡", "stats"], ["✨", "spells"], ["📋", "quests"],
+    ["⚠", "punishment"], ["🏛", "dungeons"], ["⚔", "classes"], ["🗺", "navigation"],
+    ["🔒", "protection"], ["💬", "comms"], ["🔄", "deal"], ["📦", "chest"],
+    ["⚙", "menu"], ["🏗", "build"], ["🌿", "passive"], ["ℹ", "info"], ["👥", "raid"],
+  ];
+  const iconFor = (raw, tabId) => {
+    for (const [emo, key] of EMOJI_TO_ICON) if (raw.indexOf(emo) !== -1) {
+      if (key === "raid" && tabId === "tab-dashboard") return ICONS.raid; // Groupes
+      if (key === "navigation" && tabId === "tab-donjonmc") return ICONS.path; // Parcours
+      return ICONS[key];
+    }
+    return ICONS.info;
+  };
+
+  function build(tabId, label) {
+    const tab = document.getElementById(tabId);
+    if (!tab) return;
+    const items = Array.prototype.slice.call(tab.querySelectorAll(":scope > details"));
+    if (!items.length) return;
+
+    const layout = document.createElement("div");
+    layout.className = "docs-layout";
+    const nav = document.createElement("div");
+    nav.className = "docs-nav";
+    nav.setAttribute("role", "tablist");
+    nav.setAttribute("aria-orientation", "vertical");
+    nav.setAttribute("aria-label", label);
+    const panels = document.createElement("div");
+    panels.className = "docs-panels";
+
+    const buttons = [];
+
+    items.forEach((d, i) => {
+      const summary = d.querySelector("summary");
+      const raw = summary ? summary.textContent.trim() : ("Section " + (i + 1));
+      const title = raw.replace(/^[^0-9A-Za-zÀ-ÿ]+/, "").trim() || raw;
+      const icon = iconFor(raw, tabId);
+      const body = d.querySelector(".detail-body");
+      const tId = tabId + "-dt" + i, pId = tabId + "-dp" + i;
+      const first = i === 0;
+
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "docs-nav-item" + (first ? " active" : "");
+      btn.id = tId;
+      btn.setAttribute("role", "tab");
+      btn.setAttribute("aria-controls", pId);
+      btn.setAttribute("aria-selected", first ? "true" : "false");
+      btn.tabIndex = first ? 0 : -1;
+      btn.innerHTML = icon + "<span>" + escapeHTML(title) + "</span>";
+      nav.appendChild(btn);
+      buttons.push(btn);
+
+      const panel = document.createElement("section");
+      panel.className = "docs-panel";
+      panel.id = pId;
+      panel.setAttribute("role", "tabpanel");
+      panel.setAttribute("aria-labelledby", tId);
+      panel.setAttribute("tabindex", "0");
+      if (!first) panel.hidden = true;
+      const h = document.createElement("h3");
+      h.className = "docs-panel-title";
+      h.innerHTML = icon + "<span>" + escapeHTML(title) + "</span>";
+      panel.appendChild(h);
+      if (body) panel.appendChild(body); else while (d.firstChild) { if (d.firstChild.tagName === "SUMMARY") d.removeChild(d.firstChild); else panel.appendChild(d.firstChild); }
+      panels.appendChild(panel);
+    });
+
+    const select = (idx, focus) => {
+      buttons.forEach((b, j) => {
+        const on = j === idx;
+        b.classList.toggle("active", on);
+        b.setAttribute("aria-selected", on ? "true" : "false");
+        b.tabIndex = on ? 0 : -1;
+        panels.children[j].hidden = !on;
+      });
+      if (focus) buttons[idx].focus();
+    };
+
+    nav.addEventListener("click", (e) => {
+      const b = e.target.closest(".docs-nav-item");
+      if (b) select(buttons.indexOf(b), false);
+    });
+    nav.addEventListener("keydown", (e) => {
+      const cur = buttons.findIndex(b => b.tabIndex === 0);
+      let next = -1;
+      if (e.key === "ArrowDown" || e.key === "ArrowRight") next = (cur + 1) % buttons.length;
+      else if (e.key === "ArrowUp" || e.key === "ArrowLeft") next = (cur - 1 + buttons.length) % buttons.length;
+      else if (e.key === "Home") next = 0;
+      else if (e.key === "End") next = buttons.length - 1;
+      if (next !== -1) { e.preventDefault(); select(next, true); }
+    });
+
+    layout.appendChild(nav);
+    layout.appendChild(panels);
+    items[0].before(layout);
+    items.forEach(d => d.remove());
+  }
+
+  build("tab-donjonmc", "Sections du guide DonjonMC");
+  build("tab-dashboard", "Sections du guide Dashboard");
+})();
+
+/* =====================================================================
+   SHADER GRADIENT WebGL — fond plasma/aurora animé du héros (vanilla).
+   Sans lib externe (CSP script-src 'self'). Rendu basse résolution,
+   pause hors-écran / onglet caché, statique si reduced-motion, fallback
+   sur le fond existant si WebGL indisponible.
+   Retrait : `git restore js/app.js css/style.css`.
+   ===================================================================== */
+(function initHeroShader() {
+  const hero = document.querySelector(".hero");
+  if (!hero) return;
+
+  const canvas = document.createElement("canvas");
+  canvas.className = "dm-hero-shader";
+  canvas.setAttribute("aria-hidden", "true");
+
+  let gl;
+  try {
+    gl = canvas.getContext("webgl", { antialias: false, alpha: true, depth: false, premultipliedAlpha: false })
+      || canvas.getContext("experimental-webgl");
+  } catch (_) { gl = null; }
+  if (!gl) return; // fallback : on garde aurore + particules + grille
+
+  const VERT = "attribute vec2 p; void main(){ gl_Position = vec4(p, 0.0, 1.0); }";
+  const FRAG = [
+    "precision mediump float;",
+    "uniform vec2 u_res; uniform float u_time;",
+    "float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7)))*43758.5453123); }",
+    "float noise(vec2 p){",
+    "  vec2 i=floor(p), f=fract(p);",
+    "  vec2 u=f*f*(3.0-2.0*f);",
+    "  return mix(mix(hash(i),hash(i+vec2(1.0,0.0)),u.x), mix(hash(i+vec2(0.0,1.0)),hash(i+vec2(1.0,1.0)),u.x), u.y);",
+    "}",
+    "float fbm(vec2 p){ float v=0.0,a=0.5; for(int i=0;i<4;i++){ v+=a*noise(p); p*=2.0; a*=0.5; } return v; }",
+    "void main(){",
+    "  vec2 uv = gl_FragCoord.xy / u_res.xy;",
+    "  vec2 p = uv; p.x *= u_res.x / u_res.y;",
+    "  float t = u_time * 0.06;",
+    "  vec2 q = vec2(fbm(p*1.6 + t), fbm(p*1.6 + vec2(5.2,1.3) - t));",
+    "  vec2 r = vec2(fbm(p*1.6 + 1.6*q + vec2(1.7,9.2) + t*1.2), fbm(p*1.6 + 1.6*q + vec2(8.3,2.8) - t*1.1));",
+    "  float f = fbm(p*1.6 + 1.8*r);",
+    "  vec3 cBg     = vec3(0.027,0.024,0.051);",
+    "  vec3 cViolet = vec3(0.655,0.545,0.980);",
+    "  vec3 cCyan   = vec3(0.133,0.827,0.933);",
+    "  vec3 cPink   = vec3(0.941,0.671,0.988);",
+    "  vec3 col = mix(cBg, cViolet, clamp(f*1.5, 0.0, 1.0));",
+    "  col = mix(col, cCyan, clamp(r.x*0.85, 0.0, 1.0));",
+    "  col = mix(col, cPink, clamp(q.y*0.6, 0.0, 1.0));",
+    "  col = mix(col, cBg, clamp(length(r)*0.35, 0.0, 0.6));",
+    "  float vig = smoothstep(1.15, 0.25, length(uv-0.5));",
+    "  col = mix(cBg, col, vig);",
+    "  gl_FragColor = vec4(col, 1.0);",
+    "}",
+  ].join("\n");
+
+  function compile(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src); gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { gl.deleteShader(s); return null; }
+    return s;
+  }
+  const vs = compile(gl.VERTEX_SHADER, VERT);
+  const fs = compile(gl.FRAGMENT_SHADER, FRAG);
+  if (!vs || !fs) return;
+  const prog = gl.createProgram();
+  gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+  gl.useProgram(prog);
+
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+  const locP = gl.getAttribLocation(prog, "p");
+  gl.enableVertexAttribArray(locP);
+  gl.vertexAttribPointer(locP, 2, gl.FLOAT, false, 0, 0);
+  const uRes = gl.getUniformLocation(prog, "u_res");
+  const uTime = gl.getUniformLocation(prog, "u_time");
+
+  hero.insertBefore(canvas, hero.firstChild); // derrière aurore/particules/contenu
+
+  const SCALE = 0.55; // rendu interne basse résolution (gradient flou : invisible)
+  function resize() {
+    const w = Math.max(1, Math.round(hero.clientWidth * SCALE));
+    const h = Math.max(1, Math.round(hero.clientHeight * SCALE));
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width = w; canvas.height = h;
+      gl.viewport(0, 0, w, h);
+    }
+    gl.uniform2f(uRes, w, h);
+  }
+  resize();
+  if ("ResizeObserver" in window) new ResizeObserver(resize).observe(hero);
+  else window.addEventListener("resize", resize, { passive: true });
+
+  const mm = window.matchMedia;
+  const reduce = mm && mm("(prefers-reduced-motion: reduce)").matches;
+  let visible = true, raf = 0;
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver((e) => { visible = e[0].isIntersecting; if (visible && !reduce) loop(); })
+      .observe(hero);
+  }
+  document.addEventListener("visibilitychange", () => { if (!document.hidden && visible && !reduce) loop(); });
+
+  const t0 = performance.now();
+  function frame() {
+    raf = 0;
+    resize();
+    gl.uniform1f(uTime, (performance.now() - t0) / 1000);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    if (visible && !document.hidden && !reduce) loop();
+  }
+  function loop() { if (!raf) raf = requestAnimationFrame(frame); }
+
+  // Première image (et unique si reduced-motion)
+  gl.uniform1f(uTime, 0);
+  gl.drawArrays(gl.TRIANGLES, 0, 3);
+  if (!reduce) loop();
+})();

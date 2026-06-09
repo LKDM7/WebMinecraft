@@ -1027,3 +1027,176 @@ html[data-maintenance="true"] .maintenance-overlay {
   .maintenance-title { font-size: 1.3rem; }
   .maintenance-text { font-size: 0.86rem; }
 }
+
+/* =====================================================================
+   ENHANCEMENTS — inspirés de 21st.dev (2026-06-09) · BLOC AMOVIBLE
+   Pour tout retirer : supprimer ce bloc, ou `git restore css/style.css`.
+   Effets : spotlight souris sur cartes, bordure conique animée sur l'IP,
+   dégradé animé du titre héros, glow boutons. Respecte prefers-reduced-motion.
+   ===================================================================== */
+@property --dm-angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+
+/* 1 — Spotlight qui suit le curseur (--mx/--my posés par app.js) */
+.step-card, .feature-item, .cmd-card, .download-banner { position: relative; --mx: 50%; --my: 50%; }
+.step-card::after, .feature-item::after, .cmd-card::after, .download-banner::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(360px circle at var(--mx) var(--my), rgba(167,139,250,0.16), transparent 62%);
+  opacity: 0; transition: opacity 0.4s ease; z-index: 0;
+}
+.step-card:hover::after, .feature-item:hover::after, .cmd-card:hover::after, .download-banner:hover::after { opacity: 1; }
+.step-card > *, .feature-item > *, .cmd-card > *, .download-banner > * { position: relative; z-index: 1; }
+
+/* 2 — Bordure conique lumineuse animée sur la carte IP (élément focal du héros) */
+.ip-card { position: relative; isolation: isolate; }
+.ip-card::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; z-index: -1;
+  background: conic-gradient(from var(--dm-angle),
+    transparent 0deg, transparent 200deg,
+    var(--accent) 280deg, var(--accent-2) 320deg, var(--accent-3) 340deg, transparent 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  animation: dm-border-spin 6s linear infinite;
+}
+@keyframes dm-border-spin { to { --dm-angle: 360deg; } }
+
+/* 3 — Dégradé qui s'écoule dans le titre du héros */
+.hero-title .grad { background-size: 220% auto; animation: dm-grad-flow 7s linear infinite; }
+@keyframes dm-grad-flow { to { background-position: 220% center; } }
+
+/* 4 — Glow doux et persistant sur le CTA principal du héros */
+.hero-cta-row .btn-primary { animation: dm-cta-glow 3.6s ease-in-out infinite; }
+@keyframes dm-cta-glow {
+  0%, 100% { box-shadow: 0 10px 30px -10px rgba(167,139,250,0.7); }
+  50%      { box-shadow: 0 14px 42px -10px rgba(167,139,250,0.95), 0 0 26px -6px rgba(34,211,238,0.5); }
+}
+
+/* 5 — Léger halo sur les titres de section */
+.section-title .grad { text-shadow: 0 0 38px rgba(167,139,250,0.25); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ip-card::after { animation: none; }
+  .hero-title .grad, .hero-cta-row .btn-primary { animation: none; }
+  .step-card::after, .feature-item::after, .cmd-card::after, .download-banner::after { display: none; }
+}
+@media (hover: none) {
+  .step-card::after, .feature-item::after, .cmd-card::after, .download-banner::after { display: none; }
+}
+
+/* =====================================================================
+   ENHANCEMENTS — Vague 2 · composants communautaires 21st.dev · AMOVIBLE
+   Retro Grid + Meteors (Magic UI), Number Ticker, 3D Tilt (Aceternity).
+   Retrait : supprimer ce bloc, ou `git restore css/style.css`.
+   ===================================================================== */
+
+/* Retro Grid — sol perspective animé (d'après "Retro Grid", Magic UI) */
+.dm-retro-grid {
+  position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; opacity: 0.55;
+  perspective: 220px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 52%, #000 92%);
+          mask-image: linear-gradient(to bottom, transparent 52%, #000 92%);
+}
+.dm-retro-grid__plane {
+  position: absolute; left: -75%; top: 55%; width: 250%; height: 150%;
+  transform: rotateX(58deg);
+  background-image:
+    linear-gradient(to right,  rgba(167,139,250,0.40) 1px, transparent 0),
+    linear-gradient(to bottom, rgba(34,211,238,0.32) 1px, transparent 0);
+  background-size: 46px 46px;
+  animation: dm-grid-move 16s linear infinite;
+}
+@keyframes dm-grid-move { to { background-position: 0 46px; } }
+
+/* Meteors — météores filants (d'après "Meteors", Magic UI) */
+.dm-meteor-layer { position: absolute; inset: 0; z-index: 1; overflow: hidden; pointer-events: none; }
+.dm-meteor {
+  position: absolute; width: 2px; height: 2px; border-radius: 50%;
+  background: #fff; box-shadow: 0 0 7px 1px rgba(199,210,254,0.7);
+  transform: rotate(215deg); opacity: 0;
+  animation: dm-meteor-fall linear infinite;
+}
+.dm-meteor::before {
+  content: ""; position: absolute; top: 50%; transform: translateY(-50%);
+  width: 64px; height: 1px;
+  background: linear-gradient(90deg, rgba(199,210,254,0.75), transparent);
+}
+@keyframes dm-meteor-fall {
+  0%   { transform: rotate(215deg) translateX(0);      opacity: 0; }
+  10%  { opacity: 1; }
+  100% { transform: rotate(215deg) translateX(-520px); opacity: 0; }
+}
+
+/* 3D Tilt — inclinaison des cartes vers le curseur (--rx/--ry posés par app.js) */
+.step-card, .feature-item { transform-style: preserve-3d; }
+.step-card:hover  { transform: perspective(820px) rotateY(var(--rx, 0deg)) rotateX(var(--ry, 0deg)) translateY(-5px); }
+.feature-item:hover { transform: perspective(820px) rotateY(var(--rx, 0deg)) rotateX(var(--ry, 0deg)) translateY(-3px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .dm-retro-grid__plane, .dm-meteor { animation: none; }
+  .dm-meteor-layer { display: none; }
+  .step-card:hover  { transform: translateY(-5px); }
+  .feature-item:hover { transform: translateY(-3px); }
+}
+@media (hover: none) {
+  .step-card:hover  { transform: translateY(-5px); }
+  .feature-item:hover { transform: translateY(-3px); }
+}
+
+/* =====================================================================
+   DOCS LAYOUT — remplace les accordéons des onglets DonjonMC/Dashboard
+   par une navigation latérale + panneau (sidebar docs, icônes SVG).
+   Construit au runtime par app.js (les <details> d'origine restent dans
+   index.html). Retrait : `git restore css/style.css js/app.js`.
+   ===================================================================== */
+.docs-layout { display: grid; grid-template-columns: 252px 1fr; gap: 1.4rem; align-items: start; margin-top: 0.4rem; }
+
+.docs-nav { display: flex; flex-direction: column; gap: 0.28rem; position: sticky; top: 86px; }
+.docs-nav-item {
+  display: flex; align-items: center; gap: 0.7rem; width: 100%; text-align: left;
+  padding: 0.66rem 0.85rem; border-radius: 12px; border: 1px solid transparent;
+  background: transparent; color: var(--text-2); font-size: 0.9rem; font-weight: 500;
+  line-height: 1.25; transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.docs-nav-item svg { width: 18px; height: 18px; flex: none; opacity: 0.8; transition: opacity 0.2s, color 0.2s; }
+.docs-nav-item:hover { background: rgba(255,255,255,0.045); color: var(--text); }
+.docs-nav-item.active {
+  background: var(--accent-soft); color: #fff;
+  border-color: rgba(167,139,250,0.34); box-shadow: 0 8px 24px -16px rgba(167,139,250,0.8);
+}
+.docs-nav-item.active svg { opacity: 1; color: var(--accent); }
+
+.docs-panels { min-width: 0; }
+.docs-panel { animation: fade-in 0.35s ease; }
+.docs-panel[hidden] { display: none; }
+.docs-panel-title { display: flex; align-items: center; gap: 0.6rem; font-size: 1.18rem; font-weight: 700; color: var(--text); margin-bottom: 0.2rem; }
+.docs-panel-title svg { width: 22px; height: 22px; flex: none; color: var(--accent); }
+.docs-panel .detail-body { padding: 0; }
+
+@media (max-width: 860px) {
+  .docs-layout { grid-template-columns: 1fr; gap: 0.9rem; }
+  .docs-nav {
+    flex-direction: row; overflow-x: auto; position: static; top: auto;
+    gap: 0.45rem; padding-bottom: 0.45rem; scrollbar-width: none; -ms-overflow-style: none;
+  }
+  .docs-nav::-webkit-scrollbar { display: none; }
+  .docs-nav-item { width: auto; flex: none; white-space: nowrap; padding: 0.55rem 0.8rem; }
+  .docs-panel-title { font-size: 1.05rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .docs-panel { animation: none; }
+}
+
+/* =====================================================================
+   SHADER GRADIENT WebGL — fond animé du héros (plasma/aurora vanilla).
+   Canvas injecté par app.js. Retrait : `git restore css/style.css js/app.js`.
+   ===================================================================== */
+.dm-hero-shader {
+  position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%;
+  pointer-events: none; opacity: 0.85;
+  -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+}
+/* Le shader devient le fond principal : on adoucit les couches existantes */
+.hero .aurora-blob { opacity: 0.3; }
+.hero .dm-retro-grid { opacity: 0.3; }
+.hero::before { opacity: 0.5; }

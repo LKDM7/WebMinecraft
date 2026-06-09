@@ -34,3 +34,19 @@ Next: surveiller les releases GitHub pour valider l'affichage auto, envisager ba
 ## 2026-06-08
 Mise à jour liens DonjonMC v2.0.0 → v2.0.2 + Dashboard Admin URL corrigée. Nouvel article Actualités, ancien obsolète. Bouton 🔗 copier lien sur chaque article (deep-link ?tab=changelog#cl-N). Audit humanizer (tiret cadratin FAQ, actu ouverture). Bannière auto-refresh : HEAD polling toutes les 5 min + détection SW updatefound.
 Next: tester la bannière après le prochain push, vérifier que le SW détecte bien les mises à jour.
+
+## 2026-06-08 (2)
+Liens wiki/source par mod : table MOD_LINKS (slug) avec wiki/source/issues pour 339/384 mods (287 via API Modrinth, 52 via scraping CurseForge). Rendu : petites icones inline 📖/source/🐞 a cote de chaque mod, sinon lien seul (inchange). Fonctions modSlug/modExtraIcons + CSS.
+Next: verifier le rendu visuel des icones en mobile, completer les 45 mods restants si besoin.
+
+## 2026-06-08 (3)
+Corrections + features UX : content-visibility/overscroll/touch-action, fix compteur 385->384, bouton reset recherche. Puis tri des mods (categorie/A-Z/Z-A via ?sort=), deep-link FAQ (#faq-N + bouton copier), et alignement du badge categorie (desormais dernier element, colle a droite). Commits 19ad901 + fc37239.
+Next: tri par popularite (besoin de recuperer les download counts Modrinth/CF) ; apostrophes typographiques FR.
+
+## 2026-06-09
+Liens mods MAJ : DonjonMC -> donjonmc-latest.jar, Dashboard -> dashboardadmin-1.0.5.jar (donnees MODS, articles, boutons index ; 16 occurrences). Nouvel article "supprimez les anciens d'abord", ancien passe obsolete. Fix changelog : releases GitHub marquees obsolete + tri par date (le 09 reste en tete), id d'article = slug stable (resout deep-link casse apres re-rendu). Bump SW cache v7->v8 (les assets cache-first ne se propageaient pas sans bump). Commits 3960f4d, 0bb94a2, a6a7dc1.
+Next: pousser donjonmc-latest.jar + dashboardadmin-1.0.5.jar dans les releases/ des repos (sinon 404) ; envisager stale-while-revalidate dans sw.js pour eviter les bumps manuels.
+
+## 2026-06-09 (UI — ameliorations 21st.dev)
+Ameliorations UI inspirees de composants communautaires 21st.dev, en blocs amovibles : spotlight souris + border beam + texte degrade anime + glow CTA (vague 1), Number Ticker + Retro Grid + Meteors + 3D tilt (vague 2), remplacement des accordeons DonjonMC/Dashboard par une nav docs sidebar+panneau (icones SVG, tablist ARIA, construit au runtime depuis les <details> ; index.html intact), et fond du hero en shader gradient WebGL vanilla (FBM + domain warp, rendu 0.55x, pause hors-ecran, fallback). Liens dashboard repointes vers dashboardadmin-latest.jar. Cache SW bumpe jusqu'a v11.
+Next: ajuster intensite shader / densite hero selon retours ; envisager parallaxe souris du shader.
