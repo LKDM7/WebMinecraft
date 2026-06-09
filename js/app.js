@@ -251,7 +251,7 @@ const MODS = [
 ["Comforts","Interface","https://www.curseforge.com/minecraft/mc-mods/comforts"],
 ["Controlling","Interface","https://www.curseforge.com/minecraft/mc-mods/controlling"],
 ["Convenient Effects","Interface","https://www.curseforge.com/minecraft/mc-mods/convenient-effects"],
-["Dashboard Admin","Interface","https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-1.0.5.jar"],
+["Dashboard Admin","Interface","https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-latest.jar"],
 ["Delete Worlds To Trash","Interface","https://www.curseforge.com/minecraft/mc-mods/delete-worlds-to-trash"],
 ["Despawn Tweaks","Interface","https://www.curseforge.com/minecraft/mc-mods/despawn-tweaks"],
 ["Distraction Free Recipes (EMI / REI / JEI)","Interface","https://www.curseforge.com/minecraft/mc-mods/distraction-free-recipes"],
@@ -797,10 +797,10 @@ const NEWS = [
   {
     day: "09", my: "JUIN 2026", tag: "fix", label: "MISE À JOUR",
     title: "Nouvelle MAJ des mods : supprimez les anciens d'abord",
-    body: `Les deux mods maison viennent d'être mis à jour : <strong>DonjonMC</strong> (dernière version) et <strong>Dashboard Admin v1.0.5</strong>. Avant d'installer les nouveaux, <strong>supprimez les anciennes versions</strong> de ces deux mods dans votre dossier <code class="inline-path">mods</code>. Téléchargez ensuite les fichiers ci-dessous et mettez-les à la place. Ne gardez jamais deux versions du même mod en même temps, le jeu planterait au démarrage.`,
+    body: `Les deux mods maison viennent d'être mis à jour : <strong>DonjonMC</strong> et <strong>Dashboard Admin</strong> (dernières versions). Avant d'installer les nouveaux, <strong>supprimez les anciennes versions</strong> de ces deux mods dans votre dossier <code class="inline-path">mods</code>. Téléchargez ensuite les fichiers ci-dessous et mettez-les à la place. Ne gardez jamais deux versions du même mod en même temps, le jeu planterait au démarrage.`,
     dls: [
       { label: "⬇ DonjonMC (dernière version)", url: "https://github.com/LKDM7/DonjonMC/raw/master/releases/donjonmc-latest.jar" },
-      { label: "⬇ Dashboard Admin v1.0.5", url: "https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-1.0.5.jar" },
+      { label: "⬇ Dashboard Admin (dernière version)", url: "https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-latest.jar" },
     ],
   },
   {
@@ -810,7 +810,7 @@ const NEWS = [
     body: `<strong>DonjonMC v2.0.2</strong> est disponible. Remplacez les anciennes versions dans votre dossier <code class="inline-path">mods</code> par les nouveaux fichiers ci-dessous.`,
     dls: [
       { label: "⬇ DonjonMC (dernière version)", url: "https://github.com/LKDM7/DonjonMC/raw/master/releases/donjonmc-latest.jar" },
-      { label: "⬇ Dashboard Admin v1.0.5", url: "https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-1.0.5.jar" },
+      { label: "⬇ Dashboard Admin (dernière version)", url: "https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-latest.jar" },
     ],
   },
   {
@@ -820,7 +820,7 @@ const NEWS = [
     body: `Les mods maison <strong>DonjonMC</strong> et <strong>Dashboard Admin</strong> viennent d'être mis à jour avec les dernières modifications. Si vous jouez déjà sur le serveur, remplacez les anciennes versions dans votre dossier <code class="inline-path">mods</code> par les nouvelles ci-dessous.`,
     dls: [
       { label: "⬇ DonjonMC (dernière version)", url: "https://github.com/LKDM7/DonjonMC/raw/master/releases/donjonmc-latest.jar" },
-      { label: "⬇ Dashboard Admin (dernière version)", url: "https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-1.0.5.jar" },
+      { label: "⬇ Dashboard Admin (dernière version)", url: "https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-latest.jar" },
     ],
   },
   {
@@ -830,7 +830,7 @@ const NEWS = [
     body: `Les deux mods maison ont reçu des correctifs importants. <strong>DonjonMC</strong> corrige un bug où les portails pouvaient spawner sous terre (Y &lt; 1). <strong>Dashboard Admin</strong> ajoute la compatibilité avec le mod Accessories pour conserver les items équipés à la mort. Re-téléchargez les deux mods et remplacez les anciennes versions dans votre dossier <code class="inline-path">mods</code>.`,
     dls: [
       { label: "⬇ DonjonMC (dernière version)", url: "https://github.com/LKDM7/DonjonMC/raw/master/releases/donjonmc-latest.jar" },
-      { label: "⬇ Dashboard Admin v1.0.5", url: "https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-1.0.5.jar" },
+      { label: "⬇ Dashboard Admin (dernière version)", url: "https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-latest.jar" },
     ],
   },
   {
@@ -862,7 +862,7 @@ const NEWS = [
     body: `DonjonMC utilise 2 mods personnalisés qui ne sont <strong>pas inclus</strong> dans le modpack CurseForge. Télécharge-les et place-les dans le dossier <strong>mods</strong> du modpack : ouvre CurseForge, repère le modpack DonjonMC, clique sur les <strong>3 points ⋮</strong> à côté du bouton Play → <strong>Open Folder</strong> → dépose les 2 mods dans le dossier <code class="inline-path">mods</code>.`,
     dls: [
       { label: "⬇ DonjonMC (dernière version)", url: "https://github.com/LKDM7/DonjonMC/raw/master/releases/donjonmc-latest.jar" },
-      { label: "⬇ Dashboard Admin v1.0.5", url: "https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-1.0.5.jar" },
+      { label: "⬇ Dashboard Admin (dernière version)", url: "https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-latest.jar" },
     ],
   },
   {
