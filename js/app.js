@@ -795,7 +795,17 @@ document.querySelectorAll(".js-mod-count").forEach(el => { el.textContent = MODS
 ===================================================================== */
 const NEWS = [
   {
+    day: "10", my: "JUIN 2026", tag: "fix", label: "MISE À JOUR",
+    title: "DonjonMC 2.1.0 & Dashboard 1.0.8 — Épreuve de Classe v2 et zones visibles",
+    body: `Grosse mise à jour des deux mods maison. <strong>DonjonMC 2.1.0</strong> : l'Épreuve de Classe (niveau 50) est entièrement refaite — une <strong>Burning Arena</strong> en 8 salles avec des phases chronométrées —, ajout des <strong>statistiques de carrière</strong> et interface Hunter redessinée. <strong>Dashboard Admin 1.0.8</strong> : <strong>visualisation des zones en jeu</strong> (contours affichés en temps réel, sélection à la baguette visible), activable depuis l'onglet Build du <code class="inline-path">/menu</code>. Important : <strong>supprimez les anciennes versions</strong> de ces deux mods dans votre dossier <code class="inline-path">mods</code> avant d'installer les nouvelles — votre version doit correspondre à celle du serveur pour vous connecter.`,
+    dls: [
+      { label: "⬇ DonjonMC (dernière version)", url: "https://github.com/LKDM7/DonjonMC/raw/master/releases/donjonmc-latest.jar" },
+      { label: "⬇ Dashboard Admin (dernière version)", url: "https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-latest.jar" },
+    ],
+  },
+  {
     day: "09", my: "JUIN 2026", tag: "fix", label: "MISE À JOUR",
+    obsolete: true,
     title: "Nouvelle MAJ des mods : supprimez les anciens d'abord",
     body: `Les deux mods maison viennent d'être mis à jour : <strong>DonjonMC</strong> et <strong>Dashboard Admin</strong> (dernières versions). Avant d'installer les nouveaux, <strong>supprimez les anciennes versions</strong> de ces deux mods dans votre dossier <code class="inline-path">mods</code>. Téléchargez ensuite les fichiers ci-dessous et mettez-les à la place. Ne gardez jamais deux versions du même mod en même temps, le jeu planterait au démarrage.`,
     dls: [
@@ -838,7 +848,7 @@ const NEWS = [
     title: "On repart sur une V2",
     body: `Soyons honnêtes : la première version a été un fiasco. Trop de crashs et d'incompatibilités, bref ça ne tenait pas la route. On a donc tout remis à plat et on revient avec une <strong>V2</strong> entièrement retravaillée, ${MODS.length} mods en NeoForge 1.21.1. On croise les doigts pour que cette fois soit la bonne. Téléchargez le nouveau modpack et remontez-nous le moindre bug.`,
     dls: [
-      { label: "⬇ Télécharger le Modpack V2", url: "https://www.curseforge.com/minecraft/share/V37Or6S1" },
+      { label: "⬇ Télécharger le Modpack V2", url: "https://www.curseforge.com/minecraft/share/cWe61G_T" },
     ],
   },
   {
@@ -1865,7 +1875,13 @@ mobileNav.querySelectorAll(".mnav-link").forEach(link => {
   if (!canvas) return;
   if (prefersReducedMotion()) return; // pas de particules animées si l'utilisateur l'a désactivé
   const ctx = canvas.getContext("2d");
-  const COLORS = ["167,139,250", "34,211,238", "196,149,255"];
+  // Palette par thème : violet/cyan (néon, défaut) ou gris (RPG pixel)
+  const PALETTES = {
+    neon:  ["167,139,250", "34,211,238", "196,149,255"],
+    pixel: ["237,237,237", "176,176,176", "128,128,128"],
+  };
+  const COLORS = () =>
+    document.documentElement.getAttribute("data-theme") === "pixel" ? PALETTES.pixel : PALETTES.neon;
   let pts = [];
 
   const hero = canvas.closest(".hero") || canvas.parentElement;
@@ -1883,9 +1899,14 @@ mobileNav.querySelectorAll(".mnav-link").forEach(link => {
       vy: -(Math.random() * 0.7 + 0.3),
       r: Math.random() * 2 + 0.5,
       o: Math.random() * 0.5 + 0.15,
-      c: COLORS[Math.floor(Math.random() * COLORS.length)],
+      c: (() => { const p = COLORS(); return p[Math.floor(Math.random() * p.length)]; })(),
     };
   }
+  // Changement de thème : recolore les particules existantes
+  window.addEventListener("dm-theme", () => {
+    const p = COLORS();
+    pts.forEach((pt) => { pt.c = p[Math.floor(Math.random() * p.length)]; });
+  });
 
   resize();
   for (let i = 0; i < 55; i++) { const p = make(); p.y = Math.random() * canvas.height; pts.push(p); }
@@ -2061,7 +2082,8 @@ function showUpdateBanner() {
     els.forEach(el => io.observe(el));
   })();
 
-  /* 2 — Retro Grid + Meteors : décor injecté dans le héros (index.html intact) */
+  /* 2 — Retro Grid + Meteors : décor injecté dans le héros (index.html intact).
+         Masqués en CSS quand le thème pixel est actif. */
   (function heroDecor() {
     const hero = document.querySelector(".hero");
     if (!hero) return;
@@ -2254,13 +2276,15 @@ function showUpdateBanner() {
 /* =====================================================================
    SHADER GRADIENT WebGL — fond plasma/aurora animé du héros (vanilla).
    Sans lib externe (CSP script-src 'self'). Rendu basse résolution,
-   pause hors-écran / onglet caché, statique si reduced-motion, fallback
-   sur le fond existant si WebGL indisponible.
-   Retrait : `git restore js/app.js css/style.css`.
+   pause hors-écran / onglet caché / thème pixel, statique si
+   reduced-motion, fallback sur le fond existant si WebGL indisponible.
+   Actif uniquement avec le thème néon (défaut) — masqué et mis en pause
+   quand html[data-theme="pixel"]. Retrait : `git restore js/app.js`.
    ===================================================================== */
 (function initHeroShader() {
   const hero = document.querySelector(".hero");
   if (!hero) return;
+  const isPixel = () => document.documentElement.getAttribute("data-theme") === "pixel";
 
   const canvas = document.createElement("canvas");
   canvas.className = "dm-hero-shader";
@@ -2347,11 +2371,13 @@ function showUpdateBanner() {
   const mm = window.matchMedia;
   const reduce = mm && mm("(prefers-reduced-motion: reduce)").matches;
   let visible = true, raf = 0;
+  const wantsRun = () => visible && !document.hidden && !reduce && !isPixel();
   if ("IntersectionObserver" in window) {
-    new IntersectionObserver((e) => { visible = e[0].isIntersecting; if (visible && !reduce) loop(); })
+    new IntersectionObserver((e) => { visible = e[0].isIntersecting; if (wantsRun()) loop(); })
       .observe(hero);
   }
-  document.addEventListener("visibilitychange", () => { if (!document.hidden && visible && !reduce) loop(); });
+  document.addEventListener("visibilitychange", () => { if (wantsRun()) loop(); });
+  window.addEventListener("dm-theme", () => { if (wantsRun()) loop(); });
 
   const t0 = performance.now();
   function frame() {
@@ -2359,7 +2385,7 @@ function showUpdateBanner() {
     resize();
     gl.uniform1f(uTime, (performance.now() - t0) / 1000);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
-    if (visible && !document.hidden && !reduce) loop();
+    if (wantsRun()) loop();
   }
   function loop() { if (!raf) raf = requestAnimationFrame(frame); }
 
@@ -2368,3 +2394,41 @@ function showUpdateBanner() {
   gl.drawArrays(gl.TRIANGLES, 0, 3);
   if (!reduce) loop();
 })();
+
+/* =====================================================================
+   THEME TOGGLE — bascule néon (défaut) ↔ RPG pixel (data-theme="pixel").
+   Persisté en localStorage ("dm-theme") et appliqué avant le premier
+   rendu par js/theme.js (chargé sans defer dans <head>). Émet
+   l'événement "dm-theme" pour les modules dynamiques (shader, particules).
+   ===================================================================== */
+(function initThemeToggle() {
+  const KEY = "dm-theme";
+  const root = document.documentElement;
+  const buttons = [document.getElementById("theme-toggle"), document.getElementById("theme-toggle-m")]
+    .filter(Boolean);
+  if (!buttons.length) return;
+
+  const isPixel = () => root.getAttribute("data-theme") === "pixel";
+
+  function refresh() {
+    buttons.forEach((b) => {
+      // le libellé annonce le thème vers lequel on bascule
+      b.textContent = isPixel() ? "🔮 Mode néon" : "🕹 Mode rétro";
+      b.setAttribute("aria-pressed", String(isPixel()));
+    });
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", isPixel() ? "#0a0a0a" : "#07060d");
+  }
+
+  function apply(pixel) {
+    if (pixel) root.setAttribute("data-theme", "pixel");
+    else root.removeAttribute("data-theme");
+    try { localStorage.setItem(KEY, pixel ? "pixel" : "neon"); } catch (_) {}
+    refresh();
+    window.dispatchEvent(new CustomEvent("dm-theme"));
+  }
+
+  buttons.forEach((b) => b.addEventListener("click", () => apply(!isPixel())));
+  refresh();
+})();
+

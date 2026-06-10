@@ -1188,7 +1188,7 @@ html[data-maintenance="true"] .maintenance-overlay {
 
 /* =====================================================================
    SHADER GRADIENT WebGL — fond animé du héros (plasma/aurora vanilla).
-   Canvas injecté par app.js. Retrait : `git restore css/style.css js/app.js`.
+   Canvas injecté par app.js. Thème néon uniquement (masqué en pixel).
    ===================================================================== */
 .dm-hero-shader {
   position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%;
@@ -1200,3 +1200,312 @@ html[data-maintenance="true"] .maintenance-overlay {
 .hero .aurora-blob { opacity: 0.3; }
 .hero .dm-retro-grid { opacity: 0.3; }
 .hero::before { opacity: 0.5; }
+
+/* =====================================================================
+   THEME TOGGLE — bouton de bascule néon ↔ RPG pixel (header + nav mobile)
+   ===================================================================== */
+.theme-toggle {
+  font-size: 0.78rem; font-weight: 600; color: var(--text);
+  background: var(--surface); border: 1px solid var(--border-strong);
+  border-radius: 100px; padding: 0.5rem 1rem; white-space: nowrap;
+  transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+}
+.theme-toggle:hover { background: rgba(255, 255, 255, 0.08); transform: translateY(-1px); }
+button.mnav-theme {
+  background: none; border: 0; width: 100%; text-align: left;
+  font-size: 0.95rem; font-family: inherit; cursor: pointer;
+}
+@media (max-width: 768px) {
+  .header-inner .theme-toggle { display: none; } /* sur mobile : via le menu burger */
+}
+
+/* Éléments réservés au thème pixel (étiquettes NIVEAU, "appuie sur start") */
+.lvl-tag, .hero-press { display: none; }
+
+/* =====================================================================
+   THÈME RPG PIXEL — inspiré de shakanksh.com (2026-06-10) · BLOC AMOVIBLE
+   Jeu rétro monochrome : noir/blanc cassé, polices pixel (Pixelify Sans,
+   VT323, Press Start 2P), corps en Chivo Mono, cartes papier, dialogues.
+   ENTIÈREMENT scopé sous html[data-theme="pixel"] : le thème néon (défaut)
+   reste intact. Bascule via le bouton .theme-toggle (js/app.js), choix
+   persisté en localStorage et appliqué avant le rendu par js/theme.js.
+   Retrait : supprimer ce bloc + le bouton + js/theme.js.
+   ===================================================================== */
+html[data-theme="pixel"] {
+  --bg:          #0a0a0a;
+  --bg-2:        #101010;
+  --surface:     #121212;
+  --surface-2:   #151515;
+  --surface-3:   #1b1b1b;
+
+  --border:        rgba(255, 255, 255, 0.16);
+  --border-strong: rgba(255, 255, 255, 0.30);
+
+  --accent:      #ededed;
+  --accent-2:    #c9c9c9;
+  --accent-3:    #9a9a9a;
+  --accent-soft: rgba(255, 255, 255, 0.10);
+  --grad-main:   linear-gradient(180deg, #ffffff, #cfcfcf);
+  --grad-warm:   linear-gradient(180deg, #ffffff, #cfcfcf);
+
+  --text:    #ededed;
+  --text-2:  #c6c6c6;
+  --muted:   #949494;
+
+  /* cartes "papier" clair façon référence */
+  --paper:       #efefef;
+  --paper-text:  #141414;
+  --paper-muted: #4d4d4d;
+
+  --radius-sm: 3px;
+  --radius:    5px;
+  --radius-lg: 7px;
+  --radius-xl: 9px;
+
+  --shadow:      0 0 0 1px rgba(255, 255, 255, 0.05), 0 16px 34px -20px rgba(0, 0, 0, 0.9);
+  --shadow-glow: none;
+
+  --font-title: 'Pixelify Sans', 'Press Start 2P', monospace;
+  --font-vt:    'VT323', monospace;
+  --font-body:  'Chivo Mono', 'JetBrains Mono', monospace;
+}
+
+html[data-theme="pixel"] body { letter-spacing: 0; }
+
+/* Fond : noir plat + scanlines CRT discrètes (fini le mesh violet) */
+html[data-theme="pixel"] body::before { background: var(--bg); }
+html[data-theme="pixel"] body::after {
+  opacity: 1;
+  background-image: repeating-linear-gradient(0deg,
+    rgba(255, 255, 255, 0.016) 0px, rgba(255, 255, 255, 0.016) 1px,
+    transparent 1px, transparent 4px);
+  background-size: auto;
+  -webkit-mask-image: none; mask-image: none;
+}
+
+/* Effets du thème néon coupés : shader WebGL, grille rétro, météores */
+html[data-theme="pixel"] .dm-hero-shader,
+html[data-theme="pixel"] .dm-retro-grid,
+html[data-theme="pixel"] .dm-meteor-layer { display: none; }
+
+/* Éléments réservés au pixel : étiquettes NIVEAU + "appuie sur start" */
+html[data-theme="pixel"] .lvl-tag { display: block; }
+html[data-theme="pixel"] .hero-press { display: block; }
+
+/* ---- Typo : titres pixel, dégradés remplacés par du blanc plein ---- */
+html[data-theme="pixel"] .grad {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: var(--text);
+}
+html[data-theme="pixel"] .hero-title .grad { animation: none; }
+html[data-theme="pixel"] .section-title .grad { text-shadow: none; }
+html[data-theme="pixel"] .hero-title,
+html[data-theme="pixel"] .section-title,
+html[data-theme="pixel"] .maintenance-title,
+html[data-theme="pixel"] .step-title,
+html[data-theme="pixel"] .install-title,
+html[data-theme="pixel"] .mods-modal-title,
+html[data-theme="pixel"] .docs-panel-title {
+  font-family: var(--font-title);
+  font-weight: 700;
+}
+html[data-theme="pixel"] .section-title { text-transform: uppercase; letter-spacing: 0.03em; }
+
+/* Étiquettes de niveau façon "LEVEL 02—STATS" */
+html[data-theme="pixel"] .lvl-tag {
+  font-family: var(--font-pixel);
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 1.1rem;
+}
+html[data-theme="pixel"] .lvl-tag::before { content: "■ "; color: var(--text-2); }
+html[data-theme="pixel"] .lvl-tag::after  { content: " ■"; color: var(--text-2); }
+
+/* ---- Header : nav en pilule papier (blanche, ombre dure) ---- */
+html[data-theme="pixel"] .site-header { background: rgba(10, 10, 10, 0.88); }
+html[data-theme="pixel"] .site-header::after { background: var(--border); }
+html[data-theme="pixel"] .logo-text {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: var(--text);
+}
+html[data-theme="pixel"] .logo-img { border-radius: 3px; box-shadow: 0 0 0 1px var(--border-strong); filter: grayscale(1) contrast(1.05); }
+html[data-theme="pixel"] .nav-pill {
+  background: var(--paper);
+  border: 1px solid #cfcfcf;
+  border-radius: 9px;
+  padding: 0.28rem;
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+  box-shadow: 0 3px 0 rgba(255, 255, 255, 0.16);
+}
+html[data-theme="pixel"] .nav-pill a { color: #3d3d3d; font-weight: 600; font-size: 0.8rem; border-radius: 6px; filter: grayscale(1); }
+html[data-theme="pixel"] .nav-pill a:hover { color: #000; background: rgba(0, 0, 0, 0.08); }
+html[data-theme="pixel"] .header-cta {
+  background: var(--paper);
+  color: var(--paper-text);
+  border-radius: 7px;
+  box-shadow: 3px 3px 0 rgba(255, 255, 255, 0.2);
+  font-weight: 700;
+}
+html[data-theme="pixel"] .header-cta:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 rgba(255, 255, 255, 0.3); filter: none; }
+html[data-theme="pixel"] .burger span { background: var(--text); }
+html[data-theme="pixel"] .theme-toggle {
+  background: var(--paper);
+  color: var(--paper-text);
+  border: 1px solid #cfcfcf;
+  border-radius: 7px;
+  box-shadow: 2px 2px 0 rgba(255, 255, 255, 0.18);
+}
+html[data-theme="pixel"] .theme-toggle:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 rgba(255, 255, 255, 0.26); background: var(--paper); }
+
+/* ---- Héros : scène de jeu sombre + sol en dalles ---- */
+html[data-theme="pixel"] .hero { padding-bottom: 170px; }
+html[data-theme="pixel"] .hero-aurora,
+html[data-theme="pixel"] .hero::before { display: none; }
+html[data-theme="pixel"] #particles-canvas { opacity: 0.55; }
+html[data-theme="pixel"] .hero::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 104px;
+  z-index: 1; pointer-events: none;
+  background: repeating-conic-gradient(#151515 0% 25%, #0e0e0e 0% 50%);
+  background-size: 26px 26px;
+  border-top: 2px solid #232323;
+  box-shadow: 0 -10px 26px -8px rgba(0, 0, 0, 0.8);
+}
+html[data-theme="pixel"] .hero-title { line-height: 1.05; }
+html[data-theme="pixel"] .hero-subtitle { color: var(--text-2); font-size: 1rem; }
+html[data-theme="pixel"] .hero-meta { font-family: var(--font-body); }
+html[data-theme="pixel"] .badge { border-radius: 4px; }
+html[data-theme="pixel"] .hero-press {
+  margin-top: 2.6rem;
+  font-family: var(--font-vt);
+  font-size: 1.2rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  animation: dm-press-blink 1.5s steps(2, start) infinite;
+}
+@keyframes dm-press-blink { 50% { opacity: 0.2; } }
+
+/* Carte IP = boîte de dialogue de jeu */
+html[data-theme="pixel"] .ip-card {
+  background: #0d0d0d;
+  border: 2px solid var(--text);
+  border-radius: 7px;
+  box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.14);
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+}
+html[data-theme="pixel"] .ip-card::after { display: none; } /* bordure conique retirée */
+html[data-theme="pixel"] .ip-label { font-family: var(--font-pixel); font-size: 0.5rem; letter-spacing: 0.18em; color: var(--muted); }
+html[data-theme="pixel"] .ip-address { font-family: var(--font-vt); font-size: 1.55rem; letter-spacing: 0.05em; }
+
+/* ---- Boutons pixel : papier + ombre dure décalée ---- */
+html[data-theme="pixel"] .btn { border-radius: 7px; font-weight: 700; }
+html[data-theme="pixel"] .btn-primary {
+  background: var(--paper);
+  color: var(--paper-text);
+  box-shadow: 4px 4px 0 rgba(255, 255, 255, 0.18);
+}
+html[data-theme="pixel"] .btn-primary:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.26); filter: none; }
+html[data-theme="pixel"] .hero-cta-row .btn-primary { animation: none; }
+html[data-theme="pixel"] .btn-ghost { background: transparent; border: 2px solid var(--border-strong); backdrop-filter: none; -webkit-backdrop-filter: none; }
+html[data-theme="pixel"] .btn-ghost:hover { background: rgba(255, 255, 255, 0.07); }
+
+/* Spotlight souris : halo blanc discret (au lieu du violet) */
+html[data-theme="pixel"] .feature-item::after,
+html[data-theme="pixel"] .cmd-card::after,
+html[data-theme="pixel"] .download-banner::after {
+  background: radial-gradient(360px circle at var(--mx) var(--my), rgba(255, 255, 255, 0.08), transparent 62%);
+}
+html[data-theme="pixel"] .step-card::after { display: none; }
+
+/* ---- Étapes "Comment rejoindre" : cartes papier inclinées ---- */
+html[data-theme="pixel"] .step-card {
+  background: var(--paper);
+  border: 1px solid #d2d2d2;
+  border-radius: 4px;
+  box-shadow: 6px 6px 0 rgba(255, 255, 255, 0.10);
+  color: var(--paper-text);
+}
+html[data-theme="pixel"] .step-card::before { display: none; } /* liseré violet retiré */
+html[data-theme="pixel"] .steps-grid .step-card:nth-child(1) { transform: rotate(-1.3deg); }
+html[data-theme="pixel"] .steps-grid .step-card:nth-child(2) { transform: rotate(0.9deg); }
+html[data-theme="pixel"] .steps-grid .step-card:nth-child(3) { transform: rotate(-0.7deg); }
+html[data-theme="pixel"] .step-title { color: var(--paper-text); }
+html[data-theme="pixel"] .step-desc { color: var(--paper-muted); }
+html[data-theme="pixel"] .step-num { color: #9b9b9b; opacity: 1; }
+html[data-theme="pixel"] .step-arrow { color: var(--paper-muted); }
+html[data-theme="pixel"] .step-icon { filter: grayscale(1); }
+
+/* ---- Bandeau features : panneaux de stats mono ---- */
+html[data-theme="pixel"] .feature-item { border-radius: 5px; }
+html[data-theme="pixel"] .feature-icon { filter: grayscale(1); }
+html[data-theme="pixel"] .feature-text strong { font-family: var(--font-body); }
+
+/* ---- Onglets : menu de jeu (actif = papier) ---- */
+html[data-theme="pixel"] .tabs { border-radius: 9px; }
+html[data-theme="pixel"] .tab-btn { border-radius: 6px; color: var(--muted); filter: grayscale(1); }
+html[data-theme="pixel"] .tab-btn:hover { color: var(--text); }
+html[data-theme="pixel"] .tab-btn.active {
+  background: var(--paper);
+  color: var(--paper-text);
+  box-shadow: 3px 3px 0 rgba(255, 255, 255, 0.16);
+}
+
+/* ---- Contenus d'onglets : codex mono ---- */
+html[data-theme="pixel"] .tab-intro { font-family: var(--font-body); }
+html[data-theme="pixel"] .donjon-table th { font-family: var(--font-pixel); font-size: 0.52rem; letter-spacing: 0.12em; text-transform: uppercase; }
+html[data-theme="pixel"] .install-eyebrow { font-family: var(--font-pixel); font-size: 0.52rem; letter-spacing: 0.14em; }
+html[data-theme="pixel"] details > summary { font-weight: 700; }
+html[data-theme="pixel"] .mods-modal-icon,
+html[data-theme="pixel"] .news-toast-icon,
+html[data-theme="pixel"] .notif-bell,
+html[data-theme="pixel"] .maintenance-badge { filter: grayscale(1); }
+html[data-theme="pixel"] .mod-cat-icon,
+html[data-theme="pixel"] .mod-item-badge { filter: grayscale(1); }
+html[data-theme="pixel"] .cl-tag { filter: grayscale(1); border-radius: 3px; }
+html[data-theme="pixel"] .tag-github { background: rgba(255, 255, 255, 0.10); color: var(--text-2); border-color: var(--border-strong); }
+html[data-theme="pixel"] .docs-nav-item { filter: grayscale(1); }
+
+/* ---- Mods : pilules de filtres + barre de catégories en gris ---- */
+html[data-theme="pixel"] .filter-pill { border-radius: 6px; filter: grayscale(1); }
+html[data-theme="pixel"] .filter-pill.active {
+  background: var(--paper);
+  color: var(--paper-text);
+  font-weight: 700;
+  box-shadow: 2px 2px 0 rgba(255, 255, 255, 0.16);
+}
+html[data-theme="pixel"] .mods-bar { border-radius: 4px; filter: grayscale(1); }
+
+/* ---- Dialogue / modal / toast : boîtes de jeu à bord blanc ---- */
+html[data-theme="pixel"] .mods-modal,
+html[data-theme="pixel"] .maintenance-box {
+  border: 2px solid var(--text);
+  border-radius: 8px;
+  box-shadow: 6px 6px 0 rgba(255, 255, 255, 0.12);
+}
+html[data-theme="pixel"] #news-toast { border: 2px solid var(--text); border-radius: 8px; }
+
+/* ---- Footer ---- */
+html[data-theme="pixel"] .site-footer { border-top: 2px solid var(--border); }
+html[data-theme="pixel"] .footer-brand img { filter: grayscale(1); }
+
+/* ---- Divers ---- */
+html[data-theme="pixel"] .back-to-top {
+  border-radius: 7px; border: 2px solid var(--border-strong);
+  background: var(--paper); color: var(--paper-text);
+  box-shadow: 3px 3px 0 rgba(255, 255, 255, 0.18);
+}
+html[data-theme="pixel"] .back-to-top:hover { transform: translate(-1px, -4px); box-shadow: 4px 5px 0 rgba(255, 255, 255, 0.26); }
+html[data-theme="pixel"] .map-fullscreen-btn { background: var(--paper); color: var(--paper-text); border-radius: 6px; font-weight: 700; }
+html[data-theme="pixel"] .mods-search-input,
+html[data-theme="pixel"] .cmds-search-input,
+html[data-theme="pixel"] .mods-sort { border-radius: 6px; font-family: var(--font-body); }
+html[data-theme="pixel"] .skip-link { background: var(--paper); color: var(--paper-text); }
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme="pixel"] .hero-press { animation: none; }
+}

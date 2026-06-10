@@ -50,3 +50,11 @@ Next: pousser donjonmc-latest.jar + dashboardadmin-1.0.5.jar dans les releases/ 
 ## 2026-06-09 (UI — ameliorations 21st.dev)
 Ameliorations UI inspirees de composants communautaires 21st.dev, en blocs amovibles : spotlight souris + border beam + texte degrade anime + glow CTA (vague 1), Number Ticker + Retro Grid + Meteors + 3D tilt (vague 2), remplacement des accordeons DonjonMC/Dashboard par une nav docs sidebar+panneau (icones SVG, tablist ARIA, construit au runtime depuis les <details> ; index.html intact), et fond du hero en shader gradient WebGL vanilla (FBM + domain warp, rendu 0.55x, pause hors-ecran, fallback). Liens dashboard repointes vers dashboardadmin-latest.jar. Cache SW bumpe jusqu'a v11.
 Next: ajuster intensite shader / densite hero selon retours ; envisager parallaxe souris du shader.
+
+## 2026-06-10
+Blocs Minecraft 3D dans le hero : 6 cubes voxel CSS 3D (textures pixel-art 16x16 generees en canvas/data URL, PRNG seede — herbe, diamant, pierre de portail), rotation + flottement + parallaxe souris, pause hors-ecran, statique si reduced-motion, 2 cubes recales dans les coins en mobile. Bump SW cache v11->v12. Nettoyage de 25 fichiers 0 octet a la racine (accidents de redirections shell). Verifie via Playwright desktop + mobile.
+Next: commit/push des changements ; decider du sort de img/portal.glb (vendorer three.js pour l'afficher, ou supprimer) ; idees en attente : easter egg cube cassable au clic, galerie screenshots.
+
+## 2026-06-10 (2)
+Double theme : neon (defaut, restaure intact : shader WebGL, meteores, retro grid, particules violettes) + theme RPG pixel monochrome inspire de shakanksh.com (Pixelify Sans/VT323/Chivo Mono, nav pilule papier, cartes papier, etiquettes NIVEAU, sol damier), scope sous html[data-theme="pixel"]. Bouton de bascule header + menu burger, persistance localStorage, anti-flash via js/theme.js (head, sans defer). Cubes 3D supprimes (rejetes). Liens modpack V37Or6S1 -> cWe61G_T (6 occurrences). SW v14 + theme.js dans ASSETS.
+Next: commit/push ; choisir libelles du bouton (retro/neon) ; idees pixel en attente : sprites chevalier/boss dans le hero, intro "LOADING" au premier visit.

@@ -1,5 +1,5 @@
 /* DonjonMC — Service Worker (PWA offline) */
-const CACHE = "donjonmc-v11";
+const CACHE = "donjonmc-v14";
 
 // Ressources du shell de l'app — mises en cache à l'installation.
 const ASSETS = [
@@ -7,6 +7,7 @@ const ASSETS = [
   "./index.html",
   "./css/style.css",
   "./js/app.js",
+  "./js/theme.js",
   "./img/logo.jpg",
   "./icon.png",
   "./favicon.ico",

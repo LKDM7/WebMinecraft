@@ -29,11 +29,12 @@
 
   <link rel="preload" as="image" href="img/logo.jpg">
 
-  <!-- Google Fonts : Inter (UI) + JetBrains Mono (code/IP) + Press Start 2P (accent Minecraft subtil) -->
+  <!-- Google Fonts — thème néon : Inter (UI) + JetBrains Mono (code/IP) + Press Start 2P (accents)
+       · thème RPG pixel : Pixelify Sans (titres) + VT323 (dialogues) + Chivo Mono (corps) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://api.mcsrvstat.us">
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Pixelify+Sans:wght@400;500;600;700&family=VT323&family=Chivo+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
   <!-- ===================================================================
        MAINTENANCE — mettez "true" sur l'attribut data-maintenance de <html>
@@ -41,6 +42,8 @@
   =================================================================== -->
 
   <link rel="stylesheet" href="css/style.css">
+  <!-- Thème (néon/pixel) appliqué avant le rendu — anti-flash, sans defer -->
+  <script src="js/theme.js"></script>
 </head>
 <body>
 
@@ -73,7 +76,8 @@
         <a href="#info" data-tab="dashboard">DashBoard</a>
         <a href="#info" data-tab="map" class="nav-map-link">🗺 Carte</a>
       </nav>
-      <a href="https://www.curseforge.com/minecraft/share/V37Or6S1" target="_blank" rel="noopener noreferrer" class="header-cta">⬇ Modpack</a>
+      <button class="theme-toggle" id="theme-toggle" aria-pressed="false" title="Changer de thème">🕹 Mode rétro</button>
+      <a href="https://www.curseforge.com/minecraft/share/cWe61G_T" target="_blank" rel="noopener noreferrer" class="header-cta">⬇ Modpack</a>
       <button class="burger" id="burger-btn" aria-label="Menu" aria-expanded="false" aria-controls="mobile-nav">
         <span></span><span></span><span></span>
       </button>
@@ -89,7 +93,8 @@
     <a href="#info" data-tab="donjonmc" class="mnav-link">⚔ DonjonMC</a>
     <a href="#info" data-tab="dashboard" class="mnav-link">📊 DashBoard</a>
     <a href="#info" data-tab="map" class="mnav-link">🗺 Carte du monde</a>
-    <a href="https://www.curseforge.com/minecraft/share/V37Or6S1" target="_blank" rel="noopener noreferrer" class="mnav-link">⬇ Télécharger le Modpack</a>
+    <a href="https://www.curseforge.com/minecraft/share/cWe61G_T" target="_blank" rel="noopener noreferrer" class="mnav-link">⬇ Télécharger le Modpack</a>
+    <button class="mnav-link mnav-theme" id="theme-toggle-m" aria-pressed="false">🕹 Mode rétro</button>
   </nav>
 
   <main id="main" tabindex="-1">
@@ -106,6 +111,7 @@
     <div class="hero-content">
       <span class="badge hidden" id="online-badge"><span class="badge-dot" aria-hidden="true"></span> Serveur en ligne</span>
 
+      <p class="lvl-tag" aria-hidden="true">NIVEAU 00 — ÉCRAN TITRE</p>
       <!-- MODIFIER : accroche -->
       <h1 class="hero-title" id="hero-title">Forge ta légende sur<br><span class="grad">DonjonMC</span></h1>
 
@@ -135,7 +141,7 @@
       </div>
 
       <div class="hero-cta-row">
-        <a href="https://www.curseforge.com/minecraft/share/V37Or6S1" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">⬇ Télécharger le Modpack</a>
+        <a href="https://www.curseforge.com/minecraft/share/cWe61G_T" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-lg">⬇ Télécharger le Modpack</a>
         <a href="#info" class="btn btn-ghost btn-lg" data-scroll>Comment rejoindre ?</a>
       </div>
 
@@ -146,6 +152,8 @@
         <span class="sep" aria-hidden="true"></span>
         <span><strong>PvE</strong> · Donjons · Magie</span>
       </div>
+
+      <p class="hero-press" aria-hidden="true">▼ appuie sur start pour continuer ▼</p>
     </div>
   </section>
 
@@ -186,6 +194,7 @@
   <!-- ===== COMMENT REJOINDRE ===== -->
   <section class="steps-section" aria-labelledby="steps-heading">
     <div class="container">
+      <p class="lvl-tag">NIVEAU 01 — TUTORIEL</p>
       <h2 class="section-title" id="steps-heading"><span class="grad">Comment Rejoindre ?</span></h2>
       <div class="steps-grid">
         <div class="step-card">
@@ -215,6 +224,7 @@
   <!-- ===== INFORMATIONS (Onglets) ===== -->
   <section class="info-section" id="info" tabindex="-1">
     <div class="container">
+      <p class="lvl-tag">NIVEAU 02 — CODEX</p>
       <h2 class="section-title"><span class="grad">Informations du Serveur</span></h2>
 
       <!-- Navigation onglets -->
@@ -243,7 +253,7 @@
             <span>Installe automatiquement tous les mods requis en un clic</span>
           </div>
           <!-- MODIFIER : remplacez # par le lien de votre modpack (CurseForge / Modrinth) -->
-          <a href="https://www.curseforge.com/minecraft/share/V37Or6S1" target="_blank" rel="noopener noreferrer" class="btn btn-primary">⬇ Télécharger le Modpack</a>
+          <a href="https://www.curseforge.com/minecraft/share/cWe61G_T" target="_blank" rel="noopener noreferrer" class="btn btn-primary">⬇ Télécharger le Modpack</a>
         </div>
 
         <!-- Stats + recherche + filtres + liste — tout alimenté par js/app.js -->
@@ -710,7 +720,7 @@
       <div class="footer-top">
         <p class="footer-brand"><img src="img/logo.jpg" alt="" width="24" height="24" loading="lazy" style="height:24px;border-radius:4px;vertical-align:middle;margin-right:0.4rem;"> DonjonMC</p>
         <nav class="footer-nav" aria-label="Liens utiles">
-          <a href="https://www.curseforge.com/minecraft/share/V37Or6S1" target="_blank" rel="noopener noreferrer">CurseForge</a>
+          <a href="https://www.curseforge.com/minecraft/share/cWe61G_T" target="_blank" rel="noopener noreferrer">CurseForge</a>
           <a href="https://github.com/LKDM7/WebMinecraft" target="_blank" rel="noopener noreferrer">GitHub</a>
         </nav>
       </div>
