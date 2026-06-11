@@ -487,7 +487,9 @@ button { cursor: pointer; font-family: var(--font-body); }
    (gain notable sur la longue liste de mods). intrinsic-size = hauteur estimée
    pour éviter les sauts de scrollbar. */
 .mod-cat { content-visibility: auto; contain-intrinsic-size: auto 400px; }
-.mod-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.5rem; }
+/* min(280px, 100%) : sur conteneur étroit la piste ne peut jamais dépasser 100%
+   (sinon le nom de mod le plus long, en nowrap, force la colonne à déborder). */
+.mod-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); gap: 0.5rem; }
 .mod-item {
   display: flex; align-items: center; gap: 0.6rem;
   background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px;
@@ -546,7 +548,7 @@ button { cursor: pointer; font-family: var(--font-body); }
 .cmds-search-wrap { margin-bottom: 1.75rem; }
 .cmds-count { font-size: 0.8rem; color: var(--muted); }
 .commands-grid { display: flex; flex-direction: column; gap: 2.2rem; }
-.cmd-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 0.75rem; }
+.cmd-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr)); gap: 0.75rem; }
 .cmd-card {
   display: flex; flex-direction: column; gap: 0.5rem; text-align: left; width: 100%;
   background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; will-change: transform;
@@ -653,7 +655,7 @@ details[open] summary::after { transform: rotate(90deg); background: var(--accen
 .rank-tag { display: inline-block; font-size: 0.68rem; font-weight: 700; padding: 0.12rem 0.55rem; border-radius: 5px; }
 .r-e { background: rgba(148,163,184,0.15); color: #94a3b8; } .r-d { background: rgba(34,211,238,0.15); color: #22d3ee; } .r-c { background: rgba(74,222,128,0.15); color: #4ade80; }
 .r-b { background: rgba(167,139,250,0.15); color: #a78bfa; } .r-a { background: rgba(249,115,22,0.15); color: #fb923c; } .r-s { background: rgba(239,68,68,0.15); color: #f87171; } .r-nat { background: rgba(251,191,36,0.15); color: #fbbf24; }
-.class-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; margin-top: 0.85rem; }
+.class-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr)); gap: 1rem; margin-top: 0.85rem; }
 .class-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: 16px; padding: 1.3rem; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; will-change: transform; }
 .class-card:hover { border-color: rgba(167,139,250,0.4); transform: translateY(-3px); box-shadow: 0 12px 28px -16px rgba(167,139,250,0.5); }
 .class-card h4 { color: #fff; font-weight: 700; margin-bottom: 0.3rem; font-size: 1.02rem; }
@@ -751,7 +753,7 @@ details[open] summary::after { transform: rotate(90deg); background: var(--accen
   .features-strip { margin-top: 0; padding: 0 0 1rem; }
   .features-strip .container { grid-template-columns: 1fr; }
   .cmd-cards { grid-template-columns: 1fr; }
-  .mod-list { grid-template-columns: 1fr; }
+  .mod-list { grid-template-columns: minmax(0, 1fr); }
   .changelog-list::before { left: 6px; }
   .cl-item { grid-template-columns: 1fr; gap: 0.6rem; padding-left: 1.6rem; }
   .cl-item::before { left: 6px; top: 6px; }
@@ -787,8 +789,13 @@ details[open] summary::after { transform: rotate(90deg); background: var(--accen
   transition: opacity 0.15s, color 0.15s; margin-top: 0.1rem;
 }
 .news-toast-close:hover { opacity: 1; color: #fff; }
+/* ≤768px : le burger occupe le coin haut-droit → le toast passe en bas
+   d'écran pour ne jamais recouvrir le menu (chevauchement constaté sur tablette). */
+@media (max-width: 768px) {
+  #news-toast { top: auto; bottom: 1rem; right: 1rem; left: auto; max-width: 300px; }
+}
 @media (max-width: 480px) {
-  #news-toast { top: auto; bottom: 1rem; right: 1rem; left: 1rem; max-width: none; }
+  #news-toast { left: 1rem; max-width: none; }
 }
 
 /* =====================================================================
