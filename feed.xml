@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="fr">
+  <title>Actualités DonjonMC</title>
+  <subtitle>Mises à jour du serveur Minecraft moddé DonjonMC (NeoForge 1.21.1)</subtitle>
+  <link href="https://lkdm7.github.io/WebMinecraft/" />
+  <link href="https://lkdm7.github.io/WebMinecraft/feed.xml" rel="self" type="application/atom+xml" />
+  <id>https://lkdm7.github.io/WebMinecraft/</id>
+  <updated>2026-06-10T12:00:00.000Z</updated>
+  <icon>https://lkdm7.github.io/WebMinecraft/img/icon-192.jpg</icon>
+  <entry>
+    <title>DonjonMC 2.1.0 &amp; Dashboard 1.0.8 — Épreuve de Classe v2 et zones visibles</title>
+    <link href="https://lkdm7.github.io/WebMinecraft/?tab=changelog#cl-donjonmc-2-1-0-dashboard-1-0-8-epreuve-de-classe-v2-et-zones" />
+    <id>https://lkdm7.github.io/WebMinecraft/?tab=changelog#cl-donjonmc-2-1-0-dashboard-1-0-8-epreuve-de-classe-v2-et-zones</id>
+    <updated>2026-06-10T12:00:00.000Z</updated>
+    <category term="MISE À JOUR" />
+    <content type="html">&lt;p&gt;Grosse mise à jour des deux mods maison. Côté &lt;strong&gt;DonjonMC 2.1.0&lt;/strong&gt;, l'Épreuve de Classe (niveau 50) est entièrement refaite : une &lt;strong&gt;Burning Arena&lt;/strong&gt; de 8 salles à enchaîner, avec des phases chronométrées. La mise à jour ajoute aussi les &lt;strong&gt;statistiques de carrière&lt;/strong&gt; et redessine l'interface Hunter. Côté &lt;strong&gt;Dashboard Admin 1.0.8&lt;/strong&gt;, les &lt;strong&gt;zones sont maintenant visibles en jeu&lt;/strong&gt; : contours affichés en temps réel et sélection à la baguette, à activer dans l'onglet Build du &lt;code class=&quot;inline-path&quot;&gt;/menu&lt;/code&gt;. Avant d'installer les nouvelles versions, &lt;strong&gt;supprimez les anciennes&lt;/strong&gt; de votre dossier &lt;code class=&quot;inline-path&quot;&gt;mods&lt;/code&gt; : si votre version ne correspond pas à celle du serveur, la connexion sera refusée.&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/LKDM7/DonjonMC/raw/master/releases/donjonmc-latest.jar&quot;&gt;⬇ DonjonMC (dernière version)&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-latest.jar&quot;&gt;⬇ Dashboard Admin (dernière version)&lt;/a&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>On repart sur une V2</title>
+    <link href="https://lkdm7.github.io/WebMinecraft/?tab=changelog#cl-on-repart-sur-une-v2" />
+    <id>https://lkdm7.github.io/WebMinecraft/?tab=changelog#cl-on-repart-sur-une-v2</id>
+    <updated>2026-06-06T12:00:00.000Z</updated>
+    <category term="MODPACK V2" />
+    <content type="html">&lt;p&gt;Soyons honnêtes : la première version a été un fiasco. Trop de crashs et d'incompatibilités, bref ça ne tenait pas la route. On a donc tout remis à plat et on revient avec une &lt;strong&gt;V2&lt;/strong&gt; entièrement retravaillée, 385 mods en NeoForge 1.21.1. On croise les doigts pour que cette fois soit la bonne. Téléchargez le nouveau modpack et remontez-nous le moindre bug.&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://www.curseforge.com/minecraft/share/cWe61G_T&quot;&gt;⬇ Télécharger le Modpack V2&lt;/a&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Modpack V2 sans CurseForge</title>
+    <link href="https://lkdm7.github.io/WebMinecraft/?tab=changelog#cl-modpack-v2-sans-curseforge" />
+    <id>https://lkdm7.github.io/WebMinecraft/?tab=changelog#cl-modpack-v2-sans-curseforge</id>
+    <updated>2026-06-06T12:00:00.000Z</updated>
+    <category term="SANS CURSEFORGE" />
+    <content type="html">&lt;p&gt;Pas de CurseForge ? Le dossier &lt;code class=&quot;inline-path&quot;&gt;mods&lt;/code&gt; complet est disponible directement sur GitHub. Téléchargez l'archive, décompressez-la, puis placez son contenu dans le dossier &lt;code class=&quot;inline-path&quot;&gt;mods&lt;/code&gt; de votre instance NeoForge 1.21.1.&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/LKDM7/DonjonMC-modpacks/archive/refs/heads/main.zip&quot;&gt;⬇ Télécharger le dossier mods (V2)&lt;/a&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Ouverture officielle de DonjonMC !</title>
+    <link href="https://lkdm7.github.io/WebMinecraft/?tab=changelog#cl-ouverture-officielle-de-donjonmc" />
+    <id>https://lkdm7.github.io/WebMinecraft/?tab=changelog#cl-ouverture-officielle-de-donjonmc</id>
+    <updated>2026-06-05T12:00:00.000Z</updated>
+    <category term="NOUVEAU" />
+    <content type="html">&lt;p&gt;Le serveur ouvre ses portes ce soir à 21h. 385 mods NeoForge 1.21.1 vous attendent.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Lancement du site officiel</title>
+    <link href="https://lkdm7.github.io/WebMinecraft/?tab=changelog#cl-lancement-du-site-officiel" />
+    <id>https://lkdm7.github.io/WebMinecraft/?tab=changelog#cl-lancement-du-site-officiel</id>
+    <updated>2026-06-03T12:00:00.000Z</updated>
+    <category term="ÉVÉNEMENT" />
+    <content type="html">&lt;p&gt;Le site de pré-lancement est en ligne ! Consultez la liste des mods, les commandes disponibles et préparez-vous pour l'ouverture.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Finalisation du modpack : v1.0</title>
+    <link href="https://lkdm7.github.io/WebMinecraft/?tab=changelog#cl-finalisation-du-modpack-v1-0" />
+    <id>https://lkdm7.github.io/WebMinecraft/?tab=changelog#cl-finalisation-du-modpack-v1-0</id>
+    <updated>2026-06-01T12:00:00.000Z</updated>
+    <category term="MISE À JOUR" />
+    <content type="html">&lt;p&gt;Le modpack est stabilisé. 385 mods NeoForge 1.21.1, optimisé et testé. Téléchargement disponible via CurseForge.&lt;/p&gt;</content>
+  </entry>
+</feed>

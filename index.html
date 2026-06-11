@@ -2,15 +2,15 @@
 <html lang="fr" data-maintenance="false">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://worldtimeapi.org https://timeapi.io https://api.mcsrvstat.us https://api.github.com; frame-src https://badlands.mystrator.com; manifest-src 'self'; worker-src 'self'; base-uri 'self';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.mcsrvstat.us https://api.github.com; frame-src https://badlands.mystrator.com; manifest-src 'self'; worker-src 'self'; base-uri 'self';">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>DonjonMC — Serveur Minecraft Moddé</title>
-  <meta name="description" content="Rejoins DonjonMC sur NeoForge 1.21.1 avec 384 mods soigneusement sélectionnés. Modpack disponible sur CurseForge. Serveur ouvert !">
+  <meta name="description" content="Rejoins DonjonMC sur NeoForge 1.21.1 avec 385 mods soigneusement sélectionnés. Modpack disponible sur CurseForge. Serveur ouvert !">
 
   <meta property="og:title" content="DonjonMC — Serveur Minecraft Moddé">
-  <meta property="og:description" content="Rejoins DonjonMC sur NeoForge 1.21.1 avec 384 mods soigneusement sélectionnés. Modpack disponible sur CurseForge. Serveur ouvert !">
+  <meta property="og:description" content="Rejoins DonjonMC sur NeoForge 1.21.1 avec 385 mods soigneusement sélectionnés. Modpack disponible sur CurseForge. Serveur ouvert !">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://lkdm7.github.io/WebMinecraft/">
   <meta property="og:image" content="https://lkdm7.github.io/WebMinecraft/img/logo.jpg">
@@ -18,23 +18,25 @@
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="DonjonMC — Serveur Minecraft Moddé">
-  <meta name="twitter:description" content="Rejoins DonjonMC sur NeoForge 1.21.1 avec 384 mods soigneusement sélectionnés. Modpack disponible sur CurseForge. Serveur ouvert !">
+  <meta name="twitter:description" content="Rejoins DonjonMC sur NeoForge 1.21.1 avec 385 mods soigneusement sélectionnés. Modpack disponible sur CurseForge. Serveur ouvert !">
   <meta name="twitter:image" content="https://lkdm7.github.io/WebMinecraft/img/logo.jpg">
 
-  <link rel="icon" href="img/logo.jpg" type="image/jpeg">
-  <link rel="apple-touch-icon" href="img/logo.jpg">
+  <link rel="icon" href="img/icon-192.jpg" type="image/jpeg">
+  <link rel="apple-touch-icon" href="img/icon-192.jpg">
   <link rel="manifest" href="site.webmanifest">
+  <link rel="canonical" href="https://lkdm7.github.io/WebMinecraft/">
+  <link rel="alternate" type="application/atom+xml" title="Actualités DonjonMC" href="feed.xml">
   <meta name="theme-color" content="#07060d">
   <meta name="color-scheme" content="dark">
 
-  <link rel="preload" as="image" href="img/logo.jpg">
+  <link rel="preload" as="image" href="img/icon-192.jpg">
 
   <!-- Google Fonts — thème néon : Inter (UI) + JetBrains Mono (code/IP) + Press Start 2P (accents)
        · thème RPG pixel : Pixelify Sans (titres) + VT323 (dialogues) + Chivo Mono (corps) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://api.mcsrvstat.us">
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Pixelify+Sans:wght@400;500;600;700&family=VT323&family=Chivo+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Pixelify+Sans:wght@400;500;600;700&family=VT323&family=Chivo+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- ===================================================================
        MAINTENANCE — mettez "true" sur l'attribut data-maintenance de <html>
@@ -44,6 +46,23 @@
   <link rel="stylesheet" href="css/style.css">
   <!-- Thème (néon/pixel) appliqué avant le rendu — anti-flash, sans defer -->
   <script src="js/theme.js"></script>
+
+  <!-- Données structurées (SEO) — bloc de données, jamais exécuté -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "DonjonMC",
+    "url": "https://lkdm7.github.io/WebMinecraft/",
+    "image": "https://lkdm7.github.io/WebMinecraft/img/logo.jpg",
+    "description": "Serveur Minecraft moddé sur NeoForge 1.21.1 avec 385 mods. Univers RPG inspiré de Solo Leveling : donjons, magie, rangs de E à National.",
+    "inLanguage": "fr",
+    "gamePlatform": "PC",
+    "playMode": "MultiPlayer",
+    "applicationCategory": "Game",
+    "publisher": { "@type": "Organization", "name": "DonjonMC", "url": "https://github.com/LKDM7" }
+  }
+  </script>
 </head>
 <body>
 
@@ -51,11 +70,11 @@
   <a href="#main" class="skip-link">Aller au contenu</a>
 
   <!-- ===== ÉCRAN DE MAINTENANCE (affiché si window.SITE_MAINTENANCE = true) ===== -->
-  <div class="maintenance-overlay" role="alert" aria-live="assertive">
+  <div class="maintenance-overlay">
     <div class="maintenance-box">
-      <img src="img/logo.jpg" alt="DonjonMC" class="maintenance-logo" width="140" height="140">
+      <img src="img/icon-192.jpg" alt="DonjonMC" class="maintenance-logo" width="140" height="140">
       <span class="maintenance-badge">🛠 MAINTENANCE</span>
-      <h1 class="maintenance-title">Maintenance en cours</h1>
+      <p class="maintenance-title">Maintenance en cours</p>
       <p class="maintenance-text">Le site de DonjonMC est temporairement indisponible le temps de quelques améliorations. Reviens dans un instant, l'aventure t'attend.</p>
       <div class="maintenance-spinner" aria-hidden="true"></div>
     </div>
@@ -65,7 +84,7 @@
   <header class="site-header">
     <div class="container header-inner">
       <a href="#hero" class="logo">
-        <img src="img/logo.jpg" alt="DonjonMC" class="logo-img" width="34" height="34" fetchpriority="high">
+        <img src="img/icon-192.jpg" alt="DonjonMC" class="logo-img" width="34" height="34" fetchpriority="high">
         <span class="logo-text">DonjonMC</span>
       </a>
       <nav class="nav-pill">
@@ -146,7 +165,7 @@
       </div>
 
       <div class="hero-meta">
-        <span><strong class="js-mod-count">384</strong> mods</span>
+        <span><strong class="js-mod-count">385</strong> mods</span>
         <span class="sep" aria-hidden="true"></span>
         <span><strong>NeoForge</strong> 1.21.1</span>
         <span class="sep" aria-hidden="true"></span>
@@ -163,7 +182,7 @@
       <div class="feature-item">
         <span class="feature-icon">🧩</span>
         <div class="feature-text">
-          <strong><span class="js-mod-count">384</span> Mods</strong>
+          <strong><span class="js-mod-count">385</span> Mods</strong>
           <span>NeoForge 1.21.1</span>
         </div>
       </div>
@@ -243,7 +262,7 @@
       <!-- ===== ONGLET : MODS ===== -->
       <div id="tab-mods" class="tab-content active" role="tabpanel" aria-labelledby="tabbtn-mods" tabindex="0">
         <p class="tab-intro">
-          <strong><span class="js-mod-count">384</span> mods</strong> sur NeoForge 1.21.1. Utilisez le bouton ci-dessous pour tout installer d'un coup,
+          <strong><span class="js-mod-count">385</span> mods</strong> sur NeoForge 1.21.1. Utilisez le bouton ci-dessous pour tout installer d'un coup,
           ou cliquez sur chaque mod pour le télécharger manuellement.
         </p>
 
@@ -323,148 +342,8 @@
         </div>
         <p class="tab-intro">Guide complet du mod DonjonMC, un RPG inspiré de <strong>Solo Leveling</strong>. Chaque section se déplie au clic.</p>
 
-        <details open>
-          <summary>📈 Progression &amp; Niveaux</summary>
-          <div class="detail-body">
-            <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Vous démarrez niveau 0 avec 5 cœurs. À chaque passage de niveau : soin à 100%, malus retirés, +2 points de compétences, +0,25 cœur maximum. L'XP requise est exponentielle.</p>
-            <table class="donjon-table"><thead><tr><th>Rang</th><th>Niveaux</th></tr></thead><tbody>
-              <tr><td><span class="rank-tag r-e">E</span></td><td>0–9</td></tr>
-              <tr><td><span class="rank-tag r-d">D</span></td><td>10–19</td></tr>
-              <tr><td><span class="rank-tag r-c">C</span></td><td>20–29</td></tr>
-              <tr><td><span class="rank-tag r-b">B</span></td><td>30–39</td></tr>
-              <tr><td><span class="rank-tag r-a">A</span></td><td>40–59</td></tr>
-              <tr><td><span class="rank-tag r-s">S</span></td><td>60–79</td></tr>
-              <tr><td><span class="rank-tag r-nat">National</span></td><td>80+</td></tr>
-            </tbody></table>
-          </div>
-        </details>
+        <!-- Contenu généré depuis data/donjonmc.json (source unique partagée avec le mod) par js/app.js -->
 
-        <details>
-          <summary>⚡ Les 5 Statistiques</summary>
-          <div class="detail-body">
-            <table class="donjon-table"><thead><tr><th>Stat</th><th>Effets</th></tr></thead><tbody>
-              <tr><td><strong>Force</strong></td><td>Dégâts de mêlée et santé max</td></tr>
-              <tr><td><strong>Agilité</strong></td><td>Vitesse de déplacement : toggle via <code class="cmd">/donjonmc speed</code></td></tr>
-              <tr><td><strong>Vitalité</strong></td><td>Santé max et résistance aux dégâts</td></tr>
-              <tr><td><strong>Intelligence</strong></td><td>Mana max (+5/point) et dégâts de sorts</td></tr>
-              <tr><td><strong>Sens</strong></td><td>Perception : détection ennemis et loots</td></tr>
-            </tbody></table>
-            <p class="donjon-note">▎ Atteindre 20 points dans une stat débloque un sort actif unique lié à cette stat.</p>
-          </div>
-        </details>
-
-        <details>
-          <summary>✨ Les Sorts de Rang</summary>
-          <div class="detail-body">
-            <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Les sorts utilisent Iron's Spellbooks. Chaque sort arrive sous forme de parchemin : fais un clic droit pour l'apprendre.</p>
-            <table class="donjon-table"><thead><tr><th>Nv.</th><th>Sort</th><th>École</th><th>Effet</th></tr></thead><tbody>
-              <tr><td>10</td><td><strong>Onde Primitive</strong></td><td>Évocation</td><td>Repousse + endommage tous dans 5–8 blocs</td></tr>
-              <tr><td>20</td><td><strong>Flamme du Donjon</strong></td><td>Feu</td><td>Enflamme l'ennemi le plus proche (20 blocs) : 8–36 sec d'ignition</td></tr>
-              <tr><td>30</td><td><strong>Tempête Givrée</strong></td><td>Glace</td><td>Lenteur II–IV + dégâts sur ennemis dans 8–17 blocs</td></tr>
-              <tr><td>40</td><td><strong>Foudre du Chasseur</strong></td><td>Foudre</td><td>Frappe 1 à 6 ennemis proches (30 blocs) d'éclairs</td></tr>
-              <tr><td>60</td><td><strong>Voile des Ténèbres</strong></td><td>Ender</td><td>Wither + Cécité + Lenteur IV sur tous proches : légendaire, CD 60 sec</td></tr>
-            </tbody></table>
-          </div>
-        </details>
-
-        <details>
-          <summary>📋 Le Système : Quêtes Quotidiennes</summary>
-          <div class="detail-body">
-            <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Chaque jour Minecraft, Le Système assigne <strong>4 quêtes</strong> (2 Faciles, 1 Normale, 1 Difficile). Vous avez 2 heures IRL pour toutes les compléter.</p>
-            <table class="donjon-table"><thead><tr><th>Difficulté</th><th>Récompense XP</th></tr></thead><tbody>
-              <tr><td>Facile</td><td>150 XP</td></tr>
-              <tr><td>Normale</td><td>350 XP</td></tr>
-              <tr><td>Difficile</td><td>700 XP</td></tr>
-              <tr><td><strong>Toutes complétées</strong></td><td>+2 points de compétences bonus</td></tr>
-            </tbody></table>
-            <p class="donjon-note">44 types de quêtes : tuer des mobs, compléter des donjons, récolter, crafter, survivre une nuit...</p>
-          </div>
-        </details>
-
-        <details>
-          <summary>⚠ La Punition</summary>
-          <div class="detail-body">
-            <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Si le timer expire avant que toutes les quêtes soient complétées, Le Système vous téléporte dans une dimension de punition. Un Sand Worm vous attend (60 PV, 8 dégâts, 10 armure). Survivez 15 minutes.</p>
-            <table class="donjon-table"><thead><tr><th>Résultat</th><th>Conséquence</th></tr></thead><tbody>
-              <tr><td>🟢 Survie</td><td>Retour à votre position dans l'Overworld</td></tr>
-              <tr><td>🔴 Mort</td><td>Perte de 1–3 points de stats aléatoires + retour Overworld</td></tr>
-            </tbody></table>
-          </div>
-        </details>
-
-        <details>
-          <summary>🏛 Les Donjons</summary>
-          <div class="detail-body">
-            <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Des portails colorés apparaissent aléatoirement dans l'Overworld (annoncés dans le chat). Le chef du groupe fait clic droit pour entrer : tous les membres dans un rayon de 10 blocs sont téléportés avec lui.</p>
-            <table class="donjon-table"><thead><tr><th>Rang</th><th>Couleur</th><th>Min.</th><th>PV Boss</th><th>XP</th><th>Temps</th></tr></thead><tbody>
-              <tr><td><span class="rank-tag r-d">D</span></td><td>Bleu</td><td>1</td><td>200</td><td>800</td><td>45 min</td></tr>
-              <tr><td><span class="rank-tag r-c">C</span></td><td>Vert</td><td>1</td><td>500</td><td>2 000</td><td>30 min</td></tr>
-              <tr><td><span class="rank-tag r-b">B</span></td><td>Violet</td><td>1</td><td>1 000</td><td>5 000</td><td>25 min</td></tr>
-              <tr><td><span class="rank-tag r-a">A</span></td><td>Orange</td><td>1</td><td>2 000</td><td>12 000</td><td>20 min</td></tr>
-              <tr><td><span class="rank-tag r-s">S</span></td><td>Rouge</td><td>4</td><td>4 000</td><td>30 000</td><td>15 min</td></tr>
-            </tbody></table>
-            <p class="donjon-note">▎ Double Donjon secret : les donjons D et C ont 1% de chance de mener au Temple de Cartenon. L'XP est divisée équitablement, avec un bonus ×1,5 si vous avez 2+ rangs en dessous du joueur le plus haut.</p>
-          </div>
-        </details>
-
-        <details>
-          <summary>⚔ Niveau 50 : Épreuve de Classe</summary>
-          <div class="detail-body">
-            <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem;">Utilisez <code class="cmd">/donjonmc trial</code>. Battez 3 zombies, 2 squelettes et un Wither Skeleton boss. Votre classe est attribuée selon votre stat la plus haute à la victoire.</p>
-            <div class="class-grid">
-              <div class="class-card">
-                <h4>🛡 Tank</h4>
-                <p class="class-role">Absorber les dégâts · protéger l'équipe</p>
-                <div class="class-spell"><strong>Rempart du Gardien</strong> : Résistance + Absorption (Sacré)<br><span style="color:var(--muted)">50–100 mana · 5–20 sec · CD 30 sec</span></div>
-              </div>
-              <div class="class-card">
-                <h4>🗡 Assassin</h4>
-                <p class="class-role">Burst DPS · élimination ciblée</p>
-                <div class="class-spell"><strong>Frappe de l'Ombre</strong> : Téléport + 10–50 dégâts + Cécité (Ender)<br><span style="color:var(--muted)">35–75 mana · CD 12 sec</span></div>
-              </div>
-              <div class="class-card">
-                <h4>🔮 Mage</h4>
-                <p class="class-role">DPS de zone · ×1,5 mana</p>
-                <div class="class-spell"><strong>Déluge Arcanique</strong> : 2 à 9 ennemis · 8–36 dégâts (Invocation)<br><span style="color:var(--muted)">55–115 mana · CD 6 sec</span></div>
-              </div>
-              <div class="class-card">
-                <h4>💚 Guérisseur</h4>
-                <p class="class-role">Support · soin de zone</p>
-                <div class="class-spell"><strong>Aura de Vie</strong> : 4–19 PV + Regen sur alliés proches (Sacré)<br><span style="color:var(--muted)">60–110 mana · CD 20 sec</span></div>
-              </div>
-            </div>
-          </div>
-        </details>
-
-        <details>
-          <summary>👥 Système de Raid (jusqu'à 8 joueurs)</summary>
-          <div class="detail-body">
-            <table class="donjon-table"><thead><tr><th>Commande</th><th>Action</th></tr></thead><tbody>
-              <tr><td><code class="cmd">/raid create</code></td><td>Créer un groupe (vous devenez chef)</td></tr>
-              <tr><td><code class="cmd">/raid invite &lt;joueur&gt;</code></td><td>Inviter un joueur (chef uniquement)</td></tr>
-              <tr><td><code class="cmd">/raid accept</code></td><td>Accepter une invitation</td></tr>
-              <tr><td><code class="cmd">/raid leave</code></td><td>Quitter le groupe</td></tr>
-              <tr><td><code class="cmd">/raid disband</code></td><td>Dissoudre le groupe (chef)</td></tr>
-              <tr><td><code class="cmd">/raid role &lt;rôle&gt;</code></td><td>vanguard · striker · support · porter</td></tr>
-            </tbody></table>
-          </div>
-        </details>
-
-        <details>
-          <summary>🗺 Parcours de Progression Recommandé</summary>
-          <div class="detail-body">
-            <div class="donjon-progress">
-              <div class="prog-item"><span class="prog-lv">Nv. 0–9</span><span>Grind XP (mobs, quêtes) : investis dans ta stat principale</span></div>
-              <div class="prog-item"><span class="prog-lv">Nv. 10</span><span>Sort <strong>Onde Primitive</strong> : commence les donjons <span class="rank-tag r-d">D</span></span></div>
-              <div class="prog-item"><span class="prog-lv">Nv. 20</span><span>Sort <strong>Flamme du Donjon</strong> : donjons <span class="rank-tag r-c">C</span></span></div>
-              <div class="prog-item"><span class="prog-lv">Nv. 30</span><span>Sort <strong>Tempête Givrée</strong> : donjons <span class="rank-tag r-b">B</span></span></div>
-              <div class="prog-item"><span class="prog-lv">Nv. 40</span><span>Sort <strong>Foudre du Chasseur</strong> : donjons <span class="rank-tag r-a">A</span></span></div>
-              <div class="prog-item"><span class="prog-lv">Nv. 50</span><span><strong>Épreuve de Classe</strong> → déblocage classe + sort de classe</span></div>
-              <div class="prog-item"><span class="prog-lv">Nv. 60</span><span>Sort <strong>Voile des Ténèbres</strong> (légendaire) : donjons <span class="rank-tag r-s">S</span></span></div>
-              <div class="prog-item"><span class="prog-lv">Nv. 80+</span><span>Rang <span class="rank-tag r-nat">National</span></span></div>
-            </div>
-          </div>
-        </details>
       </div>
 
       <!-- ===== ONGLET : DASHBOARD ===== -->
@@ -718,7 +597,7 @@
   <footer class="site-footer">
     <div class="container">
       <div class="footer-top">
-        <p class="footer-brand"><img src="img/logo.jpg" alt="" width="24" height="24" loading="lazy" style="height:24px;border-radius:4px;vertical-align:middle;margin-right:0.4rem;"> DonjonMC</p>
+        <p class="footer-brand"><img src="img/icon-192.jpg" alt="" width="24" height="24" loading="lazy" style="height:24px;border-radius:4px;vertical-align:middle;margin-right:0.4rem;"> DonjonMC</p>
         <nav class="footer-nav" aria-label="Liens utiles">
           <a href="https://www.curseforge.com/minecraft/share/cWe61G_T" target="_blank" rel="noopener noreferrer">CurseForge</a>
           <a href="https://github.com/LKDM7/WebMinecraft" target="_blank" rel="noopener noreferrer">GitHub</a>

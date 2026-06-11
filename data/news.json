@@ -1,0 +1,98 @@
+[
+  {
+    "day": "10", "my": "JUIN 2026", "tag": "fix", "label": "MISE À JOUR",
+    "title": "DonjonMC 2.1.0 & Dashboard 1.0.8 — Épreuve de Classe v2 et zones visibles",
+    "body": "Grosse mise à jour des deux mods maison. Côté <strong>DonjonMC 2.1.0</strong>, l'Épreuve de Classe (niveau 50) est entièrement refaite : une <strong>Burning Arena</strong> de 8 salles à enchaîner, avec des phases chronométrées. La mise à jour ajoute aussi les <strong>statistiques de carrière</strong> et redessine l'interface Hunter. Côté <strong>Dashboard Admin 1.0.8</strong>, les <strong>zones sont maintenant visibles en jeu</strong> : contours affichés en temps réel et sélection à la baguette, à activer dans l'onglet Build du <code class=\"inline-path\">/menu</code>. Avant d'installer les nouvelles versions, <strong>supprimez les anciennes</strong> de votre dossier <code class=\"inline-path\">mods</code> : si votre version ne correspond pas à celle du serveur, la connexion sera refusée.",
+    "dls": [
+      { "label": "⬇ DonjonMC (dernière version)", "url": "https://github.com/LKDM7/DonjonMC/raw/master/releases/donjonmc-latest.jar" },
+      { "label": "⬇ Dashboard Admin (dernière version)", "url": "https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-latest.jar" }
+    ]
+  },
+  {
+    "day": "09", "my": "JUIN 2026", "tag": "fix", "label": "MISE À JOUR",
+    "obsolete": true,
+    "title": "Nouvelle MAJ des mods : supprimez les anciens d'abord",
+    "body": "Les deux mods maison viennent d'être mis à jour : <strong>DonjonMC</strong> et <strong>Dashboard Admin</strong> (dernières versions). Avant d'installer les nouveaux, <strong>supprimez les anciennes versions</strong> de ces deux mods dans votre dossier <code class=\"inline-path\">mods</code>. Téléchargez ensuite les fichiers ci-dessous et mettez-les à la place. Ne gardez jamais deux versions du même mod en même temps, le jeu planterait au démarrage.",
+    "dls": [
+      { "label": "⬇ DonjonMC (dernière version)", "url": "https://github.com/LKDM7/DonjonMC/raw/master/releases/donjonmc-latest.jar" },
+      { "label": "⬇ Dashboard Admin (dernière version)", "url": "https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-latest.jar" }
+    ]
+  },
+  {
+    "day": "07", "my": "JUIN 2026", "tag": "fix", "label": "MISE À JOUR",
+    "obsolete": true,
+    "title": "DonjonMC v2.0.2 — mettez à jour vos mods",
+    "body": "<strong>DonjonMC v2.0.2</strong> est disponible. Remplacez les anciennes versions dans votre dossier <code class=\"inline-path\">mods</code> par les nouveaux fichiers ci-dessous.",
+    "dls": [
+      { "label": "⬇ DonjonMC (dernière version)", "url": "https://github.com/LKDM7/DonjonMC/raw/master/releases/donjonmc-latest.jar" },
+      { "label": "⬇ Dashboard Admin (dernière version)", "url": "https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-latest.jar" }
+    ]
+  },
+  {
+    "day": "07", "my": "JUIN 2026", "tag": "fix", "label": "MISE À JOUR",
+    "obsolete": true,
+    "title": "Mods personnalisés mis à jour — re-téléchargez-les",
+    "body": "Les mods maison <strong>DonjonMC</strong> et <strong>Dashboard Admin</strong> viennent d'être mis à jour avec les dernières modifications. Si vous jouez déjà sur le serveur, remplacez les anciennes versions dans votre dossier <code class=\"inline-path\">mods</code> par les nouvelles ci-dessous.",
+    "dls": [
+      { "label": "⬇ DonjonMC (dernière version)", "url": "https://github.com/LKDM7/DonjonMC/raw/master/releases/donjonmc-latest.jar" },
+      { "label": "⬇ Dashboard Admin (dernière version)", "url": "https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-latest.jar" }
+    ]
+  },
+  {
+    "day": "07", "my": "JUIN 2026", "tag": "fix", "label": "MISE À JOUR",
+    "obsolete": true,
+    "title": "Mettez à jour vos 2 mods personnalisés",
+    "body": "Les deux mods maison ont reçu des correctifs importants. <strong>DonjonMC</strong> corrige un bug où les portails pouvaient spawner sous terre (Y &lt; 1). <strong>Dashboard Admin</strong> ajoute la compatibilité avec le mod Accessories pour conserver les items équipés à la mort. Re-téléchargez les deux mods et remplacez les anciennes versions dans votre dossier <code class=\"inline-path\">mods</code>.",
+    "dls": [
+      { "label": "⬇ DonjonMC (dernière version)", "url": "https://github.com/LKDM7/DonjonMC/raw/master/releases/donjonmc-latest.jar" },
+      { "label": "⬇ Dashboard Admin (dernière version)", "url": "https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-latest.jar" }
+    ]
+  },
+  {
+    "day": "06", "my": "JUIN 2026", "tag": "new", "label": "MODPACK V2",
+    "title": "On repart sur une V2",
+    "body": "Soyons honnêtes : la première version a été un fiasco. Trop de crashs et d'incompatibilités, bref ça ne tenait pas la route. On a donc tout remis à plat et on revient avec une <strong>V2</strong> entièrement retravaillée, 385 mods en NeoForge 1.21.1. On croise les doigts pour que cette fois soit la bonne. Téléchargez le nouveau modpack et remontez-nous le moindre bug.",
+    "dls": [
+      { "label": "⬇ Télécharger le Modpack V2", "url": "https://www.curseforge.com/minecraft/share/cWe61G_T" }
+    ]
+  },
+  {
+    "day": "06", "my": "JUIN 2026", "tag": "new", "label": "SANS CURSEFORGE",
+    "title": "Modpack V2 sans CurseForge",
+    "body": "Pas de CurseForge ? Le dossier <code class=\"inline-path\">mods</code> complet est disponible directement sur GitHub. Téléchargez l'archive, décompressez-la, puis placez son contenu dans le dossier <code class=\"inline-path\">mods</code> de votre instance NeoForge 1.21.1.",
+    "dls": [
+      { "label": "⬇ Télécharger le dossier mods (V2)", "url": "https://github.com/LKDM7/DonjonMC-modpacks/archive/refs/heads/main.zip" }
+    ]
+  },
+  {
+    "day": "05", "my": "JUIN 2026", "tag": "new", "label": "SANS CURSEFORGE",
+    "title": "Télécharger le dossier mods directement",
+    "body": "Vous ne souhaitez pas ou ne pouvez pas utiliser CurseForge ? Téléchargez l'intégralité du dossier <code class=\"inline-path\">mods</code> directement depuis GitHub en un clic. Placez ensuite son contenu dans le dossier <code class=\"inline-path\">mods</code> de votre instance NeoForge 1.21.1.",
+    "obsolete": true
+  },
+  {
+    "day": "05", "my": "JUIN 2026", "tag": "requis", "label": "REQUIS",
+    "obsolete": true,
+    "title": "2 mods à télécharger avant de rejoindre le serveur",
+    "body": "DonjonMC utilise 2 mods personnalisés qui ne sont <strong>pas inclus</strong> dans le modpack CurseForge. Télécharge-les et place-les dans le dossier <strong>mods</strong> du modpack : ouvre CurseForge, repère le modpack DonjonMC, clique sur les <strong>3 points ⋮</strong> à côté du bouton Play → <strong>Open Folder</strong> → dépose les 2 mods dans le dossier <code class=\"inline-path\">mods</code>.",
+    "dls": [
+      { "label": "⬇ DonjonMC (dernière version)", "url": "https://github.com/LKDM7/DonjonMC/raw/master/releases/donjonmc-latest.jar" },
+      { "label": "⬇ Dashboard Admin (dernière version)", "url": "https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-latest.jar" }
+    ]
+  },
+  {
+    "day": "05", "my": "JUIN 2026", "tag": "new", "label": "NOUVEAU",
+    "title": "Ouverture officielle de DonjonMC !",
+    "body": "Le serveur ouvre ses portes ce soir à 21h. 385 mods NeoForge 1.21.1 vous attendent."
+  },
+  {
+    "day": "03", "my": "JUIN 2026", "tag": "event", "label": "ÉVÉNEMENT",
+    "title": "Lancement du site officiel",
+    "body": "Le site de pré-lancement est en ligne ! Consultez la liste des mods, les commandes disponibles et préparez-vous pour l'ouverture."
+  },
+  {
+    "day": "01", "my": "JUIN 2026", "tag": "fix", "label": "MISE À JOUR",
+    "title": "Finalisation du modpack : v1.0",
+    "body": "Le modpack est stabilisé. 385 mods NeoForge 1.21.1, optimisé et testé. Téléchargement disponible via CurseForge."
+  }
+]

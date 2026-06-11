@@ -1509,3 +1509,15 @@ html[data-theme="pixel"] .skip-link { background: var(--paper); color: var(--pap
 @media (prefers-reduced-motion: reduce) {
   html[data-theme="pixel"] .hero-press { animation: none; }
 }
+
+/* =====================================================================
+   MICRO-AMÉLIORATIONS TYPO / A11Y (audit 2026-06)
+===================================================================== */
+/* Intro des sections du guide DonjonMC (générées depuis data/donjonmc.json) */
+.detail-intro { color: var(--muted); font-size: 0.85rem; margin-bottom: 1rem; }
+
+/* Les titres s'équilibrent sur plusieurs lignes au lieu de laisser un mot orphelin */
+.hero-title, .section-title, .mods-modal-title, .step-title { text-wrap: balance; }
+
+/* Chiffres à chasse fixe : le compteur animé et les compteurs ne "sautent" plus */
+.js-mod-count, .status-players, .pill-count, .mods-count, .cmds-count, .cl-day, .mod-cat-count { font-variant-numeric: tabular-nums; }

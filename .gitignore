@@ -25,3 +25,6 @@ skills-lock.json
 *.local.*
 .env
 .env.*
+# IDE
+.idea/
+*.iml

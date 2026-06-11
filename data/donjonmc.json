@@ -1,0 +1,156 @@
+{
+  "$comment": "Source unique du guide DonjonMC — consommée par js/app.js (onglet DonjonMC) et réutilisable par le mod. Les chaînes peuvent contenir du HTML limité (strong, code.cmd, span.rank-tag, br).",
+  "version": "2.1.0",
+  "sections": [
+    {
+      "icon": "📈",
+      "title": "Progression & Niveaux",
+      "intro": "Vous démarrez niveau 0 avec 5 cœurs. À chaque passage de niveau : soin à 100%, malus retirés, +2 points de compétences, +0,25 cœur maximum. L'XP requise est exponentielle.",
+      "table": {
+        "head": ["Rang", "Niveaux"],
+        "rows": [
+          ["<span class=\"rank-tag r-e\">E</span>", "0–9"],
+          ["<span class=\"rank-tag r-d\">D</span>", "10–19"],
+          ["<span class=\"rank-tag r-c\">C</span>", "20–29"],
+          ["<span class=\"rank-tag r-b\">B</span>", "30–39"],
+          ["<span class=\"rank-tag r-a\">A</span>", "40–59"],
+          ["<span class=\"rank-tag r-s\">S</span>", "60–79"],
+          ["<span class=\"rank-tag r-nat\">National</span>", "80+"]
+        ]
+      }
+    },
+    {
+      "icon": "⚡",
+      "title": "Les 5 Statistiques",
+      "table": {
+        "head": ["Stat", "Effets"],
+        "rows": [
+          ["<strong>Force</strong>", "Dégâts de mêlée et santé max"],
+          ["<strong>Agilité</strong>", "Vitesse de déplacement : toggle via <code class=\"cmd\">/donjonmc speed</code>"],
+          ["<strong>Vitalité</strong>", "Santé max et résistance aux dégâts"],
+          ["<strong>Intelligence</strong>", "Mana max (+5/point) et dégâts de sorts"],
+          ["<strong>Sens</strong>", "Perception : détection ennemis et loots"]
+        ]
+      },
+      "note": "▎ Atteindre 20 points dans une stat débloque un sort actif unique lié à cette stat."
+    },
+    {
+      "icon": "✨",
+      "title": "Les Sorts de Rang",
+      "intro": "Les sorts utilisent Iron's Spellbooks. Chaque sort arrive sous forme de parchemin : fais un clic droit pour l'apprendre.",
+      "table": {
+        "head": ["Nv.", "Sort", "École", "Effet"],
+        "rows": [
+          ["10", "<strong>Onde Primitive</strong>", "Évocation", "Repousse + endommage tous dans 5–8 blocs"],
+          ["20", "<strong>Flamme du Donjon</strong>", "Feu", "Enflamme l'ennemi le plus proche (20 blocs) : 8–36 sec d'ignition"],
+          ["30", "<strong>Tempête Givrée</strong>", "Glace", "Lenteur II–IV + dégâts sur ennemis dans 8–17 blocs"],
+          ["40", "<strong>Foudre du Chasseur</strong>", "Foudre", "Frappe 1 à 6 ennemis proches (30 blocs) d'éclairs"],
+          ["60", "<strong>Voile des Ténèbres</strong>", "Ender", "Wither + Cécité + Lenteur IV sur tous proches : légendaire, CD 60 sec"]
+        ]
+      }
+    },
+    {
+      "icon": "📋",
+      "title": "Le Système : Quêtes Quotidiennes",
+      "intro": "Chaque jour Minecraft, Le Système assigne <strong>4 quêtes</strong> (2 Faciles, 1 Normale, 1 Difficile). Vous avez 2 heures IRL pour toutes les compléter.",
+      "table": {
+        "head": ["Difficulté", "Récompense XP"],
+        "rows": [
+          ["Facile", "150 XP"],
+          ["Normale", "350 XP"],
+          ["Difficile", "700 XP"],
+          ["<strong>Toutes complétées</strong>", "+2 points de compétences bonus"]
+        ]
+      },
+      "note": "44 types de quêtes : tuer des mobs, compléter des donjons, récolter, crafter, survivre une nuit..."
+    },
+    {
+      "icon": "⚠",
+      "title": "La Punition",
+      "intro": "Si le timer expire avant que toutes les quêtes soient complétées, Le Système vous téléporte dans une dimension de punition. Un Sand Worm vous attend (60 PV, 8 dégâts, 10 armure). Survivez 15 minutes.",
+      "table": {
+        "head": ["Résultat", "Conséquence"],
+        "rows": [
+          ["🟢 Survie", "Retour à votre position dans l'Overworld"],
+          ["🔴 Mort", "Perte de 1–3 points de stats aléatoires + retour Overworld"]
+        ]
+      }
+    },
+    {
+      "icon": "🏛",
+      "title": "Les Donjons",
+      "intro": "Des portails colorés apparaissent aléatoirement dans l'Overworld (annoncés dans le chat). Le chef du groupe fait clic droit pour entrer : tous les membres dans un rayon de 10 blocs sont téléportés avec lui.",
+      "table": {
+        "head": ["Rang", "Couleur", "Min.", "PV Boss", "XP", "Temps"],
+        "rows": [
+          ["<span class=\"rank-tag r-d\">D</span>", "Bleu", "1", "200", "800", "45 min"],
+          ["<span class=\"rank-tag r-c\">C</span>", "Vert", "1", "500", "2 000", "30 min"],
+          ["<span class=\"rank-tag r-b\">B</span>", "Violet", "1", "1 000", "5 000", "25 min"],
+          ["<span class=\"rank-tag r-a\">A</span>", "Orange", "1", "2 000", "12 000", "20 min"],
+          ["<span class=\"rank-tag r-s\">S</span>", "Rouge", "4", "4 000", "30 000", "15 min"]
+        ]
+      },
+      "note": "▎ Double Donjon secret : les donjons D et C ont 1% de chance de mener au Temple de Cartenon. L'XP est divisée équitablement, avec un bonus ×1,5 si vous avez 2+ rangs en dessous du joueur le plus haut."
+    },
+    {
+      "icon": "⚔",
+      "title": "Niveau 50 : Épreuve de Classe",
+      "intro": "Utilisez <code class=\"cmd\">/donjonmc trial</code>. Battez 3 zombies, 2 squelettes et un Wither Skeleton boss. Votre classe est attribuée selon votre stat la plus haute à la victoire.",
+      "classes": [
+        {
+          "icon": "🛡",
+          "name": "Tank",
+          "role": "Absorber les dégâts · protéger l'équipe",
+          "spell": "<strong>Rempart du Gardien</strong> : Résistance + Absorption (Sacré)<br><span style=\"color:var(--muted)\">50–100 mana · 5–20 sec · CD 30 sec</span>"
+        },
+        {
+          "icon": "🗡",
+          "name": "Assassin",
+          "role": "Burst DPS · élimination ciblée",
+          "spell": "<strong>Frappe de l'Ombre</strong> : Téléport + 10–50 dégâts + Cécité (Ender)<br><span style=\"color:var(--muted)\">35–75 mana · CD 12 sec</span>"
+        },
+        {
+          "icon": "🔮",
+          "name": "Mage",
+          "role": "DPS de zone · ×1,5 mana",
+          "spell": "<strong>Déluge Arcanique</strong> : 2 à 9 ennemis · 8–36 dégâts (Invocation)<br><span style=\"color:var(--muted)\">55–115 mana · CD 6 sec</span>"
+        },
+        {
+          "icon": "💚",
+          "name": "Guérisseur",
+          "role": "Support · soin de zone",
+          "spell": "<strong>Aura de Vie</strong> : 4–19 PV + Regen sur alliés proches (Sacré)<br><span style=\"color:var(--muted)\">60–110 mana · CD 20 sec</span>"
+        }
+      ]
+    },
+    {
+      "icon": "👥",
+      "title": "Système de Raid (jusqu'à 8 joueurs)",
+      "table": {
+        "head": ["Commande", "Action"],
+        "rows": [
+          ["<code class=\"cmd\">/raid create</code>", "Créer un groupe (vous devenez chef)"],
+          ["<code class=\"cmd\">/raid invite &lt;joueur&gt;</code>", "Inviter un joueur (chef uniquement)"],
+          ["<code class=\"cmd\">/raid accept</code>", "Accepter une invitation"],
+          ["<code class=\"cmd\">/raid leave</code>", "Quitter le groupe"],
+          ["<code class=\"cmd\">/raid disband</code>", "Dissoudre le groupe (chef)"],
+          ["<code class=\"cmd\">/raid role &lt;rôle&gt;</code>", "vanguard · striker · support · porter"]
+        ]
+      }
+    },
+    {
+      "icon": "🗺",
+      "title": "Parcours de Progression Recommandé",
+      "progress": [
+        { "lv": "Nv. 0–9", "text": "Grind XP (mobs, quêtes) : investis dans ta stat principale" },
+        { "lv": "Nv. 10", "text": "Sort <strong>Onde Primitive</strong> : commence les donjons <span class=\"rank-tag r-d\">D</span>" },
+        { "lv": "Nv. 20", "text": "Sort <strong>Flamme du Donjon</strong> : donjons <span class=\"rank-tag r-c\">C</span>" },
+        { "lv": "Nv. 30", "text": "Sort <strong>Tempête Givrée</strong> : donjons <span class=\"rank-tag r-b\">B</span>" },
+        { "lv": "Nv. 40", "text": "Sort <strong>Foudre du Chasseur</strong> : donjons <span class=\"rank-tag r-a\">A</span>" },
+        { "lv": "Nv. 50", "text": "<strong>Épreuve de Classe</strong> → déblocage classe + sort de classe" },
+        { "lv": "Nv. 60", "text": "Sort <strong>Voile des Ténèbres</strong> (légendaire) : donjons <span class=\"rank-tag r-s\">S</span>" },
+        { "lv": "Nv. 80+", "text": "Rang <span class=\"rank-tag r-nat\">National</span>" }
+      ]
+    }
+  ]
+}

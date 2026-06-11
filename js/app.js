@@ -783,7 +783,7 @@ document.querySelectorAll(".js-mod-count").forEach(el => { el.textContent = MODS
 /* =====================================================================
    ACTUALITÉS  (onglet "Actualités" — timeline)
 
-   Pour AJOUTER une actu : copiez un bloc { … } en haut du tableau.
+   Pour AJOUTER une actu : copiez un bloc { … } en haut de data/news.json.
      day   : jour sur 2 chiffres        (ex. "05")
      my    : mois + année               (ex. "JUIN 2026")
      tag   : couleur — "new" | "event" | "fix" | "requis"
@@ -793,104 +793,22 @@ document.querySelectorAll(".js-mod-count").forEach(el => { el.textContent = MODS
      dls   : boutons de téléchargement (optionnel) — [{ label, url }]
    La plus récente se met en HAUT du tableau (elle est mise en avant).
 ===================================================================== */
-const NEWS = [
-  {
-    day: "10", my: "JUIN 2026", tag: "fix", label: "MISE À JOUR",
-    title: "DonjonMC 2.1.0 & Dashboard 1.0.8 — Épreuve de Classe v2 et zones visibles",
-    body: `Grosse mise à jour des deux mods maison. Côté <strong>DonjonMC 2.1.0</strong>, l'Épreuve de Classe (niveau 50) est entièrement refaite : une <strong>Burning Arena</strong> de 8 salles à enchaîner, avec des phases chronométrées. La mise à jour ajoute aussi les <strong>statistiques de carrière</strong> et redessine l'interface Hunter. Côté <strong>Dashboard Admin 1.0.8</strong>, les <strong>zones sont maintenant visibles en jeu</strong> : contours affichés en temps réel et sélection à la baguette, à activer dans l'onglet Build du <code class="inline-path">/menu</code>. Avant d'installer les nouvelles versions, <strong>supprimez les anciennes</strong> de votre dossier <code class="inline-path">mods</code> : si votre version ne correspond pas à celle du serveur, la connexion sera refusée.`,
-    dls: [
-      { label: "⬇ DonjonMC (dernière version)", url: "https://github.com/LKDM7/DonjonMC/raw/master/releases/donjonmc-latest.jar" },
-      { label: "⬇ Dashboard Admin (dernière version)", url: "https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-latest.jar" },
-    ],
-  },
-  {
-    day: "09", my: "JUIN 2026", tag: "fix", label: "MISE À JOUR",
-    obsolete: true,
-    title: "Nouvelle MAJ des mods : supprimez les anciens d'abord",
-    body: `Les deux mods maison viennent d'être mis à jour : <strong>DonjonMC</strong> et <strong>Dashboard Admin</strong> (dernières versions). Avant d'installer les nouveaux, <strong>supprimez les anciennes versions</strong> de ces deux mods dans votre dossier <code class="inline-path">mods</code>. Téléchargez ensuite les fichiers ci-dessous et mettez-les à la place. Ne gardez jamais deux versions du même mod en même temps, le jeu planterait au démarrage.`,
-    dls: [
-      { label: "⬇ DonjonMC (dernière version)", url: "https://github.com/LKDM7/DonjonMC/raw/master/releases/donjonmc-latest.jar" },
-      { label: "⬇ Dashboard Admin (dernière version)", url: "https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-latest.jar" },
-    ],
-  },
-  {
-    day: "07", my: "JUIN 2026", tag: "fix", label: "MISE À JOUR",
-    obsolete: true,
-    title: "DonjonMC v2.0.2 — mettez à jour vos mods",
-    body: `<strong>DonjonMC v2.0.2</strong> est disponible. Remplacez les anciennes versions dans votre dossier <code class="inline-path">mods</code> par les nouveaux fichiers ci-dessous.`,
-    dls: [
-      { label: "⬇ DonjonMC (dernière version)", url: "https://github.com/LKDM7/DonjonMC/raw/master/releases/donjonmc-latest.jar" },
-      { label: "⬇ Dashboard Admin (dernière version)", url: "https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-latest.jar" },
-    ],
-  },
-  {
-    day: "07", my: "JUIN 2026", tag: "fix", label: "MISE À JOUR",
-    obsolete: true,
-    title: "Mods personnalisés mis à jour — re-téléchargez-les",
-    body: `Les mods maison <strong>DonjonMC</strong> et <strong>Dashboard Admin</strong> viennent d'être mis à jour avec les dernières modifications. Si vous jouez déjà sur le serveur, remplacez les anciennes versions dans votre dossier <code class="inline-path">mods</code> par les nouvelles ci-dessous.`,
-    dls: [
-      { label: "⬇ DonjonMC (dernière version)", url: "https://github.com/LKDM7/DonjonMC/raw/master/releases/donjonmc-latest.jar" },
-      { label: "⬇ Dashboard Admin (dernière version)", url: "https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-latest.jar" },
-    ],
-  },
-  {
-    day: "07", my: "JUIN 2026", tag: "fix", label: "MISE À JOUR",
-    obsolete: true,
-    title: "Mettez à jour vos 2 mods personnalisés",
-    body: `Les deux mods maison ont reçu des correctifs importants. <strong>DonjonMC</strong> corrige un bug où les portails pouvaient spawner sous terre (Y &lt; 1). <strong>Dashboard Admin</strong> ajoute la compatibilité avec le mod Accessories pour conserver les items équipés à la mort. Re-téléchargez les deux mods et remplacez les anciennes versions dans votre dossier <code class="inline-path">mods</code>.`,
-    dls: [
-      { label: "⬇ DonjonMC (dernière version)", url: "https://github.com/LKDM7/DonjonMC/raw/master/releases/donjonmc-latest.jar" },
-      { label: "⬇ Dashboard Admin (dernière version)", url: "https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-latest.jar" },
-    ],
-  },
-  {
-    day: "06", my: "JUIN 2026", tag: "new", label: "MODPACK V2",
-    title: "On repart sur une V2",
-    body: `Soyons honnêtes : la première version a été un fiasco. Trop de crashs et d'incompatibilités, bref ça ne tenait pas la route. On a donc tout remis à plat et on revient avec une <strong>V2</strong> entièrement retravaillée, ${MODS.length} mods en NeoForge 1.21.1. On croise les doigts pour que cette fois soit la bonne. Téléchargez le nouveau modpack et remontez-nous le moindre bug.`,
-    dls: [
-      { label: "⬇ Télécharger le Modpack V2", url: "https://www.curseforge.com/minecraft/share/cWe61G_T" },
-    ],
-  },
-  {
-    day: "06", my: "JUIN 2026", tag: "new", label: "SANS CURSEFORGE",
-    title: "Modpack V2 sans CurseForge",
-    body: `Pas de CurseForge ? Le dossier <code class="inline-path">mods</code> complet est disponible directement sur GitHub. Téléchargez l'archive, décompressez-la, puis placez son contenu dans le dossier <code class="inline-path">mods</code> de votre instance NeoForge 1.21.1.`,
-    dls: [
-      { label: "⬇ Télécharger le dossier mods (V2)", url: "https://github.com/LKDM7/DonjonMC-modpacks/archive/refs/heads/main.zip" },
-    ],
-  },
-  {
-    day: "05", my: "JUIN 2026", tag: "new", label: "SANS CURSEFORGE",
-    title: "Télécharger le dossier mods directement",
-    body: `Vous ne souhaitez pas ou ne pouvez pas utiliser CurseForge ? Téléchargez l'intégralité du dossier <code class="inline-path">mods</code> directement depuis GitHub en un clic. Placez ensuite son contenu dans le dossier <code class="inline-path">mods</code> de votre instance NeoForge 1.21.1.`,
-    obsolete: true,
-  },
-  {
-    day: "05", my: "JUIN 2026", tag: "requis", label: "REQUIS",
-    obsolete: true,
-    title: "2 mods à télécharger avant de rejoindre le serveur",
-    body: `DonjonMC utilise 2 mods personnalisés qui ne sont <strong>pas inclus</strong> dans le modpack CurseForge. Télécharge-les et place-les dans le dossier <strong>mods</strong> du modpack : ouvre CurseForge, repère le modpack DonjonMC, clique sur les <strong>3 points ⋮</strong> à côté du bouton Play → <strong>Open Folder</strong> → dépose les 2 mods dans le dossier <code class="inline-path">mods</code>.`,
-    dls: [
-      { label: "⬇ DonjonMC (dernière version)", url: "https://github.com/LKDM7/DonjonMC/raw/master/releases/donjonmc-latest.jar" },
-      { label: "⬇ Dashboard Admin (dernière version)", url: "https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-latest.jar" },
-    ],
-  },
-  {
-    day: "05", my: "JUIN 2026", tag: "new", label: "NOUVEAU",
-    title: "Ouverture officielle de DonjonMC !",
-    body: `Le serveur ouvre ses portes ce soir à 21h. ${MODS.length} mods NeoForge 1.21.1 vous attendent.`,
-  },
-  {
-    day: "03", my: "JUIN 2026", tag: "event", label: "ÉVÉNEMENT",
-    title: "Lancement du site officiel",
-    body: `Le site de pré-lancement est en ligne ! Consultez la liste des mods, les commandes disponibles et préparez-vous pour l'ouverture.`,
-  },
-  {
-    day: "01", my: "JUIN 2026", tag: "fix", label: "MISE À JOUR",
-    title: "Finalisation du modpack : v1.0",
-    body: `Le modpack est stabilisé. ${MODS.length} mods NeoForge 1.21.1, optimisé et testé. Téléchargement disponible via CurseForge.`,
-  },
-];
+/* Articles chargés depuis data/news.json (source unique, partagée avec
+   scripts/build-feed.js qui génère le flux Atom feed.xml). Pour ajouter une
+   actu : éditez data/news.json (la plus récente en HAUT) puis : npm run feed */
+const NEWS = [];
+
+async function loadNews() {
+  try {
+    const r = await fetch("data/news.json");
+    if (r.ok) NEWS.push(...await r.json());
+  } catch (_) { /* hors-ligne sans cache : timeline vide */ }
+  renderNews();
+  scrollToHashArticle();
+  initNewsToast();
+  loadGitHubReleases();
+  initNotifications();
+}
 
 const NEWS_LABELS = { new: "NOUVEAU", event: "ÉVÉNEMENT", fix: "MISE À JOUR", requis: "REQUIS", github: "GITHUB" };
 
@@ -927,11 +845,13 @@ function scrollToHashArticle() {
 }
 
 function mdToHtml(md) {
-  return md
+  // Échappe TOUT le HTML brut d'abord (les corps de releases GitHub ne sont
+  // pas de confiance), puis applique le markdown limité sur le texte échappé.
+  return escapeHTML(md)
     .replace(/#{1,6}\s+(.+)/g, "<strong>$1</strong>")
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
     .replace(/`([^`]+)`/g, `<code class="inline-path">$1</code>`)
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, t, u) => /^https:\/\//.test(u) ? `<a href="${escapeHTML(u)}" target="_blank" rel="noopener">${escapeHTML(t)}</a>` : escapeHTML(t))
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, t, u) => /^https:\/\//.test(u) ? `<a href="${u}" target="_blank" rel="noopener">${t}</a>` : t)
     .replace(/\r?\n{2,}/g, " · ")
     .replace(/\r?\n/g, " ")
     .trim();
@@ -1027,7 +947,7 @@ function initNotifications() {
     if (perm === "granted") {
       localStorage.setItem(BELL_KEY, "1");
       syncBell();
-      new Notification("DonjonMC 🔔", { body: "Alertes activées — vous serez prévenu des nouvelles versions.", icon: "./icon.png" });
+      new Notification("DonjonMC 🔔", { body: "Alertes activées — vous serez prévenu des nouvelles versions.", icon: "./img/icon-192.jpg" });
     }
   });
 
@@ -1039,7 +959,7 @@ function initNotifications() {
     const lastId = localStorage.getItem(LAST_KEY);
     const latestId = String(latest._ts);
     if (lastId && lastId !== latestId) {
-      new Notification(`DonjonMC — ${latest.label}`, { body: latest.title, icon: "./icon.png" });
+      new Notification(`DonjonMC — ${latest.label}`, { body: latest.title, icon: "./img/icon-192.jpg" });
     }
     localStorage.setItem(LAST_KEY, latestId);
   }).catch(() => {});
@@ -1085,9 +1005,7 @@ document.getElementById("changelog-list").addEventListener("click", e => {
     setTimeout(() => { btn.textContent = "🔗"; btn.classList.remove("cl-copied"); }, 1800);
   }).catch(() => {});
 });
-renderNews();
-
-(function initNewsToast() {
+function initNewsToast() {
   const latest = NEWS.find(n => !n.obsolete);
   if (!latest) return;
   const key = `toast_${latest.day}_${latest.my.replace(/\s+/g, "_")}`;
@@ -1111,10 +1029,9 @@ renderNews();
     const btn = document.querySelector('[data-tab="changelog"]');
     if (btn) btn.click();
   });
-})();
+}
 
-loadGitHubReleases();
-initNotifications();
+loadNews();
 
 /* ---- Bluemap lazy-load (charge l'iframe seulement au premier clic) --- */
 (function initMap() {
@@ -1137,43 +1054,6 @@ const serverIpEl   = document.getElementById("server-ip");
 
 let revealing = false;
 
-/* Récupère l'heure RÉELLE depuis internet (anti triche d'horloge).
-   1) Services d'heure publics (précision ms).
-   2) En-tête HTTP "Date" d'une requête réseau — c'est l'horloge du SERVEUR,
-      impossible à falsifier en changeant l'horloge du PC. Le same-origin
-      (GitHub Pages) est toujours lisible et fiable, même si les API tombent.
-   3) Dernier recours : horloge locale. */
-async function getRealNow() {
-  const fetchWithTimeout = (url, opts = {}, ms = 6000) => {
-    const ctrl = new AbortController();
-    const id = setTimeout(() => ctrl.abort(), ms);
-    return fetch(url, { ...opts, signal: ctrl.signal }).finally(() => clearTimeout(id));
-  };
-
-  const sources = [
-    ["https://worldtimeapi.org/api/timezone/Etc/UTC", d => d.unixtime * 1000],
-    ["https://timeapi.io/api/Time/current/zone?timeZone=UTC", d => new Date(d.dateTime + "Z").getTime()],
-  ];
-  for (const [url, parse] of sources) {
-    try {
-      const r = await fetchWithTimeout(url, { cache: "no-store" });
-      if (!r.ok) continue;
-      const t = parse(await r.json());
-      const MIN_TS = 1700000000000, MAX_TS = 1900000000000; // 2023–2030
-      if (t && !isNaN(t) && t > MIN_TS && t < MAX_TS) return t;
-    } catch (_) { /* source suivante */ }
-  }
-
-  // Repli robuste : en-tête "Date" same-origin (jamais mis en cache par le SW, HEAD non-GET).
-  try {
-    const r = await fetchWithTimeout(location.origin + "/?t=" + Date.now(), { method: "HEAD", cache: "no-store" });
-    const d = r.headers.get("date");
-    if (d) { const t = new Date(d).getTime(); if (!isNaN(t)) return t; }
-  } catch (_) { /* source suivante */ }
-
-  return Date.now(); // dernier recours : horloge locale
-}
-
 /* Déchiffre l'IP via Web Crypto (AES-256-GCM), clé dérivée de la date + sel. */
 async function decryptIP() {
   const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
@@ -1186,26 +1066,19 @@ async function decryptIP() {
   return new TextDecoder().decode(pt);
 }
 
-/* Vérifie l'heure réelle, et si l'ouverture est passée → déchiffre + révèle l'IP.
-   Sinon → ne révèle RIEN et réessaie (résiste au changement d'horloge). */
+/* Le serveur est ouvert (depuis le 5 juin 2026) : la vérification de l'heure
+   réelle qui retardait l'affichage (2 API externes + timeouts de 6 s) a été
+   retirée — l'IP est déchiffrée et révélée immédiatement au chargement. */
 async function tryReveal() {
   if (revealedIP || revealing) return;
   revealing = true;
   try {
-    const realNow = await getRealNow();
-    const launch  = new Date(CONFIG.launchDate).getTime();
-    if (realNow >= launch) {
-      revealedIP = await decryptIP();
-      serverIpEl.textContent = revealedIP;
-      serverReveal.classList.remove("hidden");
-      const copyBtn = document.getElementById("copy-btn");
-      if (copyBtn) { copyBtn.removeAttribute("disabled"); copyBtn.removeAttribute("aria-disabled"); }
-      startServerStatus(revealedIP);
-    } else {
-      // Pas encore l'heure réelle → on retente, sans rien révéler
-      const wait = Math.min(Math.max((launch - realNow) / 1000, 5), 30) * 1000;
-      setTimeout(() => { revealing = false; tryReveal(); }, wait);
-    }
+    revealedIP = await decryptIP();
+    serverIpEl.textContent = revealedIP;
+    serverReveal.classList.remove("hidden");
+    const copyBtn = document.getElementById("copy-btn");
+    if (copyBtn) { copyBtn.removeAttribute("disabled"); copyBtn.removeAttribute("aria-disabled"); }
+    startServerStatus(revealedIP);
   } catch (_) {
     revealedIP = null;
     revealing = false;
@@ -1270,7 +1143,9 @@ async function fetchServerStatus(ip) {
 function startServerStatus(ip) {
   if (statusTimer) return;
   fetchServerStatus(ip);
-  statusTimer = setInterval(() => fetchServerStatus(ip), 30000);
+  // Pas de requête quand l'onglet est caché ; rafraîchit dès le retour.
+  statusTimer = setInterval(() => { if (!document.hidden) fetchServerStatus(ip); }, 30000);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) fetchServerStatus(ip); });
 }
 
 /* =====================================================================
@@ -1747,7 +1622,8 @@ if (hideDeadToggle) hideDeadToggle.addEventListener("change", e => {
 document.addEventListener("keydown", e => {
   const tag = document.activeElement.tagName;
   if (tag === "INPUT" || tag === "TEXTAREA") return;
-  if (e.key === "/" || (e.key === "f" && (e.ctrlKey || e.metaKey))) {
+  // "/" focalise la recherche de mods. (Ctrl+F reste la recherche du navigateur.)
+  if (e.key === "/" && !e.ctrlKey && !e.metaKey && !e.altKey) {
     e.preventDefault();
     activateTab("mods");
     document.getElementById("info").scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth" });
@@ -2269,8 +2145,42 @@ function showUpdateBanner() {
     items.forEach(d => d.remove());
   }
 
-  build("tab-donjonmc", "Sections du guide DonjonMC");
   build("tab-dashboard", "Sections du guide Dashboard");
+
+  /* L'onglet DonjonMC est généré depuis data/donjonmc.json — source unique
+     du guide (progression, sorts, donjons, classes), réutilisable par le mod.
+     Les chaînes du JSON contiennent du HTML limité, maîtrisé par nous. */
+  function donjonSectionHTML(s) {
+    let body = "";
+    if (s.intro) body += `<p class="detail-intro">${s.intro}</p>`;
+    if (s.table) {
+      body += `<table class="donjon-table"><thead><tr>${s.table.head.map(h => `<th>${escapeHTML(h)}</th>`).join("")}</tr></thead><tbody>`
+        + s.table.rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join("")}</tr>`).join("")
+        + `</tbody></table>`;
+    }
+    if (s.classes) {
+      body += `<div class="class-grid">` + s.classes.map(c =>
+        `<div class="class-card"><h4>${c.icon} ${escapeHTML(c.name)}</h4><p class="class-role">${c.role}</p><div class="class-spell">${c.spell}</div></div>`
+      ).join("") + `</div>`;
+    }
+    if (s.progress) {
+      body += `<div class="donjon-progress">` + s.progress.map(p =>
+        `<div class="prog-item"><span class="prog-lv">${escapeHTML(p.lv)}</span><span>${p.text}</span></div>`
+      ).join("") + `</div>`;
+    }
+    if (s.note) body += `<p class="donjon-note">${s.note}</p>`;
+    return `<details><summary>${s.icon} ${escapeHTML(s.title)}</summary><div class="detail-body">${body}</div></details>`;
+  }
+
+  fetch("data/donjonmc.json")
+    .then(r => r.json())
+    .then(data => {
+      const tab = document.getElementById("tab-donjonmc");
+      if (!tab || !Array.isArray(data.sections)) return;
+      tab.insertAdjacentHTML("beforeend", data.sections.map(donjonSectionHTML).join(""));
+      build("tab-donjonmc", "Sections du guide DonjonMC");
+    })
+    .catch(() => { /* hors-ligne sans cache : l'onglet garde la carte d'installation */ });
 })();
 
 /* =====================================================================
