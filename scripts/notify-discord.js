@@ -103,7 +103,7 @@ if (latest.dls && latest.dls.length) {
 
 const payload = {
   username: "DonjonMC — Actualités",
-  avatar_url: SITE + "img/icon-192.jpg",
+  avatar_url: SITE + "img/bot-avatar.png",
   embeds: [embed],
 };
 
