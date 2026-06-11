@@ -1,5 +1,13 @@
 [
   {
+    "day": "12", "my": "JUIN 2026", "tag": "requis", "label": "REQUIS",
+    "title": "AutoModpack — les mods se mettent à jour tout seuls maintenant",
+    "body": "Installe <strong>AutoModpack</strong> une fois, et tu n'auras plus jamais à re-télécharger DonjonMC ou Dashboard Admin à la main : à chaque connexion au serveur, le mod compare tes fichiers avec ceux du serveur, récupère les nouvelles versions directement dans ton dossier <code class=\"inline-path\">mods</code> et supprime les anciennes. Pour l'installer : télécharge-le ci-dessous et dépose-le dans ton dossier <code class=\"inline-path\">mods</code> (CurseForge → modpack DonjonMC → <strong>⋮</strong> → <strong>Open Folder</strong>). Lance ensuite le jeu et connecte-toi au serveur : un écran de vérification te demande un code, colle celui-ci : <code class=\"inline-path\" style=\"word-break:break-all\">75e0e8e7b0d70d88b8975fbb82336d6e16805ae405cf8547f8bffaeed6110ea9</code>. Attends la fin du téléchargement, relance ton client, et c'est réglé. Ce code est public et identique pour tous les joueurs : il sert juste à vérifier que ton jeu parle bien à notre serveur, pas à un intermédiaire.",
+    "dls": [
+      { "label": "⬇ AutoModpack (CurseForge)", "url": "https://www.curseforge.com/minecraft/mc-mods/automodpack" }
+    ]
+  },
+  {
     "day": "10", "my": "JUIN 2026", "tag": "fix", "label": "MISE À JOUR",
     "title": "DonjonMC 2.1.0 & Dashboard 1.0.8 — Épreuve de Classe v2 et zones visibles",
     "body": "Grosse mise à jour des deux mods maison. Côté <strong>DonjonMC 2.1.0</strong>, l'Épreuve de Classe (niveau 50) est entièrement refaite : une <strong>Burning Arena</strong> de 8 salles à enchaîner, avec des phases chronométrées. La mise à jour ajoute aussi les <strong>statistiques de carrière</strong> et redessine l'interface Hunter. Côté <strong>Dashboard Admin 1.0.8</strong>, les <strong>zones sont maintenant visibles en jeu</strong> : contours affichés en temps réel et sélection à la baguette, à activer dans l'onglet Build du <code class=\"inline-path\">/menu</code>. Avant d'installer les nouvelles versions, <strong>supprimez les anciennes</strong> de votre dossier <code class=\"inline-path\">mods</code> : si votre version ne correspond pas à celle du serveur, la connexion sera refusée.",
