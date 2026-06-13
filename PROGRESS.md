@@ -66,3 +66,15 @@ Next: commit/push (workflow Discord inactif tant que non pousse) ; supprimer le 
 ## 2026-06-11 (2)
 Avatar bot Discord (img/bot-avatar.png 256px, branche dans notify-discord.js, teste OK). Audit mobile Playwright 5 profils (360/375/390/412/768) : 2 bugs corriges — .mod-list minmax(0,1fr)/min(280px,100%) (badge categorie hors ecran, nom de mod long en nowrap forcait la colonne a 441px) + #news-toast passe en bas des 768px (recouvrait le burger sur tablette). SW v17. Tout pousse, deploy OK.
 Next: AutoModpack envisage pour MAJ auto des mods chez les joueurs (config a preparer si valide) ; idees en attente : lien Discord visible sur le site, galerie screenshots.
+
+## 2026-06-12
+Audit impeccable (plugin installe user-scope) : 4 actions traitees (404 realignee tokens, 68 rgba accent tokenises en --accent-rgb, titre hero degrade -> violet plein + halo, easing toast + note sans bordure) puis refonte visuelle du neon choisie par l'utilisateur (vs pixel par defaut) : identite "Systeme" Solo Leveling — etiquettes NIVEAU visibles, barre HUD a coins lumineux, badges QUETE 0X, tuiles d'icones, footer "fin de transmission". Pixel intact (scope :not). PRODUCT.md cree. SW v19. Tout pousse.
+Next: feedback utilisateur sur les details Systeme (chevrons, clignotement) ; idees en attente : lien Discord visible, galerie screenshots, AutoModpack config.
+
+## 2026-06-12 (2)
+Article AutoModpack publie (tag REQUIS) : installation unique, sync auto des mods maison a chaque connexion, empreinte de certificat incluse (corrigee en 74abce89..., phrase d'explication retiree a la demande). Premier post Discord 100% automatique du workflow confirme. feed.xml 7 articles, SW v21.
+Next: supprimer le message Discord avec l'ancienne empreinte 75e0... ; verifier que les joueurs passent bien sur AutoModpack ; idees : lien Discord visible sur le site, galerie screenshots.
+
+## 2026-06-13
+Liens DL passes de latest.jar aux versions donjonmc-2.1.5.jar + dashboardadmin-1.2.1.jar (news.json, index.html x4, app.js x2 ; URLs verifiees 200). Guide donjonmc.json rafraichi : version 2.1.5, epreuve de classe v2 (/donjonmc trial <classe>, 3 phases Burning Arena : horde, Igris, Ignis), halo + son de portail dans l'intro Donjons, note piege des portails C (double donjon B/A revele apres TP), tooltips parchemins. Onglet Dashboard : ligne /rtp (5 min, Overworld 500-3000 blocs) + warps publics dans /menu. Nouvel article 13 JUIN (nouveautes 2.1.1->2.1.5 et 1.0.9->1.2.1) sans lien de DL (AutoModpack gere). feed.xml 8 articles, SW v22.
+Next: verifier le post Discord auto du nouvel article ; idees : lien Discord visible sur le site, galerie screenshots.

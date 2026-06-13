@@ -146,7 +146,7 @@ const MODS = [
 ["Vanillin","Create","https://www.curseforge.com/minecraft/mc-mods/vanillin"],
 // --- Combat & Magie ---
 ["Advanced Netherite","Combat","https://www.curseforge.com/minecraft/mc-mods/advanced-netherite"],
-["DonjonMC","Combat","https://github.com/LKDM7/DonjonMC/raw/master/releases/donjonmc-latest.jar"],
+["DonjonMC","Combat","https://github.com/LKDM7/DonjonMC/raw/master/releases/donjonmc-2.1.5.jar"],
 ["Easy Magic","Combat","https://www.curseforge.com/minecraft/mc-mods/easy-magic"],
 ["Enderdragon Loot","Combat","https://www.curseforge.com/minecraft/mc-mods/enderdragon-loot"],
 ["Iron's Spells 'n Spellbooks","Combat","https://www.curseforge.com/minecraft/mc-mods/irons-spells-n-spellbooks"],
@@ -251,7 +251,7 @@ const MODS = [
 ["Comforts","Interface","https://www.curseforge.com/minecraft/mc-mods/comforts"],
 ["Controlling","Interface","https://www.curseforge.com/minecraft/mc-mods/controlling"],
 ["Convenient Effects","Interface","https://www.curseforge.com/minecraft/mc-mods/convenient-effects"],
-["Dashboard Admin","Interface","https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-latest.jar"],
+["Dashboard Admin","Interface","https://github.com/LKDM7/DashBoardAdmin/raw/master/releases/dashboardadmin-1.2.1.jar"],
 ["Delete Worlds To Trash","Interface","https://www.curseforge.com/minecraft/mc-mods/delete-worlds-to-trash"],
 ["Despawn Tweaks","Interface","https://www.curseforge.com/minecraft/mc-mods/despawn-tweaks"],
 ["Distraction Free Recipes (EMI / REI / JEI)","Interface","https://www.curseforge.com/minecraft/mc-mods/distraction-free-recipes"],

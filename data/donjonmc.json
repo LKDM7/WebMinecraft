@@ -1,6 +1,6 @@
 {
   "$comment": "Source unique du guide DonjonMC — consommée par js/app.js (onglet DonjonMC) et réutilisable par le mod. Les chaînes peuvent contenir du HTML limité (strong, code.cmd, span.rank-tag, br).",
-  "version": "2.1.0",
+  "version": "2.1.5",
   "sections": [
     {
       "icon": "📈",
@@ -37,7 +37,7 @@
     {
       "icon": "✨",
       "title": "Les Sorts de Rang",
-      "intro": "Les sorts utilisent Iron's Spellbooks. Chaque sort arrive sous forme de parchemin : fais un clic droit pour l'apprendre.",
+      "intro": "Les sorts utilisent Iron's Spellbooks. Chaque sort arrive sous forme de parchemin : survole-le pour voir sa description et ses statistiques, puis fais un clic droit pour l'apprendre.",
       "table": {
         "head": ["Nv.", "Sort", "École", "Effet"],
         "rows": [
@@ -79,7 +79,7 @@
     {
       "icon": "🏛",
       "title": "Les Donjons",
-      "intro": "Des portails colorés apparaissent aléatoirement dans l'Overworld (annoncés dans le chat). Le chef du groupe fait clic droit pour entrer : tous les membres dans un rayon de 10 blocs sont téléportés avec lui.",
+      "intro": "Des portails colorés apparaissent aléatoirement dans l'Overworld : annoncés dans le chat, signalés par un son d'ouverture et entourés d'un halo lumineux visible à travers les murs jusqu'à 120 blocs. Le chef du groupe fait clic droit pour entrer : tous les membres dans un rayon de 10 blocs sont téléportés avec lui.",
       "table": {
         "head": ["Rang", "Couleur", "Min.", "PV Boss", "XP", "Temps"],
         "rows": [
@@ -90,12 +90,12 @@
           ["<span class=\"rank-tag r-s\">S</span>", "Rouge", "4", "4 000", "30 000", "15 min"]
         ]
       },
-      "note": "▎ Double Donjon secret : les donjons D et C ont 1% de chance de mener au Temple de Cartenon. L'XP est divisée équitablement, avec un bonus ×1,5 si vous avez 2+ rangs en dessous du joueur le plus haut."
+      "note": "▎ Double Donjon secret : les donjons D et C ont 1% de chance de mener au Temple de Cartenon. L'XP est divisée équitablement, avec un bonus ×1,5 si vous avez 2+ rangs en dessous du joueur le plus haut.<br>▎ Méfiez-vous des portails C : certains cachent en réalité un donjon B, voire A. Rien ne les distingue de l'extérieur — le vrai rang n'est révélé qu'une fois le groupe téléporté à l'intérieur."
     },
     {
       "icon": "⚔",
       "title": "Niveau 50 : Épreuve de Classe",
-      "intro": "Utilisez <code class=\"cmd\">/donjonmc trial</code>. Battez 3 zombies, 2 squelettes et un Wither Skeleton boss. Votre classe est attribuée selon votre stat la plus haute à la victoire.",
+      "intro": "Utilisez <code class=\"cmd\">/donjonmc trial &lt;classe&gt;</code> pour choisir votre voie, puis survivez aux 3 phases chronométrées de la <strong>Burning Arena</strong> : la horde du donjon, Igris le Chevalier-Ombre, puis Ignis le Seigneur des Flammes. La classe choisie est débloquée à la victoire ; en cas d'échec, 24h de délai avant de retenter.",
       "classes": [
         {
           "icon": "🛡",
