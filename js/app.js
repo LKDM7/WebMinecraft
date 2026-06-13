@@ -1270,6 +1270,8 @@ function activateTab(id, syncUrl = true) {
   });
   if (syncUrl) setQueryParam("tab", id === "mods" ? null : id); // mods = défaut → URL propre
   try { localStorage.setItem("donjonmc-tab", id); } catch (_) {}
+  // Signale le changement d'onglet aux modules d'animation (js/animations.js).
+  window.dispatchEvent(new CustomEvent("dm-tab", { detail: { tab: id } }));
 }
 
 function currentTab() {

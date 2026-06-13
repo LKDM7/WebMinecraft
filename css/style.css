@@ -375,6 +375,11 @@ button { cursor: pointer; font-family: var(--font-body); }
 
 .tab-content { display: none; animation: fade-in 0.4s ease; }
 .tab-content.active { display: block; }
+/* GSAP gère l'entrée des onglets (js/animations.js) → on coupe le fondu CSS
+   pour éviter le doublon. Fallback CSS conservé si reduced-motion / pas de GSAP. */
+@media (prefers-reduced-motion: no-preference) {
+  html.gsap-anim .tab-content { animation: none; }
+}
 @keyframes fade-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 .tab-intro { color: var(--muted); font-size: 0.95rem; margin-bottom: 1.75rem; max-width: 760px; }
 
@@ -905,6 +910,23 @@ details[open] summary::after { transform: rotate(90deg); background: var(--accen
 
 /* GitHub release badge */
 .tag-github { background: rgba(139,92,246,.18); color: #a78bfa; border: 1px solid rgba(139,92,246,.35); }
+
+/* =====================================================================
+   ANTI-FLASH ENTRÉES GSAP (js/animations.js)
+   On masque les éléments d'entrée du hero AVANT le premier rendu, mais
+   UNIQUEMENT si JS a posé .gsap-anim ET si l'utilisateur accepte le mouvement.
+   GSAP les révèle ensuite (autoAlpha → visibility:visible en style inline).
+   Liste alignée 1:1 sur le timeline du hero dans animations.js.
+===================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  html.gsap-anim .hero .lvl-tag,
+  html.gsap-anim .hero-title,
+  html.gsap-anim .hero-subtitle,
+  html.gsap-anim #server-reveal,
+  html.gsap-anim .hero-cta-row .btn,
+  html.gsap-anim .hero-meta,
+  html.gsap-anim .hero-press { visibility: hidden; }
+}
 
 /* =====================================================================
    SCROLL PROGRESS BAR

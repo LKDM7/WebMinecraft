@@ -78,3 +78,11 @@ Next: supprimer le message Discord avec l'ancienne empreinte 75e0... ; verifier 
 ## 2026-06-13
 Liens DL passes de latest.jar aux versions donjonmc-2.1.5.jar + dashboardadmin-1.2.1.jar (news.json, index.html x4, app.js x2 ; URLs verifiees 200). Guide donjonmc.json rafraichi : version 2.1.5, epreuve de classe v2 (/donjonmc trial <classe>, 3 phases Burning Arena : horde, Igris, Ignis), halo + son de portail dans l'intro Donjons, note piege des portails C (double donjon B/A revele apres TP), tooltips parchemins. Onglet Dashboard : ligne /rtp (5 min, Overworld 500-3000 blocs) + warps publics dans /menu. Nouvel article 13 JUIN (nouveautes 2.1.1->2.1.5 et 1.0.9->1.2.1) sans lien de DL (AutoModpack gere). feed.xml 8 articles, SW v22.
 Next: verifier le post Discord auto du nouvel article ; idees : lien Discord visible sur le site, galerie screenshots.
+
+## 2026-06-13 (suite)
+Animations GSAP 3.13.0 (auto-heberge js/vendor/, CSP 'self' respectee) : nouveau js/animations.js — entrees au scroll thematisees Minecraft (hero qui se monte, parallaxe aurore, features/steps qui se posent comme des blocs back.out, titres/footer). Scopage gsap.matchMedia (prefers-reduced-motion), anti-flash via classe .gsap-anim (theme.js + CSS) avec filet de securite si GSAP echoue, ScrollTrigger.refresh sur dm-theme. SW v22->v23 (+3 assets). Verifie Playwright : 0 erreur console, hero visible, reduced-motion OK, reveal scroll OK.
+Next: committer les changements (animations.js, vendor GSAP, index.html, theme.js, style.css, sw.js) ; supprimer scripts/_serve.js temporaire avant commit.
+
+## 2026-06-13 (onglets)
+Animation GSAP au changement d'onglet : activateTab() emet un event dm-tab (app.js), animations.js anime le panneau (enfants en cascade fade+montee, clearProps transform pour garder les :hover) + pop back.out sur le bouton actif. fade-in CSS coupe sous html.gsap-anim (fallback conserve pour reduced-motion). Verifie Playwright 4 onglets : visibles, 0 erreur. NB cache-first du SW : tester sur port neuf (8090) sinon ancien app.js servi depuis cache v22.
+Next: committer ; verifier rendu visuel sur :8090 ; ajuster intensite si trop discret.
